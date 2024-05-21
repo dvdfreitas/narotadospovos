@@ -12,4 +12,9 @@ class StoryController extends Controller
         $stories = Story::all();
         return view('stories.index', compact('stories'));
     }
+
+    public function create()
+    {
+        return view('stories.create');
+    }
 }

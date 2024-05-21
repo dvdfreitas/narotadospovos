@@ -8,6 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');
+Route::get('/stories/create', [StoryController::class, 'create'])->name('stories.create');
 
 
 Route::middleware([
