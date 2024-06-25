@@ -1,0 +1,1 @@
+<span {{ $attributes -> merge(['class' => 'text-sm text-[#0083b3] uppercase']) }}>{{ $slot }}</span>

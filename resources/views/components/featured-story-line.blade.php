@@ -1,0 +1,1 @@
+<span {{ $attributes->merge(['class' => 'h-0.5 bg-gray-500']) }}></span>
