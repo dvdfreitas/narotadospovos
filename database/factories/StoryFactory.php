@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +18,13 @@ class StoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence,
+            'title' => $this->faker->word(3),
             'subtitle' => $this->faker->sentence,
             'summary' => $this->faker->paragraph,
-        ];
+            'image' => '/img/hero1.jpg',
+            'date' => $this->faker->date(),
+            'user_id' => User::factory(),
+        ];        
+
     }
 }

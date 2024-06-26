@@ -9,7 +9,7 @@ class StoryController extends Controller
 {
     public function index()
     {
-        $stories = Story::all();
+        $stories = Story::with('user')->get();
         return view('stories.index', compact('stories'));
     }
 

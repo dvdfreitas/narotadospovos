@@ -36,27 +36,12 @@
                             </div>
                             <img src="/img/hero1.jpg" class="w-3/12">
                         </div>
-                        <div class="flex flex-row justify-center items-center space-x-2 pb-6 border-b-[0.5px] border-gray-300">
-                            <div class="w-full flex flex-col space-y-2 font-black">
-                                <strong class="text-sm text-[#0083b3] uppercase">Environments</strong>
-                                <h3 class="text-base text-black md:text-xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</h3>
-                                <p class="flex flex-row space-x-2 text-sm text-gray-300">
-                                    <span class="mr-2"> 24 June 2024 </span>|<span> By Jorge Mango</span>
-                                </p>
-                            </div>
-                            <img src="/img/hero1.jpg" class="w-3/12">
-                        </div>
+                        <x-story :story="$stories[0]" format="minimal"/>
 
-                        <div class="flex flex-row justify-center items-center space-x-2">
-                            <div class="w-full flex flex-col space-y-2 font-black">
-                                <strong class="text-sm text-[#0083b3] uppercase">Environments</strong>
-                                <h3 class="text-base text-black md:text-xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</h3>
-                                <p class="flex flex-row space-x-2 text-sm text-gray-300">
-                                    <span class="mr-2"> 24 June 2024 </span>|<span> By Jorge Mango</span>
-                                </p>
-                            </div>
-                            <img src="/img/hero1.jpg" class="w-3/12">
-                        </div>
+                        @foreach ($stories as $story)
+                            <x-story :story="$story" format="minimal"/>
+                        @endforeach
+
                     </div>
                 </div>
             </section>
