@@ -18,13 +18,12 @@ class StoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->word(3),
-            'subtitle' => $this->faker->sentence,
-            'summary' => $this->faker->paragraph,
+            'title' => $this->faker->words(10, true),
+            'subtitle' => $this->faker->sentence(20),
+            'summary' => $this->faker->paragraph(40),
             'image' => '/img/hero1.jpg',
-            'date' => $this->faker->date(),
-            'user_id' => User::factory(),
-        ];        
-
+            'date' => $this->faker->dateTimeThisMonth(),
+            'user_id' => User::factory()
+        ];
     }
 }
