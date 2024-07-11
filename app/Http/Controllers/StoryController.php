@@ -17,4 +17,11 @@ class StoryController extends Controller
     {
         return view('stories.create');
     }
+
+    public function show(Story $story)
+    {
+        return view('stories.show', [
+            'story' => $story
+        ]);
+    }
 }
