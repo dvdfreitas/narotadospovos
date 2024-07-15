@@ -15,6 +15,11 @@
                 <span class="mr-2"> {{ $story -> date}} </span>|<span> By: {{ $story -> user-> name}}</span>
             </p>
         </div>
+        <div class="flex">
+            @foreach ($story->categories as $category)
+                <a href="/stories/categories/{{ $category->slug}}"><p class="border rounded bg-blue-100 mx-1 p-1">{{ $category->name }}</p></a>
+            @endforeach
+        </div>
     </div>
 
 @elseif ($format == 'minimal')

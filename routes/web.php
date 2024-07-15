@@ -1,16 +1,22 @@
 <?php
 
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\StoryController;
+use App\Http\Middleware\LocaleMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');
-Route::get('/stories/{story}', [StoryController::class, 'show'])->name('stories.show');
-Route::get('/stories/create', [StoryController::class, 'create'])->name('stories.create');
+Route::middleware([LocaleMiddleware::class])->group(function () {
+    Route::get('/change-language/{lang}', [LanguageController::class, 'changeLanguage'])->name('changeLanguage');
+});
 
+
+Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');
+Route::get('/stories/create', [StoryController::class, 'create'])->name('stories.create');
+Route::get('/stories/{story}', [StoryController::class, 'show'])->name('stories.show');
 
 Route::middleware([
     'auth:sanctum',

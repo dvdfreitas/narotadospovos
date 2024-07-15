@@ -20,17 +20,13 @@
     </head>
 
     <body class="font-sans text-gray-900 antialiased">
-        <nav class="">
-
-        </nav>
+        <x-menu/>
 
         <main class="">
             {{ $slot }}
         </main>
 
-        <footer>
-
-        </footer>
+        <x-footer/>
 
         @livewireScripts
     </body>

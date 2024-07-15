@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
             $table->string('name');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
 
@@ -28,6 +30,8 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->timestamps();
+
+            $table->unique(['category_id', 'story_id']);
         });
     }
 
