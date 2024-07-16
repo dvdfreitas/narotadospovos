@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stories', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor('user_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->string('title');
             $table->string('subtitle');
             $table->text('summary');
