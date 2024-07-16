@@ -9,7 +9,7 @@ class Story extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'subtitle', 'summary', 'image', 'date'];
+    protected $fillable = ['user_id', 'title', 'subtitle', 'summary', 'image', 'date'];
 
     public function user()
     {
