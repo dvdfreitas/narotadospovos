@@ -15,7 +15,8 @@ Route::middleware([LocaleMiddleware::class])->group(function () {
 
 
 Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');
-Route::get('/stories/create', [StoryController::class, 'create'])->name('stories.create');
+Route::get('/stories/create', [StoryController::class, 'showCreateForm'])->name('stories.create');
+Route::post('/stories', [StoryController::class, 'store']);
 Route::get('/stories/{story}', [StoryController::class, 'show'])->name('stories.show');
 
 Route::middleware([
