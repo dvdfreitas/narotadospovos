@@ -12,7 +12,7 @@ class StoryController extends Controller
 {
     public function index()
     {
-        $stories = Story::with(['user', 'categories'])->latest()->get();
+        $stories = Story::with(['user', 'categories'])->latest()->paginate(3);
         return view('stories.index', compact('stories'));
     }
 
@@ -25,9 +25,7 @@ class StoryController extends Controller
 
     public function show(Story $story)
     {
-        return view('stories.show', [
-            'story' => $story
-        ]);
+        return view('stories.show', compact('story'));
     }
 
     public function store(Request $request)
