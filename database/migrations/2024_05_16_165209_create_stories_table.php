@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('subtitle');
             $table->text('summary');
+            $table->string('slug')->unique();
             $table->string('image');
             $table->date('date');
             $table->timestamps();
