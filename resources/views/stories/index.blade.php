@@ -1,4 +1,4 @@
-<x-guestLayout>
+<x-appLayout>
     <div class="flex flex-col w-full space-y-28">
         <!-- Hero section  -->
         <div class="flex w-full h-[520px]">
@@ -45,4 +45,4 @@
             </section>
         </div>
     </div>
-</x-guestLayout>
+</x-appLayout>

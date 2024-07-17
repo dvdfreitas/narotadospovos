@@ -22,7 +22,7 @@
     <body class="font-sans text-gray-900 antialiased">
         <x-menu/>
 
-        <main class="">
+        <main>
             {{ $slot }}
         </main>
 

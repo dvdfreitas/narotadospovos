@@ -1,4 +1,4 @@
-<x-guestLayout>
+<x-appLayout>
     <div class="max-w-md m-auto px-4 my-10 sm:px-0 sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl xl:mx-20 2xl:max-w-full transition-all duration-75 ease-in-out">
         <form method="POST" action="/stories" enctype="multipart/form-data">
             @csrf
@@ -73,4 +73,4 @@
             </div>
         </form>
     </div>
-</x-guestLayout>
+</x-appLayout>

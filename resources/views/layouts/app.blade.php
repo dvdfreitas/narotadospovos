@@ -33,7 +33,7 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="my-4 ">
                 {{ $slot }}
             </main>
         </div>
