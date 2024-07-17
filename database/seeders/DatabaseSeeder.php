@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         # HLD: Melhorar  
         $users = User::factory(10)->create();
-        $categories = Category::factory(10)->create();        
+        $categories = Category::factory(10)->create();
         Story::factory(10)->recycle($users)->create();
 
         $stories = Story::all();
@@ -25,7 +25,11 @@ class DatabaseSeeder extends Seeder
             $story->categories()->attach(
                 $categories->random(rand(1, 3))->pluck('id')->toArray()
             );
-        }        
+        }
+
+        $this->call([
+            CategorySeeder::class,
+        ]);
 
         User::factory()->create([
             'name' => 'Test User',

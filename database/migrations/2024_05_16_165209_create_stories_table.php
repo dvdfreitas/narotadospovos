@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('stories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained();
             $table->string('title');
             $table->string('subtitle');
-            $table->string('image');
             $table->text('summary');
+            $table->string('slug')->unique();
+            $table->string('image');
             $table->date('date');
             $table->timestamps();
         });
