@@ -2,7 +2,7 @@
     <div class="min-h-screen flex flex-col space-y-4 sm:space-y-6 md:space-y-8">
         <!-- Hero section  -->
         <div class="flex w-full h-[520px]">
-            <img src="/img/hero1.jpg" class="object-cover object-center">
+            <img src="/images/hero1.jpg" class="object-cover object-center">
         </div>
 
         <div class="max-w-md m-auto px-4 sm:px-0 sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl xl:mx-20 2xl:max-w-full transition-all duration-75 ease-in-out">
@@ -10,7 +10,7 @@
                 <div class="space-y-6 md:col-span-3 lg:col-span-8">
                     <div class="font-black space-y-3 uppercase">
                         <strong class="inline-block text-base text-white bg-[#0083b3] pl-2 pt-2 pr-4 rounded-tr-full md:text-lg lg:text-xl 2xl:text-2xl">Notícias</strong>
-                        <h1 class="text-xl md:text-2xl lg:text-4xl 2xl:text-5xl">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h1>
+                        <h1 class="text-xl md:text-2xl lg:text-4xl 2xl:text-5xl normal-case">{{ $story->title }}</h1>
                     </div>
                     <div class="lg:flex lg:flex-row lg:space-x-8">
                         <div class="hidden space-y-4 lg:flex lg:flex-col">
@@ -58,28 +58,10 @@
                             </a>
 
                         </div>
-                        <div class="space-y-4">
-                            <p class="">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia, nam. Nesciunt dignissimos numquam velit necessitatibus quibusdam incidunt
-                                eveniet corrupti! Quo, debitis unde ad deleniti est minima inventore illo facilis praesentium. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                Officia, nam. Nesciunt dignissimos numquam velit necessitatibus quibusdam incidunt eveniet corrupti! Quo, debitis unde ad deleniti est minima inventore
-                                illo facilis praesentium.
-                            </p>
-
-                            <p class="">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia, nam. Nesciunt dignissimos numquam velit necessitatibus quibusdam incidunt
-                                eveniet corrupti! Quo, debitis unde ad deleniti est minima inventore illo facilis praesentium. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                Officia, nam. Nesciunt dignissimos numquam velit necessitatibus quibusdam incidunt eveniet corrupti! Quo, debitis unde ad deleniti est minima inventore
-                                illo facilis praesentium.
-                            </p>
-                            <p class="">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia, nam. Nesciunt dignissimos numquam velit necessitatibus quibusdam incidunt
-                                eveniet corrupti! Quo, debitis unde ad deleniti est minima inventore illo facilis praesentium. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                Officia, nam. Nesciunt dignissimos numquam velit necessitatibus quibusdam incidunt eveniet corrupti! Quo, debitis unde ad deleniti est minima inventore
-                                illo facilis praesentium.
-                            </p>
+                        <div class="space-y-6">
+                            <h2 class="text-base md:text-xl lg:text-2xl 2xl:text-3xl normal-case">{{ $story->subtitle }}</h2>
+                            <p>{{ $story->summary}}</p>
                         </div>
-
                     </div>
                 </div>
                 <div class="flex flex-col space-y-6 md:col-span-1">
@@ -89,7 +71,7 @@
                     </div>
 
                     <div class="flex flex-col items-center space-y-4">
-                        <a format="image"> <img src="/img/hero1.jpg" class=""></a>
+                        <a format="image"> <img src="/images/hero1.jpg" class=""></a>
                         <div class="w-full flex flex-col font-black space-y-2">
                             <a href="#" class="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
                             <p class="flex flex-row space-x-2 text-sm text-gray-300">
@@ -99,7 +81,7 @@
                     </div>
 
                     <div class="flex flex-col items-center space-y-4">
-                        <a format="image"> <img src="/img/hero1.jpg" class=""></a>
+                        <a format="image"> <img src="/images/hero1.jpg" class=""></a>
                         <div class="w-full flex flex-col font-black space-y-2">
                             <a href="#" class="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
                             <p class="flex flex-row space-x-2 text-sm text-gray-300">
