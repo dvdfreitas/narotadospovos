@@ -1,5 +1,14 @@
 @props(['story', 'format' => 'default'])
 
+
+@php
+if ($story->image) 
+    $image = "images/$story->image";
+else
+    $image = "images/hero1.jpg";
+
+@endphp
+
 @if ($format == 'default')
 
 <div class=""></div>
@@ -7,7 +16,10 @@
 @elseif($format == 'highlight')
 
 <div {{$attributes ->merge(['class' => 'flex flex-col items-center space-y-4'])}}>
-    <a><img src="{{ asset('images/' .$story->image) }}" class=""></a>
+    <b class="bg-red-400">{{ $story->image }}</b>
+    
+    <a><img src="{{ $story }}" class=""></a>
+    
     <div class="w-full flex flex-col font-black space-y-2">
         <div class="flex space-x-2">
             @foreach($story->categories as $category)
@@ -42,7 +54,7 @@
             <span class="mr-2">{{ $story->date }}</span>|<span>{{ $story->user->name }}</span>
         </p>
     </div>
-    <a class="w-3/12"><img src="{{ asset('images/'. $story->image ) }}"></a>
+    <a class="w-3/12"><img src="/images/hero1.jpg"></a>
 </div>
 
 @else

@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Story;
-use App\Models\User;
-use Faker\Provider\Lorem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class StoryController extends Controller
 {
@@ -16,9 +16,8 @@ class StoryController extends Controller
         return view('stories.index', compact('stories'));
     }
 
-    public function showCreateForm()
-    {
-        // Retornar categorias, permintindo a escolha de de categoria a associar a notícia
+    public function create()
+    {        
         $categories = Category::all();
         return view('stories.create', compact('categories'));
     }
@@ -29,18 +28,16 @@ class StoryController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validar os dados de formulário de registo
+    {        
         $validatedData = $request->validate([
             'title'     => ['required', 'string', 'max:255'],
-            'subtitle'  => ['required', 'string', 'max:255'],
+            'subtitle'  => ['nullable', 'string', 'max:255'],
             'summary'   => ['required', 'string', 'max:65535'],
             'image'     => [
-                'required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048',
+                'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048',
                 'dimensions:min_width=100,min_height=100,max_width=2000,max_height=2000'
             ],
-            'date'      => ['required', 'date', 'date_format:Y-m-d'],
-            'categories' => ['required', 'array'],
+            'date'      => ['required', 'date', 'date_format:Y-m-d'],            
             'categories.*', ['exists:categories,id'],
         ]);
 
@@ -50,17 +47,13 @@ class StoryController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension(); // Gerar nome único da imagem
             $image->move(public_path('images'), $imageName); // Mover para pasta pública
         }
+        
+        // Add slug to the validated data
+        $validatedData['slug'] = Str::slug($validatedData['title']);
+        $validatedData['user_id'] = auth()->id();
 
-        $user = User::find(1);
         // Caso passe a validação criar notícia 
-        $story = Story::create([
-            'title'     => $validatedData['title'],
-            'user_id' => $user->id,
-            'subtitle'  => $validatedData['subtitle'],
-            'summary'   => $validatedData['summary'],
-            'image'     => $imageName,
-            'date'      => $validatedData['date'],
-        ]);
+        $story = Story::create($validatedData);
 
         // Associár a notícia as categorias
         if (isset($validatedData['categories'])) {

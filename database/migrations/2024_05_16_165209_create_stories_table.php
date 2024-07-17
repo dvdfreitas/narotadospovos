@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('title');
-            $table->string('subtitle');
+            $table->string('subtitle')->nullable();
             $table->text('summary');
             $table->string('slug')->unique();
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->date('date');
             $table->timestamps();
         });

@@ -11,7 +11,7 @@
                         <div class="flex text-sm leading-6 text-gray-600">
                             <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                 <span class="p-2">Upload de imagem</span>
-                                <x-input type="file" name="image" id="file-upload" class="sr-only" />
+                                <x-input type="file" name="image" id="file-upload" class="sr-only" />                                
                             </label>
                             <p class="pl-1">ou arreste e solta</p>
                         </div>
@@ -22,23 +22,23 @@
                 <div class="col-span-1 space-y-8 sm:space-y-6">
                     <fieldset class="space-y-2">
                         <x-label>Título</x-label>
-                        <div class="">
-                            <x-input name="title" value="{{ old('title') }}" id="title" placeholder="Tíulo" />
+                        <div>                            
+                            <x-input id="title" class="block mt-1 w-full" type="text" name="title" :value="old('title')" required autofocus/>
                             <x-input-error for="title" />
                         </div>
                     </fieldset>
                     <fieldset class="space-y-2">
                         <x-label>Subtítulo</x-label>
-                        <div class="">
-                            <x-input name="subtitle" value="{{ old('subtitle') }}" id="subtitle" placeholder="Subtítulo" />
+                        <div>
+                            <x-input class="w-full" name="subtitle" value="{{ old('subtitle') }}" id="subtitle" placeholder="Subtítulo" />
                             <x-input-error for="subtitle" />
                         </div>
                     </fieldset>
                     <div class="flex flex-col space-y-6 md:flex md:flex-row md:space-y-0 md:space-x-6 transition-all duration-75 ease-in-out">
                         <fieldset class="w-full space-y-2 md:w-1/2">
                             <x-label>Data</x-label>
-                            <div class="">
-                                <x-input name="date" value="{{ old('date') }}" id="date" placeholder="dd-mm-aa" />
+                            <div>
+                                <x-input type="date" name="date" value="{{ old('date') }}" id="date" placeholder="dd-mm-aa" />
                                 <x-input-error for="date" />
                             </div>
                         </fieldset>
@@ -59,7 +59,7 @@
                         <div>
                             <textarea name="summary" id="summary" rows="8" class="block w-full rounded-md border-0 py-1.5
                                  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-                                 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{{ old('summary') }}
                             </textarea>
                             <x-input-error for="summary" />
                         </div>
