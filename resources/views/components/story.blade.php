@@ -3,22 +3,21 @@
 
 @php
 if ($story->image) 
-    $image = "images/$story->image";
+    $image = "/images/$story->image";
 else
-    $image = "images/hero1.jpg";
+    $image = "/images/hero1.jpg";
 
 @endphp
 
 @if ($format == 'default')
 
-<div class=""></div>
+<div></div>
 
 @elseif($format == 'highlight')
 
 <div {{$attributes ->merge(['class' => 'flex flex-col items-center space-y-4'])}}>
-    <b class="bg-red-400">{{ $story->image }}</b>
     
-    <a><img src="{{ $story }}" class=""></a>
+    <a><img src="{{ $image }}"></a>
     
     <div class="w-full flex flex-col font-black space-y-2">
         <div class="flex space-x-2">
@@ -59,6 +58,6 @@ else
 
 @else
 
-<div class=""></div>
+<div></div>
 
 @endif
