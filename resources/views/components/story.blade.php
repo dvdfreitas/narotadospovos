@@ -2,41 +2,51 @@
 
 @if ($format == 'default')
 
-    <div class=""></div>
+<div class=""></div>
 
 @elseif($format == 'highlight')
 
-    <div {{$attributes ->merge(['class' => 'flex flex-col items-center space-y-4'])}}>
-        <a format="image"> <img src="/img/hero1.jpg" class=""></a>
-        <div class="w-full flex flex-col font-black space-y-2">
-            <a format="category">Environments</a>
-            <a>{{ $story->title }}</a>
-            <p class="flex flex-row space-x-2 text-sm text-gray-300">
-                <span class="mr-2"> {{ $story -> date}} </span>|<span> By: {{ $story -> user-> name}}</span>
-            </p>
-        </div>
-        <div class="flex">
-            @foreach ($story->categories as $category)
-                <a href="/stories/categories/{{ $category->slug}}"><p class="border rounded bg-blue-100 mx-1 p-1">{{ $category->name }}</p></a>
+<div {{$attributes ->merge(['class' => 'flex flex-col items-center space-y-4'])}}>
+    <a><img src="{{ asset('images/' .$story->image) }}" class=""></a>
+    <div class="w-full flex flex-col font-black space-y-2">
+        <div class="flex space-x-2">
+            @foreach($story->categories as $category)
+            <a href="/stories/categories/{{ $category->slug }}" class="inline-block font-medium text-sm text-center text-gray-400 px-2 py-3 
+            rounded-lg shadow-sm no-underline uppercase hover:shadow-lg hover:text-gray-600 transition-all ease-out">
+                {{$category->name}}
+            </a>
             @endforeach
         </div>
+        <a href="/stories/{{ $story->slug }}" class="font-bold text-lg"> {{ $story->title }} </a>
+        <p class="flex flex-row space-x-2 text-sm text-gray-500">
+            <span class="mr-2"> {{ $story -> date}} </span>|<span> By: {{ $story -> user-> name}}</span>
+        </p>
     </div>
+
+</div>
 
 @elseif ($format == 'minimal')
 
-    <div class="flex flex-row justify-center items-center space-x-2 pb-6 border-b-[0.5px] border-gray-300">
-        <div class="w-9/12 flex flex-col space-y-2 font-black">
-            <a format="category"> Health Care </a>
-            <a> {{ $story->title }} </a>
-            <p class="flex flex-row space-x-2 text-sm text-gray-300">
-                <span class="mr-2">{{ $story->date }}</span>|<span>{{ $story->user->name }}</span>
-            </p>
+<div class="flex flex-row justify-center items-center space-x-2 pb-6 border-b-[0.5px] border-gray-500">
+    <div class="w-9/12 flex flex-col space-y-2 font-black">
+        <div class="flex space-x-2">
+            @foreach($story->categories as $category)
+            <a href="/stories/categories/{{ $category->slug }}" class="inline-block font-medium text-sm text-center text-gray-400 px-2 py-3 
+                rounded-lg shadow-sm no-underline uppercase hover:shadow-lg hover:text-gray-600 transition-all ease-out">
+                {{$category->name}}
+            </a>
+            @endforeach
         </div>
-        <a format="image" class="w-3/12 bg-red-400"><img src="/img/hero1.jpg"></a>
+        <a href="/stories/{{ $story->slug }}"> {{ $story->title }} </a>
+        <p class="flex flex-row space-x-2 text-sm text-gray-500">
+            <span class="mr-2">{{ $story->date }}</span>|<span>{{ $story->user->name }}</span>
+        </p>
     </div>
+    <a class="w-3/12"><img src="{{ asset('images/'. $story->image ) }}"></a>
+</div>
 
 @else
 
-    <div class=""></div>
+<div class=""></div>
 
 @endif
