@@ -23,14 +23,14 @@
                     <fieldset class="space-y-2">
                         <x-label>Título</x-label>
                         <div class="">
-                            <x-input name="title" id="title" placeholder="Tíulo" />
+                            <x-input name="title" value="{{ old('title') }}" id="title" placeholder="Tíulo" />
                             <x-input-error for="title" />
                         </div>
                     </fieldset>
                     <fieldset class="space-y-2">
                         <x-label>Subtítulo</x-label>
                         <div class="">
-                            <x-input name="subtitle" id="subtitle" placeholder="Subtítulo" />
+                            <x-input name="subtitle" value="{{ old('subtitle') }}" id="subtitle" placeholder="Subtítulo" />
                             <x-input-error for="subtitle" />
                         </div>
                     </fieldset>
@@ -38,7 +38,7 @@
                         <fieldset class="w-full space-y-2 md:w-1/2">
                             <x-label>Data</x-label>
                             <div class="">
-                                <x-input name="date" id="date" placeholder="dd-mm-aa" />
+                                <x-input name="date" value="{{ old('date') }}" id="date" placeholder="dd-mm-aa" />
                                 <x-input-error for="date" />
                             </div>
                         </fieldset>
