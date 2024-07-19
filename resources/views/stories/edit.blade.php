@@ -8,12 +8,10 @@
                 transition-all duration-75 ease-in-out">
                 <div class="relative col-span-1 h-full w-full rounded-lg">
                     @if(asset($story) && $story->image)
-                        <img src="{{ asset('/images/'.$story->image)}}" class="relative h-full w-full object-cover object-center" 
-                        alt="{{ $story->title }}">
+                    <img src="{{ asset('/images/'.$story->image)}}" class="relative h-full w-full object-cover object-center" alt="{{ $story->title }}">
                     @endif
                     <div class="absolute inset-0 flex flex-col justify-center items-center text-center space-y-2 bg-gray-800 opacity-75 hover:opacity-95">
-                        <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" 
-                        aria-hidden="true">
+                        <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 
                             6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 
                             0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 
@@ -24,7 +22,7 @@
                             focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2
                             hover:text-indigo-500">
                                 <span class="p-2">Alterar imagem</span>
-                                <x-input type="file" name="image" id="file-upload" class="sr-only" />                                
+                                <x-input type="file" name="image" id="file-upload" class="sr-only" />
                             </label>
                             <p class="pl-1">ou arreste e solta</p>
                         </div>
@@ -40,16 +38,14 @@
                     <fieldset class="space-y-2">
                         <x-label>Título</x-label>
                         <div>
-                            <x-input id="title" class="block mt-1 w-full" type="text" name="title" 
-                            value="{{ old('title', $story->title) }}" required autofocus />
+                            <x-input id="title" class="block mt-1 w-full" type="text" name="title" value="{{ old('title', $story->title) }}" required autofocus />
                             <x-input-error for="title" />
                         </div>
                     </fieldset>
                     <fieldset class="space-y-2">
                         <x-label>Subtítulo</x-label>
                         <div>
-                            <x-input class="w-full" name="subtitle" id="subtitle" 
-                            value="{{ old('subtitle',$story->subtitle) }}" />
+                            <x-input class="w-full" name="subtitle" id="subtitle" value="{{ old('subtitle',$story->subtitle) }}" />
                             <x-input-error for="subtitle" />
                         </div>
                     </fieldset>
@@ -58,8 +54,7 @@
                         <fieldset class="w-full space-y-2 md:w-1/2">
                             <x-label>Data</x-label>
                             <div>
-                                <x-input type="date" name="date" id="date" value="{{ old('date', $story->date) }}" 
-                                class="w-full" />
+                                <x-input type="date" name="date" id="date" value="{{ old('date', $story->date) }}" class="w-full" />
                                 <x-input-error for="date" />
                             </div>
                         </fieldset>
@@ -93,11 +88,19 @@
             </div>
             <div class="mt-6 flex items-center justify-end space-x-6">
                 <a href="/stories/{{$story->slug}}" class="inline-flex items-center justify-center px-4 
+                py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white 
+                uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2
+                focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150">Voltar</a>
+                <button form="delete-form" class="inline-flex items-center justify-center px-4 
                 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white 
                 uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2
-                focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">Cancelar</a>
+                focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">Eliminar</button>
                 <x-button>Atualizar</x-button>
             </div>
+        </form>
+        <form method="POST" action="/stories/{{ $story->slug }}" id="delete-form" class="hidden">
+            @csrf
+            @method('DELETE')
         </form>
     </div>
 </x-appLayout>

@@ -25,6 +25,7 @@ Route::get('/stories/{story:slug}', [StoryController::class, 'show'])->name('sto
 Route::post('/stories', [StoryController::class, 'store']);
 Route::get('/stories/{story:slug}/edit', [StoryController::class, 'edit'])->name('stories.edit');
 Route::patch('/stories/{story:slug}', [StoryController::class, 'update']);
+Route::delete('/stories/{story:slug}', [StoryController::class, 'destroy']);
 
 Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
 Route::get('/partners/create', [PartnerController::class, 'create'])->name('partners.create');

@@ -102,7 +102,6 @@ class StoryController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
             $validatedData['image'] = $imageName;
-
         } else {
 
             $validatedData['image'] = $story->image;
@@ -114,5 +113,11 @@ class StoryController extends Controller
 
         $story->update($validatedData);
         return redirect('/stories/' . $story->slug);
+    }
+
+    public function destroy(Story $story)
+    {
+        $story->delete();
+        return redirect('stories/');
     }
 }
