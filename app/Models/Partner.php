@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Partner extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['logo', 'slug', 'visible', 'website', 'facebook', 'instagram', 'linkedIn'];
 }
