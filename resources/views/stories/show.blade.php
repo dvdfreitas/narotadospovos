@@ -1,8 +1,8 @@
 <x-guestLayout>
     <div class="min-h-screen flex flex-col space-y-4 sm:space-y-6 md:space-y-8">
         <!-- Hero section  -->
-        <div class="flex w-full h-[520px]">
-            <img src="/images/hero1.jpg" class="object-cover object-center">
+        <div class="h-[520px] w-full">
+            <img src="{{asset('images/' . $story->image)}}" class="h-full w-full object-cover object-center">
         </div>
 
         <div class="max-w-md m-auto px-4 sm:px-0 sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl xl:mx-20 2xl:max-w-full transition-all duration-75 ease-in-out">
@@ -61,6 +61,19 @@
                         <div class="space-y-6">
                             <h2 class="text-base md:text-xl lg:text-2xl 2xl:text-3xl normal-case">{{ $story->subtitle }}</h2>
                             <p>{{ $story->summary}}</p>
+                            <div class="mt-6 flex items-center justify-end space-x-6">
+                                <a href="/stories" class="inline-flex items-center justify-center px-4 
+                                py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white 
+                                uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2
+                                focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                    Voltar
+                                </a>
+                                <a href="/stories/{{$story->slug}}/edit" class="inline-block items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white 
+                                    uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2
+                                    focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 transition ease-in-out duration-150">
+                                    Editar
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +84,7 @@
                     </div>
 
                     <div class="flex flex-col items-center space-y-4">
-                        <a format="image"> <img src="/images/hero1.jpg" class=""></a>
+                        <a format="image"> <img src="/images/default.jpg" class=""></a>
                         <div class="w-full flex flex-col font-black space-y-2">
                             <a href="#" class="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
                             <p class="flex flex-row space-x-2 text-sm text-gray-300">
@@ -81,7 +94,7 @@
                     </div>
 
                     <div class="flex flex-col items-center space-y-4">
-                        <a format="image"> <img src="/images/hero1.jpg" class=""></a>
+                        <a format="image"> <img src="/images/default.jpg" class=""></a>
                         <div class="w-full flex flex-col font-black space-y-2">
                             <a href="#" class="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
                             <p class="flex flex-row space-x-2 text-sm text-gray-300">

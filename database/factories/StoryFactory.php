@@ -25,7 +25,7 @@ class StoryFactory extends Factory
             'title' => $this->faker->words(8, true),
             'subtitle' => $this->faker->sentence(20),
             'summary' => $this->faker->paragraph(40),
-            'image' => 'hero1.jpg',
+            'image' => 'default.jpg',
             'date' => $this->faker->dateTimeThisMonth(),
             'user_id' => User::factory(),
             'slug' => $slug,

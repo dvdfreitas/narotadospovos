@@ -26,7 +26,7 @@
             {{ $slot }}
         </main>
 
-        <x-footer/>
+        <!-- <x-footer/> -->
 
         @livewireScripts
     </body>
