@@ -29,6 +29,7 @@ Route::delete('/stories/{story:slug}', [StoryController::class, 'destroy']);
 
 Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
 Route::get('/partners/create', [PartnerController::class, 'create'])->name('partners.create');
+Route::post('/partners', [PartnerController::class, 'store']);
 
 Route::middleware([
     'auth:sanctum',

@@ -15,11 +15,8 @@
                 </p>
             </div>
             <!-- Partners List -->
-            <div class="grid grid-flow-row gap-6 mx-6 transition-all duration-75 
-            ease-in-out sm:grid-cols-2 md:grid-cols-3 lg:mx-0 lg:grid-cols-4">
-                @foreach($partners as $partner)
-                    <x-partner :partner="$partner" />
-                @endforeach
+            <div class="grid grid-flow-row gap-6 mx-6 transition-all duration-75 ease-in-out sm:grid-cols-2 md:grid-cols-3 lg:mx-0 lg:grid-cols-4">
+                <x-partner :partners="$partners" :icons="$icons"/>
             </div>
             <div class="mx-6 lg:mx-0">
                 {{ $partners->links() }}
