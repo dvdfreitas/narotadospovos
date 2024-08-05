@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('partners', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('logo')->nullable();
             $table->string('slug')->nullable();
             $table->boolean('visible')->default(true);

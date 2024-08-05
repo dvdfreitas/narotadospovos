@@ -47,9 +47,9 @@ class StoryController extends Controller
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
+            $validatedData['image'] = $imageName;
         }
 
-        $validatedData['image'] = $imageName;
         $validatedData['slug'] = Str::slug($validatedData['title']);
         $validatedData['user_id'] = auth()->id();
 
