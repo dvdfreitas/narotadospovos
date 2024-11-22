@@ -16,8 +16,11 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'nrp-blue': '#0083b3',
+                'nrp-green': '#91be4a',
+            },
         },
     },
-
     plugins: [forms, typography],
 };

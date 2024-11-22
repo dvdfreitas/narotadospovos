@@ -9,13 +9,10 @@ use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
-    public function changeLanguage($lang)
-    {        
-        if (in_array($lang, ['en', 'pt'])) {
-            Session::put('locale', $lang);            
-            App::setLocale($lang);
-        }                
-
+    public function switch(Request $request)
+    {
+        $language = $request->input('language');
+        session(['language' => $language]);
         return redirect()->back();
     }
 }

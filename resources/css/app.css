@@ -5,3 +5,22 @@
 [x-cloak] {
     display: none;
 }
+
+@layer base {
+    h1 {
+      @apply text-3xl font-bold mt-8;
+    }
+
+    h2 {
+      @apply text-2xl font-bold mt-6;
+    }
+
+    h3 {
+      @apply text-xl font-bold mt-4;
+    }
+
+    p {
+        @apply text-justify my-1 text-xl space-y-1 text-gray-900 font-extralight leading-relaxed;
+    }
+
+}

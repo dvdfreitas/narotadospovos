@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Partner;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -13,129 +14,204 @@ class PartnerSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('partners')->insert([
-            'name' => 'A Lareira',
-            'logo' => 'a_lareira.png',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'At Porto',
-            'logo' => 'atporto.png',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Bi Cafe',
-            'logo' => 'bicafe.png',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Cabeleireiro Teresa Moreira',
-            'logo' => 'cabeleireiro_teresa_moreira.png',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Cantinho Caseiro',
-            'logo' => 'cantinho_caseiro.jpg',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Cegonha',
-            'logo' => 'cegonha.jpeg',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Confeitaria Avenida',
-            'logo' => 'confeitaria_avenida.png',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Costa Capelo',
-            'logo' => 'costa_capelo.jpeg',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Curtes',
-            'logo' => 'curtes.png',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Epa Carvalhais',
-            'logo' => 'a_lareira.png',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Feito à Mão',
-            'logo' => 'feito_mao.jpg',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'GSLines',
-            'logo' => 'gsl.png',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Henisa',
-            'logo' => 'henisa.png',
-        ]);
+        Partner::truncate();
 
         DB::table('partners')->insert([
             'name' => 'Instituto Politécnico de Bragança',
             'logo' => 'ipb.png',
-        ]);
-        
-        DB::table('partners')->insert([
-            'name' => 'Jardim Confeitaria',
-            'logo' => 'jardim-confeitaria.jpeg',
+            'website' => 'https://portal3.ipb.pt/',
+            'visible' => true
         ]);
 
         DB::table('partners')->insert([
-            'name' => 'Juvenil',
-            'logo' => 'juvenil.png',
+            'name' => 'GS Lines',
+            'logo' => 'gsl.png',
+            'website' => 'https://www.gslines.pt/en/homepage-gs-lines-international/',
+            'visible' => true
         ]);
 
         DB::table('partners')->insert([
-            'name' => 'Mini Mercado Cunha',
-            'logo' => 'minimercado_cunha.jpeg',
+            'name' => 'Curtes',
+            'slug' => 'curtes',
+            'logo' => 'curtes.png',
+            'website' => 'https://curtes.com/',
+            'visible' => true
         ]);
 
         DB::table('partners')->insert([
-            'name' => 'Orthos XXI',
-            'logo' => 'orthosxxi.jpg',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Pedregal Hotel',
-            'logo' => 'pedregal-hotel.jpeg',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Pé no Mar',
-            'logo' => 'penomar.jpeg',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Persono',
-            'logo' => 'persono.jpg',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Rogerio do Redondo',
-            'logo' => 'rogerio-do-redondo.png',
-        ]);
-
-        DB::table('partners')->insert([
-            'name' => 'Rosenblatt',
-            'logo' => 'rosenblatt.png',
+            'name' => 'Henisa',
+            'slug' => 'henisa',
+            'logo' => 'henisa.png',
+            'website' => 'https://henisa.pt/',
+            'visible' => true
         ]);
 
         DB::table('partners')->insert([
             'name' => 'Tabanca Pequena',
             'logo' => 'tabanca_pequena.jpg',
+            'website' => 'https://www.facebook.com/tabancapequena.ongd',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Fundação Rosenblatt',
+            'logo' => 'rosenblatt.png',
+            'website' => 'https://rosenblattfoundation.org/',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Escola Profissional de Agricultura e Desenvolvimento Rural de Caravalhais',
+            'logo' => 'epacarvalhais.png',
+            'website' => 'https://epacarvalhais.com/',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Orthos XXI',
+            'logo' => 'orthosxxi.jpg',
+            'website' => 'https://www.orthosxxi.com/',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Rogerio do Redondo',
+            'slug' => 'rogerio-do-redondo',
+            'logo' => 'rogerio-do-redondo.png',
+            'website' => 'https://www.rogeriodoredondo.pt/',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Bicafé',
+            'slug' => 'bicafe',
+            'logo' => 'bicafe.png',
+            'website' => 'https://bicafecapsulas.com/pt/',
+            'visible' => true
+        ]);
+
+        // Take-away cantinho caseiro
+        DB::table('partners')->insert([
+            'name' => 'Take-Away Cantinho Caseiro',
+            'slug' => 'cantinho-caseiro',
+            'logo' => 'cantinho_caseiro.jpg',
+            'website' => 'https://www.facebook.com/cantinho.caseiro.valbom/',
+            'visible' => true
+        ]);
+
+        // Confeitaria Avenida
+        DB::table('partners')->insert([
+            'name' => 'Confeitaria Avenida',
+            'slug' => 'confeitaria-avenida',
+            'logo' => 'confeitaria_avenida.png',
+            'website' => 'https://www.confeitariaavenida.pt/index.php/pt/',
+            'visible' => true
+        ]);
+
+        // ATPorto
+        DB::table('partners')->insert([
+            'name' => 'ATPorto',
+            'slug' => 'atporto',
+            'logo' => 'atporto.png',
+            'website' => 'https://www.facebook.com/atporto.dmc',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Feito à Mão para Doar',
+            'logo' => 'feito_mao.jpg',
+            'slug' => 'feito-a-mao',
+            'website' => 'https://www.facebook.com/feitoamao.paradoar',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Pé no Mar',
+            'slug' => 'penomar',
+            'logo' => 'penomar.jpeg',
+            'website' => 'https://penomar.pt/',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Cegonha - Bando de Criação',
+            'slug' => 'cegonha',
+            'logo' => 'cegonha.jpeg',
+            'website' => 'https://www.facebook.com/cegonhabando/',
+            'visible' => false
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Minimercado Cunha',
+            'slug' => 'minimercado-cunha',
+            'logo' => 'minimercado_cunha.jpeg',
+            'website' => 'https://minimercado-cunha.negocio.site/',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Cabeleireiro Teresa Moreira',
+            'slug' => 'cabeleireiro-teresa-moreira',
+            'logo' => 'cabeleireiro_teresa_moreira.png',
+            'website' => 'https://www.facebook.com/profile.php?id=100063882832570',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Quinta do Pedregal Hotel & SPA',
+            'slug' => 'pedregal-hotel',
+            'logo' => 'pedregal-hotel.jpeg',
+            'website' => 'https://quintadopedregal.pt/',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'A Lareira',
+            'slug' => 'a-lareira',
+            'logo' => 'a_lareira.png',
+            'website' => 'https://www.facebook.com/restaurantecafelareira/',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Papelaria Juvenil',
+            'slug' => 'juvenil',
+            'logo' => 'juvenil.png',
+            'website' => 'https://www.facebook.com/papelarialivrariajuvenil',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Padaria Costa Capelo',
+            'slug' => 'costa-capelo',
+            'logo' => 'costa_capelo.jpeg',
+            'website' => 'https://www.facebook.com/p/Padaria-Costa-Capela-100054571473975/?locale=pt_PT',
+            'visible' => true
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Cafetaria Cidade Jardim',
+            'slug' => 'cidade-jardim',
+            'logo' => 'jardim-confeitaria.jpeg',
+            'website' => 'https://www.instagram.com/jardimcafeteria/?hl=pt',
+            'visible' => true
         ]);
 
         DB::table('partners')->insert([
             'name' => 'Talho Popular',
+            'slug' => 'talho-popular',
             'logo' => 'talho_popular.jpg',
+            'website' => 'https://www.facebook.com/talhopopular1',
+            'visible' => true
+        ]);
+
+        // Persono
+        DB::table('partners')->insert([
+            'name' => 'Persono',
+            'slug' => 'persono',
+            'logo' => 'persono.jpg',
+            'website' => 'https://www.persono.pt/',
+            'visible' => true
         ]);
     }
 }

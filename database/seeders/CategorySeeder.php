@@ -13,22 +13,18 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('categories')->delete();
+
         DB::table('categories')->insert([
-            'slug' => 'casa-de-Acolhimento',
-            'name' => 'Casa de Acolhimento',
-            'description' => 'Acolher crianças orfão de mãe no parte...',
+            'name' => 'Caminhada',
+            'slug' => 'caminhada',
+            'description' => 'Caminhadas e passeios pedestres.',
         ]);
 
         DB::table('categories')->insert([
-            'slug' => 'educacao',
-            'name' => 'Educação',
-            'description' => 'Apoiar as escolas com materiais escolares...',
-        ]);
-
-        DB::table('categories')->insert([
-            'slug' => 'saude',
-            'name' => 'Saúde',
-            'description' => 'Damos apoio a hospital Musna Sambu, com intuito de melhor as condições...',
+            'name' => 'Mercado',
+            'slug' => 'mercado',
+            'description' => 'Mercados e feiras.',
         ]);
     }
 }

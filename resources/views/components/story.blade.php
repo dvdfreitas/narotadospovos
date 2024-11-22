@@ -1,6 +1,16 @@
 @props(['story', 'format' => 'default'])
 
+<div class="leading-normal w-full flex flex-col font-black space-y-2">
+    <a href="/stories/{{ $story->slug }}">
+        <img src="/stories/{{ $story->image }}">
+        <p class="font-bold">{{ $story->title }}</p>
+        <p class="text-xs">{{ $story->date }}</p>
+        <p class="leading-tight">{{ $story->summary }}</p>
+        <p class="text-sm font-bold">Ler mais</p>
+    </a>
+</div>
 
+{{--
 @php
 if ($story->image)
     $image = asset('images/'. $story->image);
@@ -10,7 +20,6 @@ else
 
 @if ($format == 'default')
 
-<div></div>
 
 @elseif($format == 'highlight')
 
@@ -21,7 +30,7 @@ else
     <div class="w-full flex flex-col font-black space-y-2">
         <div class="flex space-x-2">
             @foreach($story->categories as $category)
-            <a href="/stories/categories/{{ $category->slug }}" class="inline-block font-medium text-sm text-center text-gray-400 px-2 py-3 
+            <a href="/stories/categories/{{ $category->slug }}" class="inline-block font-medium text-sm text-center text-gray-400 px-2 py-3
             rounded-lg shadow-sm no-underline uppercase hover:shadow-lg hover:text-gray-600 transition-all ease-out">
                 {{$category->name}}
             </a>
@@ -41,7 +50,7 @@ else
     <div class="w-9/12 flex flex-col space-y-2 font-black">
         <div class="flex space-x-2">
             @foreach($story->categories as $category)
-            <a href="/stories/categories/{{ $category->slug }}" class="inline-block font-medium text-sm text-center text-gray-400 px-2 py-3 
+            <a href="/stories/categories/{{ $category->slug }}" class="inline-block font-medium text-sm text-center text-gray-400 px-2 py-3
                 rounded-lg shadow-sm no-underline uppercase hover:shadow-lg hover:text-gray-600 transition-all ease-out">
                 {{$category->name}}
             </a>
@@ -59,4 +68,4 @@ else
 
 <div></div>
 
-@endif
+@endif --}}

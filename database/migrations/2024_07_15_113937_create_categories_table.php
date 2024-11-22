@@ -20,19 +20,6 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->timestamps();
         });
-
-        Schema::create('category_story', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Category::class)->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-            $table->foreignIdFor(Story::class)->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-            $table->timestamps();
-
-            $table->unique(['category_id', 'story_id']);
-        });
     }
 
     /**

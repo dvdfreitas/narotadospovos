@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -8,9 +9,10 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+        <!-- Retirar -->
+        <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -19,14 +21,17 @@
         @livewireStyles
     </head>
 
-    <body class="font-sans text-gray-900 antialiased">
+    <body class="text-gray-900 antialiased">
         <x-menu/>
 
         <main>
             {{ $slot }}
         </main>
 
-        <!-- <x-footer/> -->
+        <x-footer/>
+
+        <!-- Retirar -->
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 
         @livewireScripts
     </body>
