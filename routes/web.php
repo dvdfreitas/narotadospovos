@@ -12,6 +12,46 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/sobre', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/orgaos_sociais', function () {
+    return view('board');
+})->name('board');
+
+Route::get('/estatutos', function () {
+    return view('statutes');
+})->name('statutes');
+
+Route::get('/relatorios', function () {
+    return view('reports');
+})->name('reports');
+
+Route::get('/educacao', function () {
+    return view('projects.education.index');
+})->name('projects.education');
+
+Route::get('/casa-da-mame', function () {
+    return view('projects.mame.index');
+})->name('projects.mame');
+
+Route::get('/ceet', function () {
+    return view('projects.ceet.index');
+})->name('projects.ceet');
+
+Route::get('/saude', function () {
+    return view('projects.health.index');
+})->name('projects.health');
+
+Route::get('/academia-desportiva', function () {
+    return view('projects.academy.index');
+})->name('projects.academy');
+
+Route::get('/ajudar', function () {
+    return view('help');
+})->name('help');
+
 
 Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');
 Route::get('/stories/create', [StoryController::class, 'create'])->name('stories.create');

@@ -5,6 +5,7 @@
     <x-welcome.about/>
     <x-stories/>
     <x-welcome.projects/>
+    <x-welcome.data/>
     <x-welcome.multimedia/>
     <x-welcome.help/>
     <x-partners/>

@@ -1,4 +1,4 @@
-<div class="max-w-4xl m-auto my-16">
+<x-margins-text>
     @if (session('language') === 'pt')
         <div>
             <h1>Quem somos</h1>
@@ -30,4 +30,4 @@
             <p>From that moment on, always with the motto “Educação é o Único Caminho" (Education is the Only Way) a long journey has been traveled. The project that began with the aim of helping to improve the conditions of the teachers of Catió has been growing, now reaching many other areas beyond schools such as the orphanage of “Casa da Mamé”, the “Special and Therapeutic Education Center”, support for the regional hospital in the region, among many other contributions to the Tombali sector.</p>
         </div>
     @endif
-</div>
+</x-margins-text>

@@ -1,4 +1,10 @@
-# 
+# YouTube
+
+- Vídeos não estão disponíveis
+
+# Outros
+
+- Acrescentar o link para YouTube no footer
 
 # Fazer um menu sem bibliotecas 
 
