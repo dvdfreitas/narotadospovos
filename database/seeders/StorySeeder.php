@@ -59,7 +59,7 @@ class StorySeeder extends Seeder
         $story = Story::create([
             'title' => 'Irão 1998',
             'date' => '2024-11-25',
-            'summary' => 'Relato da viagem ao Irão em 1998.',
+            'summary' => 'Relato da viagem ao Irão em 1998 realizada por dois fundadores da "Rota", Tito Baião e João Pedro Pereira.',
             'image' => '2024/11/irao1998.jpg',
             'slug' => 'irao1998',
             'url' => '2024/11/irao1998',
