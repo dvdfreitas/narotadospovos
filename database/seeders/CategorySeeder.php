@@ -22,9 +22,21 @@ class CategorySeeder extends Seeder
         ]);
 
         DB::table('categories')->insert([
-            'name' => 'Mercado',
-            'slug' => 'mercado',
+            'name' => 'Mercados',
+            'slug' => 'mercados',
             'description' => 'Mercados e feiras.',
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Viagens',
+            'slug' => 'viagens',
+            'description' => 'Viagens.',
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Tito Baião',
+            'slug' => 'tito',
+            'description' => 'Relatos das viagens do Tito Baião.',
         ]);
     }
 }

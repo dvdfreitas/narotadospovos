@@ -9,6 +9,8 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <meta property="og:title" content="@yield('social_description')">
+        <meta property="og:image" content="@yield('social_image')">
 
         <!-- Retirar -->
         <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />

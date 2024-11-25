@@ -18,7 +18,9 @@ class StorySeeder extends Seeder
         DB::table('stories')->delete();
 
         $caminhada = Category::where('slug', 'caminhada')->first();
-        $mercado = Category::where('slug', 'mercado')->first();
+        $mercados = Category::where('slug', 'mercados')->first();
+        $viagens = Category::where('slug', 'viagens')->first();
+        $tito = Category::where('slug', 'tito')->first();
 
         $story = Story::create([
             'title' => 'Caminhada com a Rota',
@@ -26,7 +28,7 @@ class StorySeeder extends Seeder
             'summary' => 'No próximo dia 20 de outubro pelas 9h vem participar numa caminhada solidária, com o objetivo de angariar fundos para a nova "Casa da Mamé".',
             'image' => '2024/10/caminhada.jpg',
             'slug' => '2024/10/caminhada-com-a-rota',
-            'www' => '/stories/2024/10/caminhada_com_a_rota',
+            'url' => '2024/10/caminhada_com_a_rota',
         ]);
 
         $story->categories()->attach($caminhada);
@@ -36,11 +38,35 @@ class StorySeeder extends Seeder
             'date' => '2024-11-08',
             'summary' => 'Nos próximos dias 16 e 17 de novembro, entre as 11h e as 18h realizar-se-á o Mercado para Catió, com o objectivo de angariar fundos para a nova "Casa da Mamé".',
             'image' => '2024/11/mercado.jpg',
-            'slug' => '2024/11/mercado-para-catio',
-            'www' => '/stories/2024/11/mercado_para_catio',
+            'slug' => 'mercado-para-catio',
+            'url' => '2024/11/mercado',
         ]);
 
-        $story->categories()->attach($mercado);
+        $story->categories()->attach($mercados);
+
+        $story = Story::create([
+            'title' => 'Mercado para Catió 2',
+            'subtitle' => 'Nova data',
+            'date' => '2024-11-25',
+            'summary' => 'Depois do grande sucesso que foi o mercado dos dias 16 e 17 de novembro, a feirinha de natal será realizad.',
+            'image' => '2024/11/mercado2.jpg',
+            'slug' => 'mercado-para-catio-2',
+            'url' => '2024/11/mercado2',
+        ]);
+
+        $story->categories()->attach($mercados);
+
+        $story = Story::create([
+            'title' => 'Irão 1998',
+            'date' => '2024-11-25',
+            'summary' => 'Relato da viagem ao Irão em 1998.',
+            'image' => '2024/11/irao1998.jpg',
+            'slug' => 'irao1998',
+            'url' => '2024/11/irao1998',
+        ]);
+
+        $story->categories()->attach($viagens);
+        $story->categories()->attach($tito);
 
     }
 }

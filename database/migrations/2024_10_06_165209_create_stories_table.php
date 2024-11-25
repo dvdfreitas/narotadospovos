@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Category;
+use App\Models\Story;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,14 +21,15 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->date('date');
-            $table->string('www')->nullable();
+            $table->boolean('visible')->default(true);
+            $table->string('url')->nullable();
             $table->timestamps();
         });
 
         Schema::create('category_story', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('story_id')->nullable()->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Story::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

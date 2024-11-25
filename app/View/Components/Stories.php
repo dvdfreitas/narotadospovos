@@ -16,7 +16,7 @@ class Stories extends Component
      */
     public function __construct()
     {
-        $this->stories = Story::orderBy('date', 'desc')->take(5)->get();
+        $this->stories = Story::orderBy('date', 'desc')->with('categories')->take(5)->get();
     }
 
     /**

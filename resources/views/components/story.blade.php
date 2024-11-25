@@ -1,11 +1,19 @@
 @props(['story', 'format' => 'default'])
 
-<div class="leading-normal w-full flex flex-col font-black space-y-2">
-    <a href="/stories/{{ $story->slug }}">
-        <img src="/stories/{{ $story->image }}">
-        <p class="font-bold">{{ $story->title }}</p>
+<div class="w-full flex flex-col font-black">
+    <a href="/stories/{{ $story->url }}">
+        <img class="h-56 m-auto" src="/stories/{{ $story->image }}">
+        <p class="font-bold leading-tight">{{ $story->title }}</p>
+        @if ($story->subtitle)
+            <p class="text-sm font-semibold">{{ $story->subtitle }}</p>
+        @endif
         <p class="text-xs">{{ $story->date }}</p>
         <p class="leading-tight">{{ $story->summary }}</p>
+        <p class="text-sm">
+            @foreach ($story->categories as $category)
+                <span class="border rounded px-0.5">{{ $category->name }}</span>
+            @endforeach
+        </p>
         <p class="text-sm font-bold">Ler mais</p>
     </a>
 </div>

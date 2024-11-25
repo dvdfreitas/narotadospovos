@@ -28,6 +28,9 @@
                       <a href="{{ route('board') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Órgãos sociais</a>
                     </li>
                     <li>
+                        <a href="{{ route('tales') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Histórias</a>
+                    </li>
+                    <li>
                         <a href="{{ route('statutes') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Estatutos</a>
                     </li>
                   </ul>
