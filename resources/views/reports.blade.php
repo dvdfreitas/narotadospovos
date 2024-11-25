@@ -18,23 +18,20 @@
                 <div class="border-solid p-4 border-2 rounded border-nrp-blue">
                     <div class="text-xl text-nrp-blue font-bold">Ano {{ $year }}</div>
                     @foreach ($labels as $label)
-                        @if ($label !== 'Relatório da Direção' || $year != 2023)
-                            @php
-                                $file = ".pdf";
-                                if ($label == "Balanço") $file = "Balanco_" . $year . $file;
-                                elseif ($label == "Parecer do Conselho Fiscal") $file = 'Parecer-Conselho-Fiscal_' . $year . $file;
-                                elseif ($label == "Demonstração de Resultados") $file = 'Demonstracao-de-Resultados_'  . $year . $file;
-                                elseif ($label == "Relatório da Direção") $file = 'Relatorio-da-Direcao_'  . $year .  $file;
-                            @endphp
+                        @php
+                            $file = ".pdf";
+                            if ($label == "Balanço") $file = "Balanco_" . $year . $file;
+                            elseif ($label == "Parecer do Conselho Fiscal") $file = 'Parecer-Conselho-Fiscal_' . $year . $file;
+                            elseif ($label == "Demonstração de Resultados") $file = 'Demonstracao-de-Resultados_'  . $year . $file;
+                            elseif ($label == "Relatório da Direção") $file = 'Relatorio-da-Direcao_'  . $year .  $file;
+                        @endphp
 
-                            <a href="/docs/relatorios/{{$year}}/{{$file}}">
-                                <div class="flex hover:opacity-50 cursor-pointer">
-                                    <img class="h-12 p-2 " src="/images/icons/pdf.svg">
-                                    <div class="text-md self-center">{{ $label}}</div>
-                                </div>
-                            </a>
-                        @endif
-
+                        <a href="/docs/relatorios/{{$year}}/{{$file}}">
+                            <div class="flex hover:opacity-50 cursor-pointer">
+                                <img class="h-12 p-2 " src="/images/icons/pdf.svg">
+                                <div class="text-md self-center">{{ $label}}</div>
+                            </div>
+                        </a>
                     @endforeach
                 </div>
             @endforeach
