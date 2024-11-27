@@ -29,6 +29,7 @@
                     <span class="sr-only">Next</span>
                 </span>
             </button>
+
             {{-- Left navigation button --}}
             <button @click="visible--; if (visible == -1) visible = 4;" class="absolute flex items-center
             justify-center h-auto top-1/2 -translate-y-1/2 z-30 left-0 px-5 lg:left-40 lg:px-0
