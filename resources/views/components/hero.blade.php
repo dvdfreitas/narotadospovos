@@ -12,7 +12,7 @@
             <div class="absolute inline-block space-x-2 gap-3 bottom-8 left-1/2 -translate-x-1/2">
                 <template x-for="(image, index) in images">
                     <button @click="visible = index" class="w-4 h-4 p-0 border-none rounded-full cursor-pointer outline-none bg-white/80
-                    shadow-sm shadow-gray-600 hover:bg-white active:ring-4 ring-white/70"></button>
+                    shadow-sm shadow-gray-600 hover:bg-white active:ring-4 ring-white/70 "></button>
                 </template>
             </div>
 
