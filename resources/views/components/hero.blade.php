@@ -19,7 +19,7 @@
             {{-- Right navigation button --}}
             <button @click="visible++; if (visible == images.length) visible = 0;" class="absolute flex
             items-center justify-center h-auto top-1/2 -translate-y-1/2 z-30 right-0 px-5 lg:right-40 lg:px-0
-            pointer-events-none group focus:outline-none">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
+            pointer-events-none group focus:outline-none">
                 <span class="next-button enabled-button inline-flex items-center justify-center w-10 h-10 rounded-full bg-white
                     shadow-sm shadow-gray-400 hover:shadow-lg group-hover:bg-white/70 group-focus:ring-4
                     group-focus:ring-white/90 group-focus:outline-none transition duration-300 ease-in-out">
