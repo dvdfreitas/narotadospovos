@@ -18,7 +18,7 @@ class LanguageMiddleware
     {
         $language =  session('language');
         if ($language == null) {
-            session(['language' => 'en']);
+            session(['language' => 'pt']);
         }
         app()->setLocale($language);
         return $next($request);
