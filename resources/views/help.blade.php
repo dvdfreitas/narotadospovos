@@ -6,51 +6,96 @@
             <h1>How to help</h1>
         @endif
 
-
+        @if (session('language') === 'pt')
             <p>Se der um pouco vai faltar menos.</p>
             <p>Neste processo de fazer do mundo um lugar melhor, todos contam.</p>
             <p>Junte-se a nós.</p>
+        @elseif (session('language') === 'en')
+            <p>If you give a little, there will be less missing.</p>
+            <p>In this process of making the world a better place, everyone counts.</p>
+            <p>Join us.</p>
+        @endif
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 rounded my-6">
                 <a href="#firquidja" class="rounded bg-nrp-blue  px-2">
                     <div class="px-2 rounded text-center">
-                        <p class="text-white mt-2 text-3xl  bg-nrp-green rounded px-2 py-1">Ser Firquidja</p>
-                        <p class="mx-2 my-3 text-white">Apoie as nossas crianças tornando-se num firquidja da Casa da Mamé!</p>
+                        @if (session('language') === 'pt')
+                            <p class="text-white mt-2 text-3xl  bg-nrp-green rounded px-2 py-1">Ser Firquidja</p>
+                            <p class="mx-2 my-3 text-white">Apoie as nossas crianças tornando-se num firquidja da Casa da Mamé!</p>
+                        @elseif (session('language') === 'en')
+                            <p class="text-white mt-2 text-3xl  bg-nrp-green rounded px-2 py-1">Be a Firquidja</p>
+                            <p class="mx-2 my-3 text-white">Support our children by becoming a firquidja of Casa da Mamé!</p>
+                        @endif
                     </div>
                 </a>
 
                 <a href="#donativo" class="rounded bg-nrp-green px-2">
                     <div class="text-center">
-                        <p class="text-white mt-2 text-3xl  bg-nrp-blue rounded px-2 py-1">Donativo</p>
-                        <p class="mx-2 my-3 text-white">Faça um donativo e seja a mudança que quer ver no mundo!</p>
+                        @if (session('language') === 'pt')
+                            <p class="text-white mt-2 text-3xl  bg-nrp-blue rounded px-2 py-1">Donativo</p>
+                            <p class="mx-2 my-3 text-white">Faça um donativo e seja a mudança que quer ver no mundo!</p>
+                        @elseif (session('language') === 'en')
+                            <p class="text-white mt-2 text-3xl  bg-nrp-blue rounded px-2 py-1">Donation</p>
+                            <p class="mx-2 my-3 text-white">Make a donation and be the change you want to see in the world!</p>
+                        @endif
                     </div>
                 </a>
 
                 <div class="bg-nrp-blue px-2 rounded text-center">
-                    <p class="text-white mt-2 text-3xl  bg-nrp-green rounded px-2 py-1">Voluntariado</p>
-                    <p class="mx-2 my-3 text-white">Tem algumas horas livres que gostava de dedicar à "Na Rota dos Povos"?</p>
+                    @if (session('language') === 'pt')
+                        <p class="text-white mt-2 text-3xl  bg-nrp-green rounded px-2 py-1">Voluntariado</p>
+                        <p class="mx-2 my-3 text-white">Tem algumas horas livres que gostava de dedicar à "Na Rota dos Povos"?</p>
+                    @elseif (session('language') === 'en')
+                        <p class="text-white mt-2 text-3xl  bg-nrp-green rounded px-2 py-1">Volunteering</p>
+                        <p class="mx-2 my-3 text-white">Do you have some free hours that you would like to dedicate to "Na Rota dos Povos"?</p>
+                    @endif
                 </div>
             </div>
 
             <div class="my-8 mt-16" id="donativo"></div>
 
-            <h2>Donativo</h2>
+            @if (session('language') === 'pt')
+                <h2>Donativos</h2>
+            @elseif (session('language') === 'en')
+                <h2>Donations</h2>
+            @endif
+
                 <div class="mt-8">
                     <div class="gap-x-1">
-                        <p class="my-auto">Pode fazer um donativo através do IBAN</p>
+                        @if (session('language') === 'pt')
+                            <p class="my-auto">Pode fazer um donativo através do IBAN</p>
+                        @elseif (session('language') === 'en')
+                            <p class="my-auto">You can make a donation through IBAN</p>
+                        @endif
                         <div class="flex my-4">
-                            <input type="text" disabled class="border-nrp-green  border-2 rounded" id="iban" value="PT50 0036 0407 99106015040 19">
-                            <button onclick="myFunction('iban')" class="px-4 bg-nrp-green text-white rounded">Copiar</button>
+                            <input type="text" disabled class="border-nrp-green  border-2 rounded w-72" id="iban" value="PT50 0036 0407 99106015040 19">
+                            <button onclick="myFunction('iban')" class="px-4 bg-nrp-green text-white rounded">
+                                @if (session('language') === 'pt')
+                                    Copiar
+                                @elseif (session('language') === 'en')
+                                    Copy
+                                @endif
+                            </button>
                         </div>
                     </div>
                     <div id="clipiban" style="visibility: hidden" class="text-xs font-bold text-nrp-green">IBAN copiado para o Clipboard</div>
                 </div>
                 <div class="mt-8">
                     <div class="gap-x-1">
-                        <p class="my-auto">Ou através de MB Way:</p>
+                        @if (session('language') === 'pt')
+                            <p class="my-auto">Ou através de MB Way:</p>
+                        @elseif (session('language') === 'en')
+                            <p class="my-auto">Or through MB Way:</p>
+                        @endif
                         <div class="flex my-4">
                             <input type="text" disabled class="w-32 text-center border-nrp-green  border-2 rounded" id="phone" value="932412050">
-                            <button onclick="myFunction('phone')" class="px-4 bg-nrp-green text-white rounded">Copiar</button>
+                            <button onclick="myFunction('phone')" class="px-4 bg-nrp-green text-white rounded">
+                                @if (session('language') === 'pt')
+                                    Copiar
+                                @elseif (session('language') === 'en')
+                                    Copy
+                                @endif
+                            </button>
                         </div>
                     </div>
                     <div id="clipphone" style="visibility: hidden" class="text-xs font-bold text-nrp-green">Número copiado para o Clipboard</div>
@@ -89,13 +134,9 @@
             <div class="my-8 mt-16"></div>
 
             <h2>Bens essenciais</h2>
-                <div class="space-y-4">
-                    <a href="/help"><img class="rounded-xl" src="/images/campanhas/2024_campanha_essenciais.jpg" class="m-auto"></a>
-                    <img src="images/help/give1.jpg" class="m-auto">
-                    <img src="images/help/give2.jpg" class="m-auto">
-                    <img src="images/help/give3.jpg" class="m-auto">
-                    <img src="images/help/give4.jpg" class="m-auto">
-                </div>
+
+
+            <p></p>
 
 
             <div class="my-8 mt-16" id="firquidja"></div>
