@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Person;
 use App\Models\Story;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             StorySeeder::class,
             PartnerSeeder::class,
+            PersonSeeder::class,
         ]);
 
         User::factory()->create([

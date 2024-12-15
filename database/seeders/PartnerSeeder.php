@@ -213,5 +213,14 @@ class PartnerSeeder extends Seeder
             'website' => 'https://www.persono.pt/',
             'visible' => true
         ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Portus Vector LDA',
+            'slug' => 'portus-vector',
+            'logo' => 'portus_vector.jpg',
+            'website' => 'https://www.facebook.com/people/Portus-Vector-LDA/100063305793213/',
+            'visible' => true
+        ]);
+
     }
 }
