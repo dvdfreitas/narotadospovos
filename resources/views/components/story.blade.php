@@ -1,7 +1,7 @@
 @props(['story', 'format' => 'default'])
 
 <div class="w-full flex flex-col font-black">
-    <a href="/stories/{{ $story->url }}">
+    <a href="/noticias/{{ $story->url }}">
         <img class="h-56 m-auto" src="/stories/{{ $story->image }}">
         <p class="font-bold leading-tight">{{ $story->title }}</p>
         @if ($story->subtitle)
@@ -38,13 +38,13 @@ else
     <div class="w-full flex flex-col font-black space-y-2">
         <div class="flex space-x-2">
             @foreach($story->categories as $category)
-            <a href="/stories/categories/{{ $category->slug }}" class="inline-block font-medium text-sm text-center text-gray-400 px-2 py-3
+            <a href="/noticias/categories/{{ $category->slug }}" class="inline-block font-medium text-sm text-center text-gray-400 px-2 py-3
             rounded-lg shadow-sm no-underline uppercase hover:shadow-lg hover:text-gray-600 transition-all ease-out">
                 {{$category->name}}
             </a>
             @endforeach
         </div>
-        <a href="/stories/{{ $story->slug }}" class="font-bold text-lg"> {{ $story->title }} </a>
+        <a href="/noticias/{{ $story->slug }}" class="font-bold text-lg"> {{ $story->title }} </a>
         <p class="flex flex-row space-x-2 text-sm text-gray-500">
             <span class="mr-2"> {{ $story -> date}} </span>|<span> By: {{ $story -> user-> name}}</span>
         </p>
@@ -58,13 +58,13 @@ else
     <div class="w-9/12 flex flex-col space-y-2 font-black">
         <div class="flex space-x-2">
             @foreach($story->categories as $category)
-            <a href="/stories/categories/{{ $category->slug }}" class="inline-block font-medium text-sm text-center text-gray-400 px-2 py-3
+            <a href="/noticias/categories/{{ $category->slug }}" class="inline-block font-medium text-sm text-center text-gray-400 px-2 py-3
                 rounded-lg shadow-sm no-underline uppercase hover:shadow-lg hover:text-gray-600 transition-all ease-out">
                 {{$category->name}}
             </a>
             @endforeach
         </div>
-        <a href="/stories/{{ $story->slug }}"> {{ $story->title }} </a>
+        <a href="/noticias/{{ $story->slug }}"> {{ $story->title }} </a>
         <p class="flex flex-row space-x-2 text-sm text-gray-500">
             <span class="mr-2">{{ $story->date }}</span>|<span>{{ $story->user->name }}</span>
         </p>

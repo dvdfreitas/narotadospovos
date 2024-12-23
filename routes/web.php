@@ -81,7 +81,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/stories/{year}/{month}/{title}', function($year, $month, $title) {
+Route::get('/noticias/{year}/{month}/{title}', function($year, $month, $title) {
     if (view()->exists("/stories/$year/$month/$title"))
         return view("/stories/$year/$month/$title");
     else

@@ -176,5 +176,82 @@ class PersonSeeder extends Seeder
             'username' => 'daniel_paulo_martins',
             'description' => 'Formador do centro de informática',
         ]);
+
+        // Estudantes Catió
+
+        Person::create([
+            'name' => 'Binta Silá',
+            'phone' => '+351 930 540 442',
+            'username' => 'binta_sila',
+            'birth_date' => '2004-12-29',
+            'description' => 'Estudante Técnico de Informática de Gestão',
+        ]);
+
+        Person::create([
+            'name' => 'Dino Nassalú',
+            'username' => 'dino_nassalu',
+            'phone' => '+351 929 247 751',
+            'birth_date' => '2005-01-11',
+            'description' => 'Estudante Técnico de Informática de Gestão',
+        ]);
+
+        Person::create([
+            'name' => 'Hedigar Cá',
+            'username' => 'hedigar_ca',
+            'birth_date' => '2004-11-11',
+            'phone' => '+351 930 540 483',
+            'description' => 'Estudante Técnico de Informática de Gestão',
+        ]);
+
+        Person::create([
+            'name' => 'Sadú Baldé',
+            'username' => 'sadu_balde',
+            'birth_date' => '2005-02-12',
+            'phone' => '+351 929 247 752',
+            'description' => 'Estudante Técnico de Informática de Gestão',
+        ]);
+
+        Person::create([
+            'name' => 'Mariama Siré Djaló',
+            'username' => 'mariama_sire_djalo',
+            'birth_date' => '2003-09-20',
+            'phone' => '+351 930 540 496',
+            'description' => 'Estudante Animador Sociocultural',
+        ]);
+
+        Person::create([
+            'name' => 'Olívio Na Teinha',
+            'phone' => '+351 929 247 757',
+            'username' => 'olivio_na_teinha',
+            'birth_date' => '2003-08-19',
+            'description' => 'Estudante Técnico de Informática de Gestão',
+        ]);
+
+        Person::create([
+            'name' => 'Roberto Na Sanha',
+            'username' => 'roberto_na_sanha',
+            'phone' => '+351 930 540 454',
+            'birth_date' => '2004-03-04',
+            'description' => 'Estudante Técnico de Mecatrónica Automóvel',
+        ]);
+
+        Person::create([
+            'name' => 'Tânia Na Massé',
+            'username' => 'tania_na_masse',
+            'phone' => '+351 920 405 633',
+            'birth_date' => '2004-02-22',
+            'description' => 'Estudante Animador Sociocultural',
+        ]);
+
+        Person::create([
+            'name' => 'Titina Na Tchiba',
+            'username' => 'titina_na_tchiba',
+            'phone' => '+351 930 540 488',
+            'birth_date' => '2001-09-05',
+            'description' => 'Estudante Técnico de Informática de Gestão',
+        ]);
+
+
+
     }
 }
