@@ -20,8 +20,8 @@
 
         <h2>A adaptação a Portugal</h2>
 
-        <figure class="float-right my-4 ml-4 ">
-            <img src="{{ asset('/stories/2024/12/natal_estudantes/todos_natal.jpg') }}" alt="Natal dos Estudantes" class="h-96 rounded m-auto">
+        <figure class="float-right my-4 md:ml-4">
+            <img src="{{ asset('/stories/2024/12/natal_estudantes/todos_natal.jpg') }}" alt="Natal dos Estudantes" class="object-cover lg:h-96 rounded m-auto">
             <figcaption class="mt-2 text-sm text-gray-500 dark:text-gray-400">O Natal não era celebrado por todos, mas as saudades vivem em todos eles.</figcaption>
         </figure>
 
@@ -56,8 +56,8 @@
 
         <h2>Saudades</h2>
 
-        <figure class="float-right my-4 ml-4 ">
-            <img src="{{ asset('/stories/2024/12/natal_estudantes/hedigar_mum.jpg') }}" alt="Mãe do Hedigar" class="w-80 rounded m-auto">
+        <figure class="float-right my-4 md:ml-4">
+            <img src="{{ asset('/stories/2024/12/natal_estudantes/hedigar_mum.jpg') }}" alt="Mãe do Hedigar" class="lg:w-80 rounded m-auto object-cover">
             <figcaption class="mt-2 text-sm text-gray-500 dark:text-gray-400">Se pudesse trazer alguma coisa, o Hedigar não tem dúvida, traria a mãe.</figcaption>
         </figure>
 
