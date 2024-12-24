@@ -7,7 +7,7 @@
         <h1>Construir Pontes: A Jornada de Estudantes da Guiné-Bissau</h1>
         <p class="text-sm text-gray-500 dark:text-gray-400">Texto por David Freitas</p>
 
-        <figure class="max-w-lg float-left my-4 mr-4 ">
+        <figure class="float-left my-4 mr-4 ">
             <img src="{{ asset('/stories/2024/12/natal_estudantes/natal_estudantes.png') }}" alt="Natal dos Estudantes" class="h-96 rounded m-auto">
             <figcaption class="mt-2 text-sm text-gray-500 dark:text-gray-400">O dia em que receberam os vistos para estudarem em Portugal foi um momento inesquecível.</figcaption>
         </figure>
@@ -20,7 +20,7 @@
 
         <h2>A adaptação a Portugal</h2>
 
-        <figure class="max-w-lg float-right my-4 ml-4 ">
+        <figure class="float-right my-4 ml-4 ">
             <img src="{{ asset('/stories/2024/12/natal_estudantes/todos_natal.jpg') }}" alt="Natal dos Estudantes" class="h-96 rounded m-auto">
             <figcaption class="mt-2 text-sm text-gray-500 dark:text-gray-400">O Natal não era celebrado por todos, mas as saudades vivem em todos eles.</figcaption>
         </figure>
@@ -56,7 +56,7 @@
 
         <h2>Saudades</h2>
 
-        <figure class="max-w-lg float-right my-4 ml-4 ">
+        <figure class="float-right my-4 ml-4 ">
             <img src="{{ asset('/stories/2024/12/natal_estudantes/hedigar_mum.jpg') }}" alt="Mãe do Hedigar" class="w-80 rounded m-auto">
             <figcaption class="mt-2 text-sm text-gray-500 dark:text-gray-400">Se pudesse trazer alguma coisa, o Hedigar não tem dúvida, traria a mãe.</figcaption>
         </figure>
