@@ -216,7 +216,7 @@ class PersonSeeder extends Seeder
             'username' => 'mariama_sire_djalo',
             'birth_date' => '2003-09-20',
             'phone' => '+351 930 540 496',
-            'description' => 'Estudante Animador Sociocultural',
+            'description' => 'Estudante Animador Sociocultural. Perdeu a mãe com 15 anos (asma) e o pai com ',
         ]);
 
         Person::create([
