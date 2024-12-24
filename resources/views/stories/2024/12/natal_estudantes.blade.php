@@ -8,8 +8,8 @@
         <p class="text-sm text-gray-500 dark:text-gray-400">Texto por David Freitas</p>
 
         <figure class="float-left my-4 md:mr-4 ">
-            <img src="{{ asset('/stories/2024/12/natal_estudantes/natal_estudantes.png') }}" alt="Natal dos Estudantes" class="h-96 rounded m-auto">
-            <figcaption class="mt-2 text-sm text-gray-500 dark:text-gray-400">O dia em que receberam os vistos para estudarem em Portugal foi um momento inesquecível.</figcaption>
+            <img src="{{ asset('/stories/2024/12/natal_estudantes/natal_estudantes.png') }}" alt="Natal dos Estudantes" class="object-cover lg:h-96 rounded m-auto">
+            <figcaption class="mt-2 text-sm text-gray-500 dark:text-gray-400 ">O dia em que receberam os vistos para estudarem em Portugal foi um momento inesquecível.</figcaption>
         </figure>
 
             <p>Vivemos num mundo que se desdobra em múltiplas dimensões, muitas vezes segmentadas pelo eixo norte-sul global. O acesso à educação, à saúde e às oportunidades é frequentemente clivado por esta linha imaginária, que separa realidades e experiências de vida.</p>
