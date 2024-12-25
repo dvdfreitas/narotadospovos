@@ -1,6 +1,6 @@
 @props(['story', 'format' => 'default'])
 
-<div class="w-full flex flex-col font-black">
+<div class="w-full flex flex-col font-black px-1 my-2">
     <a href="/noticias/{{ $story->url }}">
         <img class="h-56 m-auto" src="/stories/{{ $story->image }}">
         <p class="font-bold leading-tight">{{ $story->title }}</p>

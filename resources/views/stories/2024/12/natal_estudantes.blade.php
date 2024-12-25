@@ -10,11 +10,11 @@
     <x-margins-text>
         @if (session('language') === 'pt')
             <h1>Construir Pontes: A Jornada de Estudantes da Guiné-Bissau</h1>
-            <p class="text-gray-500 dark:text-gray-400">Texto por <x-person>David Freitas</x-person></p>
+            <p class="text-gray-500 dark:text-gray-400">Por <x-person>David Freitas</x-person></p>
             <p class="text-sm text-gray-500 dark:text-gray-400">25 de dezembro de 2024</p>
         @elseif (session('language') === 'en')
             <h1>Building Bridges: The Journey of Students from Guinea-Bissau</h1>
-            <p class="text-gray-500 dark:text-gray-400">Text by <x-person>David Freitas</x-person></p>
+            <p class="text-gray-500 dark:text-gray-400">By <x-person>David Freitas</x-person></p>
             <p class="text-sm text-gray-500 dark:text-gray-400">December 25, 2024</p>
         @endif
 
