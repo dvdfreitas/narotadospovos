@@ -15,7 +15,14 @@ class SchoolSeeder extends Seeder
     {
         School::create([
             'name' => 'Escola Sembé Djessi',
-            'location' => 'Catió'
+            'location' => 'Catió',
+            'country' => 'Guiné-Bissau'
+        ]);
+
+        School::create([
+            'name' => 'Liceu Regional Areolino Cruz',
+            'location' => 'Catió',
+            'country' => 'Guiné-Bissau'
         ]);
     }
 }

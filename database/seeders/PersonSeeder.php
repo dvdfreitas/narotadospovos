@@ -184,7 +184,7 @@ class PersonSeeder extends Seeder
             'phone' => '+351 930 540 442',
             'username' => 'binta_sila',
             'birth_date' => '2004-12-29',
-            'description' => 'Estudante Técnico de Informática de Gestão',
+            'description' => 'Em Catió estudava em no Centro educacional São Bento. Em Portugal é estudante de Técnico de cozinha e pastelaria na Escola profissional de agricultura (EPA) Carvalhais',
         ]);
 
         Person::create([
@@ -192,7 +192,7 @@ class PersonSeeder extends Seeder
             'username' => 'dino_nassalu',
             'phone' => '+351 929 247 751',
             'birth_date' => '2005-01-11',
-            'description' => 'Estudante Técnico de Informática de Gestão',
+            'description' => 'Escola profissional de agricultura e desenvolvimento rural.',
         ]);
 
         Person::create([
@@ -200,7 +200,7 @@ class PersonSeeder extends Seeder
             'username' => 'hedigar_ca',
             'birth_date' => '2004-11-11',
             'phone' => '+351 930 540 483',
-            'description' => 'Estudante Técnico de Informática de Gestão',
+            'description' => 'Na Guiné-Bissau, estudava no Liceu sectorial de Como. Em Portugal, EPA CARVALHAIS. estou a estudar vitivinicultura.',
         ]);
 
         Person::create([
@@ -208,7 +208,7 @@ class PersonSeeder extends Seeder
             'username' => 'sadu_balde',
             'birth_date' => '2005-02-12',
             'phone' => '+351 929 247 752',
-            'description' => 'Estudante Técnico de Informática de Gestão',
+            'description' => 'Na Guiné-Bissau, era estudante CANHE NAN TUNGUÊ. Em Portugal, estuda Turismo Ambiental e Rural na E.P.A. (Escola profissional de Agricultura) de Mirandela.  estudante Técnico de Informática de Gestão',
         ]);
 
         Person::create([
@@ -216,7 +216,7 @@ class PersonSeeder extends Seeder
             'username' => 'mariama_sire_djalo',
             'birth_date' => '2003-09-20',
             'phone' => '+351 930 540 496',
-            'description' => 'Estudante Animador Sociocultural. Perdeu a mãe com 15 anos (asma) e o pai com ',
+            'description' => 'Estudante no curso Técnico de Apoio Familiar e de Apoio à Comunidade no Instituto do emprego e de formação profissional (IEFP) de Mirandela. Perdeu a mãe (Djenabu Culubali) com 15 anos por asma, e o pai (Braima Djaló) com 17 anos.',
         ]);
 
         Person::create([
@@ -224,7 +224,7 @@ class PersonSeeder extends Seeder
             'phone' => '+351 929 247 757',
             'username' => 'olivio_na_teinha',
             'birth_date' => '2003-08-19',
-            'description' => 'Estudante Técnico de Informática de Gestão',
+            'description' => 'Estuda curso de técnico de apoio familiar e a comunidade no Instituto do Emprego e Formação Profissional (IEFP) de Mirandela',
         ]);
 
         Person::create([
@@ -240,7 +240,7 @@ class PersonSeeder extends Seeder
             'username' => 'tania_na_masse',
             'phone' => '+351 920 405 633',
             'birth_date' => '2004-02-22',
-            'description' => 'Estudante Animador Sociocultural',
+            'description' => 'Na Guiné-Bissau, estudava no Liceu sectorial de Como. ',
         ]);
 
         Person::create([
@@ -248,7 +248,7 @@ class PersonSeeder extends Seeder
             'username' => 'titina_na_tchiba',
             'phone' => '+351 930 540 488',
             'birth_date' => '2001-09-05',
-            'description' => 'Estudante Técnico de Informática de Gestão',
+            'description' => 'Na Guiné-Bissau, estudava no Liceu regional Areolino cruz Catió. Estudante Técnico de Informática de Gestão',
         ]);
 
 

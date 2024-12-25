@@ -68,5 +68,14 @@ class StorySeeder extends Seeder
         $story->categories()->attach($viagens);
         $story->categories()->attach($tito);
 
+        $story = Story::create([
+            'title' => '',
+            'date' => '2024-12-25',
+            'summary' => 'Aproveitando a interrupção letiva de Natal, quisemos conhecer a experiência destes jovens guineenses a estudar em Portugal. Entre desafios de adaptação, sonhos para o futuro e recordações de casa, partilharam connosco um pouco das suas histórias, refletindo sobre o significado de passarem esta época festiva longe das suas famílias.',
+            'image' => '2024/12/natal_estudantes/todos_natal.jpg',
+            'slug' => 'natal-estudantes',
+            'url' => '2024/12/natal_estudantes',
+        ]);
+
     }
 }
