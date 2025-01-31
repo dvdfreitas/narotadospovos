@@ -83,7 +83,7 @@ class StorySeeder extends Seeder
             'summary' => 'A NRP está a organizar uma recolha de bens essenciais para enviar para Catió.',
             'image' => '2025/01/recolha.png',
             'slug' => 'recolha-janeiro-2025',
-            'url' => 'campanha',
+            'url' => '/campanha',
         ]);
 
     }

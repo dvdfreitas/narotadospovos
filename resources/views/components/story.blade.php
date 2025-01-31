@@ -1,7 +1,15 @@
 @props(['story', 'format' => 'default'])
 
+@php
+    if (Str::startsWith($story->url, '/')) {
+        $url = $story->url;
+    } else {
+        $url = '/noticias/' . $story->url;
+    }
+@endphp
+
 <div class="w-full flex flex-col font-black px-1 my-2">
-    <a href="/noticias/{{ $story->url }}">
+    <a href="{{ $url }}">
         <img class="h-56 m-auto" src="/stories/{{ $story->image }}">
         <p class="font-bold leading-tight">{{ $story->title }}</p>
         @if ($story->subtitle)
