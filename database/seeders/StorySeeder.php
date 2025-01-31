@@ -86,5 +86,14 @@ class StorySeeder extends Seeder
             'url' => '/campanha',
         ]);
 
+        $story = Story::create([
+            'title' => 'Revista MUT',
+            'date' => '2025-01-31',
+            'summary' => 'No dia 24 de maio de 2024, a Na Rota Dos Povos recebeu o Prémio Mutualismo e Solidariedade Internacional da União das Mutualidades Portuguesas. Hoje temos a honra de aparecer na revista Mut, onde partilhámos um pouco da nossa história e do nosso trabalho.',
+            'image' => '2025/01/revista_mut/cover.jpg',
+            'slug' => 'revista_mut',
+            'url' => '2025/01/revista_mut',
+        ]);
+
     }
 }

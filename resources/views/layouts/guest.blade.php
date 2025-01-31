@@ -27,7 +27,7 @@
 
     </head>
 
-    <body class="text-gray-900 antialiased">
+    <body class="text-gray-900 antialiased px-1 md:px-0">
         <x-menu/>
 
         <main>
