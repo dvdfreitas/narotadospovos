@@ -12,7 +12,7 @@
         <p class="text-sm">Pode ver a revista completa clicando na imagem abaixo.</p>
         <div class="grid grid-cols-1 max-w-xl m-auto">
             <a href="https://mutualismo.pt/anexos/RevistaMUT25.pdf">
-                <img class="max-w-xl rounded m-auto my-12" src="/stories/2025/01/revista_mut/cover.jpg"  alt="Mut - A Revista do Mutualismo">
+                <img class="rounded m-auto my-12" src="/stories/2025/01/revista_mut/cover.jpg"  alt="Mut - A Revista do Mutualismo">
             </a>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2">
