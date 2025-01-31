@@ -105,5 +105,11 @@ class NeedSeeder extends Seeder
             'priority' => 'dont_want',
         ]);
 
+        $product_id = Product::where('slug', 'roupa-de-adulto')->first()->id;
+        Need::create([
+            'product_id' => $product_id,
+            'priority' => 'dont_want',
+        ]);
+
     }
 }

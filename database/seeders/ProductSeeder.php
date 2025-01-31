@@ -87,5 +87,10 @@ class ProductSeeder extends Seeder
             'name' => 'Brinquedos',
             'slug' => 'brinquedos',
         ]);
+
+        Product::create([
+            'name' => 'Roupa de adulto',
+            'slug' => 'roupa-de-adulto',
+        ]);
     }
 }
