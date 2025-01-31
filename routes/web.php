@@ -70,7 +70,7 @@ Route::get('/partners', [PartnerController::class, 'index'])->name('partners.ind
 Route::get('/partners/create', [PartnerController::class, 'create'])->name('partners.create');
 Route::post('/partners', [PartnerController::class, 'store']);
 
-Route::get('/needs', [NeedController::class, 'index'])->name('needs.index');
+Route::get('/campanha', [NeedController::class, 'index'])->name('needs.index');
 
 Route::post('/language-switch', [LanguageController::class, 'switch'])->name('language.switch');
 
