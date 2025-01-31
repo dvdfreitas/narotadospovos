@@ -43,9 +43,9 @@
                       <li class="mb-2">
                           <a href="https://www.instagram.com/NaRotaDosPovos" class="hover:underline">Instagram</a>
                       </li>
-                      <li class="mb-2">
+                      {{--<li class="mb-2">
                         <a href="" class="hover:underline">YouTube</a>
-                    </li>
+                        </li>--}}
                     <li class="mb-2">
                         <a href="https://www.linkedin.com/company/narotadospovos" class="hover:underline">LinkedIn</a>
                     </li>

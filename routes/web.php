@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\NeedController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\StoryController;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,8 @@ Route::delete('/stories/{story:slug}', [StoryController::class, 'destroy']);
 Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
 Route::get('/partners/create', [PartnerController::class, 'create'])->name('partners.create');
 Route::post('/partners', [PartnerController::class, 'store']);
+
+Route::get('/needs', [NeedController::class, 'index'])->name('needs.index');
 
 Route::post('/language-switch', [LanguageController::class, 'switch'])->name('language.switch');
 

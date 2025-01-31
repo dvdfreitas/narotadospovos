@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             StorySeeder::class,
             PartnerSeeder::class,
             PersonSeeder::class,
+            ProductSeeder::class,
+            NeedSeeder::class,
         ]);
 
         User::factory()->create([

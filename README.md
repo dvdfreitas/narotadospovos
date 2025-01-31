@@ -1,3 +1,11 @@
+# Próximos
+
+- Setas no Hero
+- Melhorar padding e margens
+- Melhorar os "números" na página inicial
+- Condensar os parceiros
+
+
 # YouTube
 
 - Vídeos não estão disponíveis
