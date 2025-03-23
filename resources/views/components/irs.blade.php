@@ -1,5 +1,5 @@
 <div>
-    <img class="h-[600px]  m-auto" src="/images/irs/2025-IRS-1.png"/>
+    <img class="h-[600px] object-cover m-auto" src="/images/irs/2025-IRS-1.png"/>
 
     <x-margins-text>
 
