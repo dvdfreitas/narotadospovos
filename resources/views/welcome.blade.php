@@ -1,5 +1,6 @@
 <x-guestLayout>
 
+    <x-irs/>
     <x-motto/>
     <x-hero/>
     <x-welcome.about/>
