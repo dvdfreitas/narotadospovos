@@ -41,10 +41,10 @@
         <div class="my-2">
             <p class="font-semibold">CONSELHO FISCAL</p>
             <div>
-                <p>Presidente: Luis Armando Monteiro</p>
+                <p>Presidente: Luis Armando Gonçalves Monteiro</p>
                 <p>Vice-Presidente: Ivone Carla dos Santos Miranda Branco Vasco</p>
                 <p>Vogal: Paula Alexandra Beirão Vieira</p>
-                <p>Vogal: Luis Miguel Soares Seabra</p>
+                <p>Vogal: Luis Miguel Soares da Costa Seabra</p>
                 <p>Vogal: Susana Isabel Duarte Teles Andrade</p>
             </div>
         </div>
