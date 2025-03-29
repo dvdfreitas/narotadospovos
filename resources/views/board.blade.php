@@ -9,6 +9,45 @@
         @endif
 
         <div class="border-2 border-solid border-nrp-blue p-4 rounded-lg my-4">
+
+            <p class="font-bold">22 de Fevereiro 2025 a 31 de Dezembro 2027</p>
+
+            <div class="my-2">
+                <p class="font-semibold">MESA DA ASSEMBLEIA GERAL</p>
+                <div>
+                    <p>Presidente: Tito Osvaldo Dias Baião</p>
+                    <p>1º Vice-Presidente: Teresa Natália da Costa Leite Pinheiro</p>
+                    <p>2º Vice-Presidente: Isabel Margarida da Silva Soares Lopes</p>
+                    <p>Secretária: Maria Manuela Fidalgo</p>
+                </div>
+            </div>
+
+            <div class="my-2">
+                <p class="font-semibold">DIRECÇÃO</p>
+                <div>
+                    <p>Presidente: Susana Rute Ribeiro Ramos Antunes</p>
+                    <p>1º Vice-Presidente: Fernando Manuel Lino Pinheiro</p>
+                    <p>2º Vice-Presidente: Manuel Octávio Braga Soares Coelho</p>
+                    <p>Tesoureira: Anabela Fernanda Santos Bandeira de Sousa</p>
+                    <p>Vogal: David Correia Teixeira Freitas</p>
+                    <p>Vogal: Maria Alcina Jorge Almeida</p>
+                    <p>Vogal: Maria Luísa Sousa Marques Pinto</p>
+                    <p>Secretário: Domingos Paulo Soares Lopes</p>
+                    <p>Suplente: Rita Bandeira Coelho</p>
+                </div>
+            </div>
+
+            <div class="my-2">
+                <p class="font-semibold">CONSELHO FISCAL</p>
+                <div>
+                    <p>Presidente: Luis Armando Monteiro</p>
+                    <p>Vice-Presidente: Ivone Carla dos Santos Miranda Branco Vasco</p>
+                    <p>Vogal: Paula Alexandra Beirão Vieira</p>
+                    <p>Vogal: Luis Miguel Soares Seabra</p>
+                    <p>Vogal: Susana Isabel Duarte Teles Andrade</p>
+                </div>
+            </div>
+
             <p class="font-bold">28 de Maio 2022 a 31 de Dezembro 2024</p>
 
             <div class="my-2">
