@@ -53,7 +53,7 @@
 
         <div class="border-2 border-solid border-nrp-blue p-4 rounded-lg my-4">
 
-            <p class="font-bold">28 de Maio 2022 a 31 de Dezembro 2024</p>
+            <p class="font-bold">28 de Maio 2022 a 21 de Fevereiro 2025</p>
 
             <div class="my-2">
                 <p class="font-semibold">MESA DA ASSEMBLEIA GERAL</p>
