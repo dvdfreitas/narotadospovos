@@ -30,11 +30,9 @@
                 <p>1º Vice-Presidente: Fernando Manuel Lino Pinheiro</p>
                 <p>2º Vice-Presidente: Manuel Octávio Braga Soares Coelho</p>
                 <p>Tesoureira: Anabela Fernanda Santos Bandeira de Sousa</p>
-                <p>Vogal: David Correia Teixeira Freitas</p>
+                <p>Secretário: David Correia Teixeira Freitas</p>
                 <p>Vogal: Maria Alcina Jorge Almeida</p>
-                <p>Vogal: Maria Luísa Sousa Marques Pinto</p>
-                <p>Secretário: Domingos Paulo Soares Lopes</p>
-                <p>Suplente: Rita Bandeira Coelho</p>
+                <p>Vogal: Rita Bandeira Coelho</p>
             </div>
         </div>
 
