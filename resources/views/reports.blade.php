@@ -26,14 +26,14 @@
                             elseif ($label == "Relatório da Direção") $file = 'Relatorio-da-Direcao_'  . $year .  $file;
                         @endphp
 
-                        @if ($label != "Relatório da Direção" || $year!=2024)
+                        {{-- @if ($label != "Relatório da Direção" || $year!=2024) --}}
                             <a href="/docs/relatorios/{{$year}}/{{$file}}">
                                 <div class="flex hover:opacity-50 cursor-pointer">
                                     <img class="h-12 p-2 " src="/images/icons/pdf.svg">
                                     <div class="text-md self-center">{{ $label}}</div>
                                 </div>
                             </a>
-                        @endif
+                        {{-- @endif --}}
                     @endforeach
                 </div>
             @endforeach
