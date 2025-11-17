@@ -1,6 +1,6 @@
 <x-guestLayout>
 
-    <x-irs/>
+    {{-- <x-irs/> --}}
     <x-motto/>
     <x-hero/>
     <x-welcome.about/>
@@ -11,13 +11,6 @@
     <x-welcome.help/>
     <x-partners/>
 
-    {{--
-
-
-
-
-
-    --}}
     {{--
 
 

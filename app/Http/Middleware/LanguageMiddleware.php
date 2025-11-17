@@ -16,11 +16,15 @@ class LanguageMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $language =  session('language');
-        if ($language == null) {
-            session(['language' => 'pt']);
+        $language = session('language');
+
+        if ($language === null) {
+            $language = 'pt';               // <- update the variable too
+            session(['language' => $language]);
         }
+
         app()->setLocale($language);
+
         return $next($request);
     }
 }
