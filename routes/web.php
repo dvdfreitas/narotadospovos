@@ -4,6 +4,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NeedController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\StoryController;
+use App\Models\Donation;
 use Illuminate\Support\Facades\Route;
 
 // Para teste
@@ -59,7 +60,12 @@ Route::get('/historias', function () {
 
 Route::get('/natal', function () {
     return view('christmas-board');
-});
+})->name('christmas-board');
+
+Route::get('/cards/christmas/{code}', function ($code) {
+    $donation = Donation::where('access_code', $code)->firstOrFail();
+    return view('cards.christmas', ['donation' => $donation]);
+})->name('cards.christmas');
 
 
 Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');

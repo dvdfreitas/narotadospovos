@@ -4,50 +4,44 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Donation;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Donation>
- */
 class DonationFactory extends Factory
 {
-    protected $model = Donation::class;
-
-    public function definition(): array
+    public function definition()
     {
-        // 50% de probabilidade de ser uma prenda/oferta
-        $isGift = $this->faker->boolean(50);
-        // 20% de probabilidade de ser anónimo
-        $isAnonymous = $this->faker->boolean(20);
-
-        $donorName = $this->faker->name();
-        $donorEmail = $this->faker->safeEmail();
+        $isGift = $this->faker->boolean(20); // 20% das doações são prenda
+        $isAnonymous = $this->faker->boolean(15); // 15% anónimas
 
         return [
-            // 1. DADOS FINANCEIROS (entre 5€ e 500€)
-            'amount' => $this->faker->randomFloat(2, 5, 500),
+            // 1. FINANCEIRO
+            'amount' => $this->faker->randomFloat(2, 2, 250), // €2 a €250
+            'donor_email' => $this->faker->safeEmail(),
+            'donor_phone' => $this->faker->numerify('9########'), // nº PT
+            'payment_status' => $this->faker->randomElement(['pending', 'paid', 'failed']),
+            'payment_gateway_id' => $this->faker->optional()->uuid(),
 
-            // 2. DADOS DO DOADOR
-            'donor_name' => $donorName,
-            'donor_email' => $donorEmail,
+            // 2. DOADOR
+            'donor_name' => $isAnonymous
+                ? 'Anónimo'
+                : $this->faker->name(),
 
-            // 3. EXIBIÇÃO NA ÁRVORE
+            // 3. EXPOSIÇÃO PÚBLICA
             'is_anonymous' => $isAnonymous,
-            'public_message' => $this->faker->optional(0.7, null)->sentence(3, true), // 70% de chance de ter uma mensagem
+            'public_message' => $this->faker->optional(0.6)->sentence(6, true), // 60% têm mensagem
 
-            // 4. OFERTA / PRENDA
+            // 4. PRENDA / GIFT
             'is_gift' => $isGift,
             'gift_recipient_name' => $isGift ? $this->faker->name() : null,
             'gift_recipient_email' => $isGift ? $this->faker->safeEmail() : null,
-            'gift_message' => $isGift ? $this->faker->text(100) : null,
+            'gift_message' => $isGift
+                ? $this->faker->optional(0.8)->sentence(10)
+                : null,
 
-            // 5. CONTROLO INTERNO
-            'access_code' => $this->faker->unique()->lexify('????????????'), // 12 caracteres aleatórios
+            // 5. CONTROLO
+            'access_code' => Str::random(12),
 
-            // Data de criação escalonada para simular o tempo real
-            'created_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
-            'updated_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
+            'created_at' => now()->subDays(rand(0, 20)),
+            'updated_at' => now(),
         ];
     }
-
 }

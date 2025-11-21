@@ -9,7 +9,8 @@ state([
 ]);
 
 $loadDonations = function () {
-    $this->donations = Donation::orderByDesc('created_at')
+    $this->donations = Donation::where('payment_status', 'paid') // SÓ OS PAGOS
+        ->orderByDesc('created_at')
         ->take(50)
         ->get()
         ->toArray();

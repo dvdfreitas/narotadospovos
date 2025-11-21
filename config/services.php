@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'ifthenpay' => [
+        'mbway_key' => env('IFTHENPAY_MBWAY_KEY'), // Coloca no .env
+        'callback_key' => env('IFTHENPAY_CALLBACK_KEY'), // Chave anti-phishing
+    ],
+
 ];

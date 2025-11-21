@@ -12,9 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('donations', function (Blueprint $table) {
+            $table->id();
            // 1. DADOS FINANCEIROS
             $table->decimal('amount', 8, 2);
             $table->string('donor_email'); // Necessário para recibo/comprovativo
+            $table->string('donor_phone');
+            $table->string('payment_status')->default('pending');
+            $table->string('payment_gateway_id')->nullable();
 
             // 2. DADOS DO DOADOR
             $table->string('donor_name');
