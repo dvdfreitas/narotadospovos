@@ -57,6 +57,10 @@ Route::get('/historias', function () {
     return view('tales.index');
 })->name('tales');
 
+Route::get('/natal', function () {
+    return view('christmas-board');
+})->name('tales');
+
 
 Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');
 Route::get('/stories/create', [StoryController::class, 'create'])->name('stories.create');
@@ -84,7 +88,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/noticias/{year}/{month}/{title}', function($year, $month, $title) {
+Route::get('/noticias/{year}/{month}/{title}', function ($year, $month, $title) {
     if (view()->exists("/stories/$year/$month/$title"))
         return view("/stories/$year/$month/$title");
     else

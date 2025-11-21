@@ -3,6 +3,7 @@
     {{-- <x-irs/> --}}
     <x-motto/>
     <x-hero/>
+    <livewire:christmas-board />
     <x-welcome.about/>
     <x-stories/>
     <x-welcome.projects/>
