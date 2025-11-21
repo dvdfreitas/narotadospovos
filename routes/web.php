@@ -59,7 +59,7 @@ Route::get('/historias', function () {
 
 Route::get('/natal', function () {
     return view('christmas-board');
-})->name('tales');
+});
 
 
 Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');
