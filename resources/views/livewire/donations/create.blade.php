@@ -6,25 +6,27 @@ use Illuminate\Support\Str;
 use function Livewire\Volt\{state, rules, on};
 
 // =================================================================
-// 1. ESTADO (VARIÁVEIS)
+// 1. ESTADO
 // =================================================================
 state([
     'showModal' => false,
-    'step' => 1,            // Controla se estamos no Formulário (1) ou Sucesso (2)
-    'createdDonation' => null, // Guarda o donativo criado para gerar o link
+    'step' => 1,
+    'createdDonation' => null,
 
     'amount' => 5,
+    'selectedProduct' => 'food',
 
     // Doador
     'donor_name' => '',
     'donor_email' => '',
-    'donor_phone' => '',    // Obrigatório para MB WAY
+    'donor_phone' => '',
+    'nif' => '',
 
-    // Opções da Árvore
+    // Opções
     'is_anonymous' => false,
     'public_message' => '',
 
-    // Opções de Prenda
+    // Prenda
     'is_gift' => false,
     'gift_recipient_name' => '',
     'gift_recipient_email' => '',
@@ -38,26 +40,26 @@ rules([
     'amount' => 'required|numeric|min:1',
     'donor_name' => 'required|string|max:255',
     'donor_email' => 'required|email|max:255',
-    // Validação simples de telemóvel PT (91, 92, 93, 96)
     'donor_phone' => ['required', 'regex:/^9[1236][0-9]{7}$/'],
-
+    'nif' => 'nullable|digits:9',
     'public_message' => 'nullable|string|max:140',
-
     'gift_recipient_name' => 'required_if:is_gift,true|nullable|string|max:255',
     'gift_recipient_email' => 'required_if:is_gift,true|nullable|email|max:255',
     'gift_message' => 'nullable|string|max:500',
 ]);
 
 // =================================================================
-// 3. ABRIR MODAL (RESET)
+// 3. ABRIR MODAL (Ouvinte de Eventos)
 // =================================================================
-on(['open-donation-modal' => function () {
+on(['open-donation-modal' => function ($type = 'food', $amount = 5) {
     $this->resetValidation();
 
-    // Limpar campos para novo donativo
+    // Reset dos campos
     $this->donor_name = '';
     $this->donor_email = '';
     $this->donor_phone = '';
+    $this->nif = '';
+
     $this->public_message = '';
     $this->is_anonymous = false;
     $this->is_gift = false;
@@ -65,38 +67,62 @@ on(['open-donation-modal' => function () {
     $this->gift_recipient_email = '';
     $this->gift_message = '';
 
-    // Reiniciar fluxo
+    // Define o produto selecionado (ou default)
+    $this->selectedProduct = $type;
+    $this->amount = $amount;
+
     $this->step = 1;
     $this->createdDonation = null;
     $this->showModal = true;
 }]);
 
+// Helper para mudar produto dentro do modal
+$selectProduct = function($type, $value) {
+    $this->selectedProduct = $type;
+    $this->amount = $value;
+};
+
 // =================================================================
 // 4. GUARDAR E PAGAR
 // =================================================================
 $save = function (IfthenpayService $paymentService) {
-    $this->validate();
 
-    // A. Criar registo na BD (Pendente)
+    // Mensagens Personalizadas em Português
+    $messages = [
+        'amount.required' => 'Por favor, escolha um valor.',
+        'amount.min' => 'O valor mínimo é de 1€.',
+        'donor_name.required' => 'O nome é obrigatório.',
+        'donor_email.required' => 'O email é obrigatório.',
+        'donor_email.email' => 'Introduza um email válido.',
+        'donor_phone.required' => 'O telemóvel é necessário para o MB WAY.',
+        'donor_phone.regex' => 'Introduza um número válido (91, 92, 93 ou 96).',
+        'nif.digits' => 'O NIF deve ter 9 dígitos.',
+        'gift_recipient_name.required_if' => 'Indique o nome do destinatário da prenda.',
+        'gift_recipient_email.required_if' => 'Indique o email do destinatário.',
+    ];
+
+    // Validação
+    $this->validate(null, $messages);
+
+    // Criar Donativo (Pendente)
     $donation = Donation::create([
         'amount' => $this->amount,
         'donor_name' => $this->donor_name,
         'donor_email' => $this->donor_email,
         'donor_phone' => $this->donor_phone,
+        'nif' => $this->nif ?: null,
 
         'is_anonymous' => $this->is_anonymous,
         'public_message' => $this->public_message,
-
         'is_gift' => $this->is_gift,
         'gift_recipient_name' => $this->is_gift ? $this->gift_recipient_name : null,
         'gift_recipient_email' => $this->is_gift ? $this->gift_recipient_email : null,
         'gift_message' => $this->is_gift ? $this->gift_message : null,
-
         'payment_status' => 'pending',
         'access_code' => Str::random(12),
     ]);
 
-    // B. Comunicar com MB WAY (Simulado ou Real)
+    // Processar MB WAY
     try {
         $result = $paymentService->requestMbWayPayment(
             $this->donor_phone,
@@ -105,31 +131,23 @@ $save = function (IfthenpayService $paymentService) {
         );
 
         if (isset($result['Estado']) && $result['Estado'] === '000') {
-            // SUCESSO NA API
-
-            // Para efeitos de teste/simulação, marcamos já como PAGO
-            // (Em produção real, isto seria feito pelo Webhook, mas assim vês logo o resultado)
+            // SUCESSO (Na simulação, marcamos logo como pago)
             $donation->update([
                 'payment_status' => 'paid',
                 'payment_gateway_id' => $result['IdPedido']
             ]);
 
-            // Guardar dados para o Passo 2
             $this->createdDonation = $donation;
-
-            // Mudar para o ecrã de sucesso
-            $this->step = 2;
-
-            // Atualizar a lista lá atrás
-            $this->dispatch('donation-added');
-
+            $this->step = 2; // Avança para o sucesso
+            $this->dispatch('donation-added'); // Atualiza a lista
         } else {
-            // Erro da API (ex: número inválido)
-            $this->addError('donor_phone', 'Erro MB WAY: ' . ($result['MsgDescricao'] ?? 'Desconhecido'));
-        }
+            $msgErro = $result['MsgDescricao'] ?? 'Erro desconhecido';
+            if(str_contains($msgErro, 'Alias')) $msgErro = 'Número de telemóvel inválido ou sem MB WAY.';
 
+            $this->addError('donor_phone', 'MB WAY: ' . $msgErro);
+        }
     } catch (\Exception $e) {
-        $this->addError('donor_phone', 'Erro técnico: ' . $e->getMessage());
+        $this->addError('donor_phone', 'Erro técnico ao comunicar com o pagamento.');
     }
 };
 
@@ -143,29 +161,13 @@ $save = function (IfthenpayService $paymentService) {
          class="fixed inset-0 z-50 overflow-y-auto"
          style="display: none;">
 
-        {{-- 1. Backdrop --}}
-        <div x-show="show"
-             x-transition:enter="ease-out duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             class="fixed inset-0 bg-emerald-900/40 backdrop-blur-sm transition-opacity"
-             @click="show = false"></div>
+        {{-- Backdrop --}}
+        <div x-show="show" class="fixed inset-0 bg-emerald-900/40 backdrop-blur-sm transition-opacity" @click="show = false"></div>
 
-        {{-- 2. Layout Central --}}
+        {{-- Painel --}}
         <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-
-            {{-- 3. CAIXA DO MODAL --}}
             <div x-show="show"
-                 x-transition:enter="ease-out duration-300"
-                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                 x-transition:leave="ease-in duration-200"
-                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                 class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-emerald-100">
+                 class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl border border-emerald-100">
 
                 {{-- ================================================== --}}
                 {{-- PASSO 1: O FORMULÁRIO --}}
@@ -173,7 +175,7 @@ $save = function (IfthenpayService $paymentService) {
                 @if($step === 1)
                     <div class="bg-emerald-50/50 px-6 py-4 border-b border-emerald-100 flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-emerald-800 flex items-center gap-2">
-                            <span>🎁</span> Fazer Donativo
+                            <span>🎁</span> Escolha o seu Impacto
                         </h3>
                         <button wire:click="$set('showModal', false)" class="text-neutral-400 hover:text-emerald-600">
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -181,138 +183,158 @@ $save = function (IfthenpayService $paymentService) {
                     </div>
 
                     <form wire:submit="save">
-                        <div class="px-6 py-6 space-y-5">
+                        <div class="px-6 py-6 space-y-6">
 
-                            {{-- Valor --}}
+                            {{-- GRID DE PRODUTOS --}}
                             <div>
-                                <label class="block text-xs font-medium text-neutral-700 mb-2">Valor do Donativo</label>
-                                <div class="grid grid-cols-4 gap-2 mb-3">
-                                    @foreach([5, 10, 20, 50] as $val)
-                                        <button type="button" wire:click="$set('amount', {{ $val }})"
-                                            class="py-2 rounded-lg text-sm font-semibold border transition-all {{ $amount == $val ? 'bg-emerald-600 text-white border-emerald-600 shadow-md' : 'bg-white text-neutral-600 border-neutral-200 hover:bg-emerald-50' }}">
-                                            {{ $val }}€
-                                        </button>
-                                    @endforeach
-                                </div>
-                                <div class="relative">
-                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">€</span>
-                                    <input type="number" wire:model="amount" step="0.01" min="1"
-                                        class="w-full pl-8 pr-4 py-2 rounded-lg border-neutral-300 focus:border-emerald-500 focus:ring-emerald-500 text-sm">
-                                </div>
-                                @error('amount') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
-                            </div>
-
-                            <hr class="border-neutral-100">
-
-                            {{-- Dados Doador --}}
-                            <div class="space-y-3">
-                                <h4 class="text-xs font-bold text-emerald-800 uppercase">Os teus dados</h4>
+                                <label class="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-3">O que quer oferecer?</label>
 
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    <div>
-                                        <input type="text" wire:model="donor_name" placeholder="O teu Nome" class="w-full text-sm rounded-lg border-neutral-300 focus:ring-emerald-500 focus:border-emerald-500">
-                                        @error('donor_name') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
-                                    </div>
-                                    <div>
-                                        <input type="tel" wire:model="donor_phone" placeholder="Telemóvel (MB WAY)" class="w-full text-sm rounded-lg border-neutral-300 focus:ring-emerald-500 focus:border-emerald-500">
-                                        @error('donor_phone') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
+                                    {{-- 5€ --}}
+                                    <button type="button" wire:click="selectProduct('food', 5)"
+                                        class="relative flex items-center p-3 rounded-xl border-2 transition-all text-left group hover:shadow-md {{ $selectedProduct === 'food' ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500' : 'border-neutral-200 bg-white hover:border-emerald-200' }}">
+                                        <div class="h-12 w-12 flex-shrink-0 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-xl mr-3">🥣</div>
+                                        <div><p class="font-bold text-neutral-800">Bens Alimentares</p><p class="text-xs text-neutral-500">Ajuda com papas.</p></div>
+                                        <div class="ml-auto font-bold text-emerald-700 text-lg">5€</div>
+                                    </button>
 
-                                <input type="email" wire:model="donor_email" placeholder="O teu Email" class="w-full text-sm rounded-lg border-neutral-300 focus:ring-emerald-500 focus:border-emerald-500">
-                                @error('donor_email') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+                                    {{-- 12€ --}}
+                                    <button type="button" wire:click="selectProduct('milk', 12)"
+                                        class="relative flex items-center p-3 rounded-xl border-2 transition-all text-left group hover:shadow-md {{ $selectedProduct === 'milk' ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500' : 'border-neutral-200 bg-white hover:border-emerald-200' }}">
+                                        <div class="h-12 w-12 flex-shrink-0 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl mr-3">🍼</div>
+                                        <div><p class="font-bold text-neutral-800">Leite Bebé</p><p class="text-xs text-neutral-500">Lata de leite.</p></div>
+                                        <div class="ml-auto font-bold text-emerald-700 text-lg">12€</div>
+                                    </button>
 
-                                {{-- Checkbox Anónimo --}}
-                                <label class="flex items-center gap-2 cursor-pointer mt-1">
-                                    <input type="checkbox" wire:model="is_anonymous" class="rounded text-emerald-600 focus:ring-emerald-600 border-neutral-300">
-                                    <span class="text-xs text-neutral-600">Não mostrar o meu nome na árvore</span>
-                                </label>
-                            </div>
+                                    {{-- 20€ --}}
+                                    <button type="button" wire:click="selectProduct('hygiene', 20)"
+                                        class="relative flex items-center p-3 rounded-xl border-2 transition-all text-left group hover:shadow-md {{ $selectedProduct === 'hygiene' ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500' : 'border-neutral-200 bg-white hover:border-emerald-200' }}">
+                                        <div class="h-12 w-12 flex-shrink-0 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl mr-3">🧼</div>
+                                        <div><p class="font-bold text-neutral-800">Kit Higiene</p><p class="text-xs text-neutral-500">Fraldas e limpeza.</p></div>
+                                        <div class="ml-auto font-bold text-emerald-700 text-lg">20€</div>
+                                    </button>
 
-                            <hr class="border-neutral-100">
-
-                            {{-- Mensagem Pública --}}
-                            <div>
-                                <label class="block text-xs font-medium text-neutral-700 mb-1">Mensagem para a Árvore (Opcional)</label>
-                                <input type="text" wire:model="public_message" maxlength="140" placeholder="Ex: Feliz Natal a todos!" class="w-full text-sm rounded-lg border-neutral-300 focus:ring-emerald-500 focus:border-emerald-500">
-                            </div>
-
-                            {{-- Prenda --}}
-                            <div class="bg-neutral-50 p-3 rounded-xl border border-neutral-200">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm font-bold text-neutral-800">Oferecer como Prenda?</span>
-                                    <button type="button" wire:click="$toggle('is_gift')" class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 {{ $is_gift ? 'bg-emerald-600' : 'bg-neutral-300' }}">
-                                        <span class="{{ $is_gift ? 'translate-x-6' : 'translate-x-1' }} inline-block h-4 w-4 transform rounded-full bg-white transition-transform"></span>
+                                    {{-- 50€ --}}
+                                    <button type="button" wire:click="selectProduct('family', 50)"
+                                        class="relative flex items-center p-3 rounded-xl border-2 transition-all text-left group hover:shadow-md {{ $selectedProduct === 'family' ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500' : 'border-neutral-200 bg-white hover:border-emerald-200' }}">
+                                        <div class="h-12 w-12 flex-shrink-0 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-xl mr-3">❤️</div>
+                                        <div><p class="font-bold text-neutral-800">Cabaz Família</p><p class="text-xs text-neutral-500">Apoio mensal.</p></div>
+                                        <div class="ml-auto font-bold text-emerald-700 text-lg">50€</div>
                                     </button>
                                 </div>
 
-                                @if($is_gift)
-                                    <div class="mt-3 space-y-3 animate-in slide-in-from-top-2">
-                                        <input type="text" wire:model="gift_recipient_name" placeholder="Nome do Destinatário" class="w-full text-sm rounded border-emerald-200">
-                                        @error('gift_recipient_name') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
-
-                                        <input type="email" wire:model="gift_recipient_email" placeholder="Email do Destinatário" class="w-full text-sm rounded border-emerald-200">
-                                        @error('gift_recipient_email') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
-
-                                        <textarea wire:model="gift_message" rows="2" placeholder="Mensagem privada..." class="w-full text-sm rounded border-emerald-200"></textarea>
-                                    </div>
-                                @endif
+                                {{-- Valor Personalizado --}}
+                                <div class="mt-3 relative" @click="$wire.set('selectedProduct', 'custom')">
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 font-bold">€</span>
+                                    <input type="number" wire:model="amount" step="0.01" min="1"
+                                        class="w-full pl-8 pr-4 py-3 rounded-xl border-2 focus:ring-emerald-500 focus:border-emerald-500 text-lg font-bold
+                                        {{ $selectedProduct === 'custom' ? 'border-emerald-500 bg-emerald-50/30' : 'border-neutral-200' }}">
+                                </div>
+                                @error('amount') <span class="text-xs text-red-500 font-bold block mt-1">{{ $message }}</span> @enderror
                             </div>
 
-                            {{-- Botão Submit --}}
-                            <div class="flex flex-row-reverse pt-2">
-                                <button type="submit" class="w-full sm:w-auto inline-flex justify-center rounded-xl bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 transition-all">
-                                    <span wire:loading.remove>Pagar com MB WAY</span>
-                                    <span wire:loading>A processar...</span>
+                            {{-- FORMULÁRIO DE DADOS --}}
+                            <div class="grid md:grid-cols-2 gap-6">
+
+                                {{-- Coluna 1: Dados Pessoais --}}
+                                <div class="space-y-3">
+                                    <label class="block text-xs font-bold text-neutral-700 uppercase tracking-wide">Os teus dados</label>
+
+                                    <input type="text" wire:model="donor_name" placeholder="O teu Nome" class="w-full text-sm rounded-lg border-neutral-300">
+                                    @error('donor_name') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+
+                                    <input type="email" wire:model="donor_email" placeholder="Email" class="w-full text-sm rounded-lg border-neutral-300">
+                                    @error('donor_email') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+
+                                    {{-- Telemóvel e NIF --}}
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>
+                                            <input type="tel" wire:model="donor_phone" placeholder="Telemóvel (MB)" class="w-full text-sm rounded-lg border-neutral-300">
+                                            @error('donor_phone') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+                                        </div>
+                                        <div>
+                                            <input type="text" wire:model="nif" placeholder="NIF (Opcional)" maxlength="9" class="w-full text-sm rounded-lg border-neutral-300">
+                                            <p class="text-[10px] text-neutral-500 mt-1 leading-tight">
+                                                Obrigatório para recibo fiscal.
+                                            </p>
+                                            @error('nif') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+                                        </div>
+                                    </div>
+
+                                    <label class="flex items-center gap-2 cursor-pointer pt-1">
+                                        <input type="checkbox" wire:model="is_anonymous" class="rounded text-emerald-600 border-neutral-300">
+                                        <span class="text-xs text-neutral-600">Doar como Anónimo</span>
+                                    </label>
+                                </div>
+
+                                {{-- Coluna 2: Opções e Prenda --}}
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-neutral-700 uppercase tracking-wide mb-1">Mensagem Pública</label>
+                                        <textarea wire:model="public_message" rows="2" placeholder="Deixa uma mensagem na árvore..." class="w-full text-sm rounded-lg border-neutral-300"></textarea>
+                                    </div>
+
+                                    {{-- Prenda --}}
+                                    <div class="bg-neutral-50 p-3 rounded-lg border border-neutral-200">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-xs font-bold text-neutral-700">É uma Prenda? 🎁</span>
+                                            <button type="button" wire:click="$toggle('is_gift')" class="{{ $is_gift ? 'bg-emerald-600' : 'bg-neutral-300' }} relative inline-flex h-5 w-9 rounded-full transition-colors">
+                                                <span class="{{ $is_gift ? 'translate-x-4' : 'translate-x-1' }} inline-block h-3 w-3 transform rounded-full bg-white transition-transform mt-1"></span>
+                                            </button>
+                                        </div>
+                                        @if($is_gift)
+                                            <div class="space-y-2 animate-in fade-in">
+                                                <input type="text" wire:model="gift_recipient_name" placeholder="Nome do Destinatário" class="w-full text-xs rounded border-neutral-300">
+                                                @error('gift_recipient_name') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+
+                                                <input type="email" wire:model="gift_recipient_email" placeholder="Email do Destinatário" class="w-full text-xs rounded border-neutral-300">
+                                                @error('gift_recipient_email') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+
+                                                <textarea wire:model="gift_message" rows="2" placeholder="Mensagem privada..." class="w-full text-xs rounded border-neutral-300"></textarea>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- BOTÃO --}}
+                            <div class="pt-2">
+                                <button type="submit" class="w-full rounded-xl bg-emerald-600 py-4 text-base font-bold text-white shadow-lg shadow-emerald-200 hover:bg-emerald-500 hover:-translate-y-0.5 transition-all flex justify-center items-center gap-2">
+                                    <span>Pagar {{ $amount }}€ com MB WAY</span>
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                                 </button>
+                                <p class="text-[10px] text-center text-neutral-400 mt-2">Pagamento seguro processado pela Ifthenpay</p>
                             </div>
                         </div>
                     </form>
                 @endif
 
                 {{-- ================================================== --}}
-                {{-- PASSO 2: O SUCESSO (Postal) --}}
+                {{-- PASSO 2: SUCESSO --}}
                 {{-- ================================================== --}}
                 @if($step === 2 && $createdDonation)
-                    <div class="p-10 text-center space-y-6 animate-in zoom-in-95 duration-300">
-
-                        {{-- Ícone Sucesso --}}
+                    <div class="p-10 text-center space-y-6">
                         <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-green-100 animate-bounce">
-                            <svg class="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
+                            <svg class="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                         </div>
 
                         <div>
                             <h3 class="text-2xl font-bold text-emerald-900">Donativo Confirmado!</h3>
-                            <p class="text-sm text-neutral-500 mt-2 max-w-xs mx-auto">
-                                O teu gesto já coloriu a árvore. Obrigado por ajudares a Casa da Mamé.
-                            </p>
+                            <p class="text-sm text-neutral-500 mt-2">Obrigado! A tua ajuda já está a caminho.</p>
                         </div>
 
-                        {{-- Link do Postal --}}
-                        <div class="bg-neutral-50 p-5 rounded-xl border border-neutral-200 text-left shadow-inner">
-                            <p class="text-xs font-bold text-neutral-500 uppercase tracking-wide mb-2 flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                O teu Postal Digital:
-                            </p>
-
-                            <div class="flex flex-col sm:flex-row gap-2">
-                                <input type="text" readonly
-                                    value="{{ route('cards.christmas', $createdDonation->access_code) }}"
-                                    class="w-full text-sm text-neutral-600 bg-white border-neutral-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 select-all">
-
-                                <a href="{{ route('cards.christmas', $createdDonation->access_code) }}" target="_blank"
-                                   class="px-5 py-2.5 bg-emerald-600 text-white font-bold rounded-lg text-sm hover:bg-emerald-700 transition-colors whitespace-nowrap flex items-center justify-center gap-2 shadow-sm">
+                        <div class="bg-neutral-50 p-5 rounded-xl border border-neutral-200 text-left">
+                            <p class="text-xs font-bold text-neutral-500 uppercase tracking-wide mb-2">O teu Postal Digital:</p>
+                            <div class="flex gap-2">
+                                <input type="text" readonly value="{{ route('cards.christmas', $createdDonation->access_code) }}" class="w-full text-sm text-neutral-600 bg-white border-neutral-300 rounded-lg">
+                                <a href="{{ route('cards.christmas', $createdDonation->access_code) }}" target="_blank" class="px-5 py-2.5 bg-emerald-600 text-white font-bold rounded-lg text-sm hover:bg-emerald-700 whitespace-nowrap flex items-center gap-2">
                                     <span>Abrir</span>
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                                 </a>
                             </div>
                         </div>
 
-                        <button wire:click="$set('showModal', false)" class="text-sm text-neutral-400 hover:text-neutral-600 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-500 transition-all">
-                            Fechar janela
-                        </button>
+                        <button wire:click="$set('showModal', false)" class="text-sm text-neutral-400 underline hover:text-neutral-600">Fechar janela</button>
                     </div>
                 @endif
 
