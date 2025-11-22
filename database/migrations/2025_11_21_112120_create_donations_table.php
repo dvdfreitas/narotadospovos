@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('donor_phone');
             $table->string('payment_status')->default('pending');
             $table->string('payment_gateway_id')->nullable();
+            $table->string('nif')->nullable();
 
             // 2. DADOS DO DOADOR
             $table->string('donor_name');
