@@ -77,7 +77,7 @@ $getDonationStats = computed(function () {
             {{-- ==================================================== --}}
             <div class="absolute inset-0 z-0">
                 {{-- Árvore Colorida --}}
-                <img src="/images/tree.png" class="w-full h-full object-contain">
+                <img src="/images/funding/christmas2025/tree.png" class="w-full h-full object-contain">
 
                 {{-- Bolas Coloridas (Loop) --}}
                 @foreach($ornaments as $ball)
@@ -100,7 +100,7 @@ $getDonationStats = computed(function () {
                  style="clip-path: inset(0 0 {{ $this->getDonationStats['percent'] }}% 0);">
 
                 {{-- Árvore Cinzenta --}}
-                <img src="/images/tree.png" class="w-full h-full object-contain grayscale opacity-90">
+                <img src="/images/funding/christmas2025/tree.png" class="w-full h-full object-contain grayscale opacity-90">
 
                 {{-- Bolas Cinzentas (Loop - Mesmas posições, cor cinza) --}}
                 @foreach($ornaments as $ball)

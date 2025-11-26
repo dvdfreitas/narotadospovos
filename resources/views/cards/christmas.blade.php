@@ -123,7 +123,7 @@
                             {{-- Selo --}}
                             <div class="bg-white p-1 shadow-sm border border-gray-200">
                                 <div class="w-20 h-24 bg-emerald-50 flex flex-col items-center justify-center border border-dotted border-gray-300">
-                                    <img src="/images/tree.png" class="h-14 w-auto object-contain mb-1">
+                                    <img src="/images/funding/christmas2025/tree.jpg" class="h-14 w-auto object-contain mb-1">
                                     <span class="text-[10px] font-bold text-emerald-800">{{ number_format($donation->amount, 0) }} €</span>
                                 </div>
                             </div>

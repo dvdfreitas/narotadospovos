@@ -95,5 +95,14 @@ class StorySeeder extends Seeder
             'url' => '2025/01/revista_mut',
         ]);
 
+        $story = Story::create([
+            'title' => 'Recolha de Bens Essenciais',
+            'date' => '2025-11-26',
+            'summary' => 'Campanha de recolha de bens essenciais.',
+            'image' => '2025/11/recolha2025.png',
+            'slug' => 'recolha-bens-essenciais',
+            'url' => '2025/11/campanha_recolha',
+        ]);
+
     }
 }
