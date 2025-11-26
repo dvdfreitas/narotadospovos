@@ -6,41 +6,38 @@
 
 
 
-<h1>Dar Alimentos, Dar Sorrisos!</h1>
-<p class="text-sm text-gray-500 dark:text-gray-400">26 de novembro de 2025</p>
+        <h1>Dar Alimentos, Dar Sorrisos!</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400">26 de novembro de 2025</p>
 
-<div class="mt-6 mb-8 flex flex-col items-center gap-4">
+        <div class="mt-6 mb-8 flex flex-col items-center gap-4">
 
-    @php
-        $photos = [
-            '/stories/2025/11/face6.jpg',
-            '/stories/2025/11/face2.jpg',
-            '/stories/2025/11/face3.png',
-            '/stories/2025/11/face4.jpg',
-            '/stories/2025/11/face5.jpg',
-            '/stories/2025/11/face1.jpg',
-        ];
-    @endphp
+            @php
+                $photos = [
+                    '/stories/2025/11/face6.jpg',
+                    '/stories/2025/11/face2.jpg',
+                    '/stories/2025/11/face3.png',
+                    '/stories/2025/11/face4.jpg',
+                    '/stories/2025/11/face5.jpg',
+                    '/stories/2025/11/face1.jpg',
+                ];
+            @endphp
 
-    <div class="w-full max-w-5xl">
-        <div class="flex justify-center gap-3">
-            @foreach ($photos as $src)
-                <figure
-                    class="w-24 sm:w-28 md:w-32 rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-                    <img
-                        src="{{ $src }}"
-                        alt="Sorriso de uma criança"
-                        class="w-full h-20 sm:h-24 md:h-28 object-cover"
-                    >
-                </figure>
-            @endforeach
+            <div class="w-full max-w-5xl">
+                <div class="flex justify-center gap-3">
+                    @foreach ($photos as $src)
+                        <figure
+                            class="w-24 sm:w-28 md:w-32 rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+                            <img src="{{ $src }}" alt="Sorriso de uma criança"
+                                class="w-full h-20 sm:h-24 md:h-28 object-cover">
+                        </figure>
+                    @endforeach
+                </div>
+            </div>
+
+            <p class="text-[11px] text-gray-500 text-center uppercase tracking-[0.22em]">
+                1 € = 1 sorriso por dia
+            </p>
         </div>
-    </div>
-
-    <p class="text-[11px] text-gray-500 text-center uppercase tracking-[0.22em]">
-        1 € = 1 sorriso por dia
-    </p>
-</div>
 
 
 
@@ -98,14 +95,40 @@
         <h2 class="text-xl font-semibold mt-8 mb-4">Como podes ajudar</h2>
 
         <h3 class="text-lg font-medium mt-4 mb-2">💛 Doação de alimentos</h3>
-        <p>Podes entregar os bens nos nossos pontos de recolha:</p>
-        <ul class="list-disc ml-6 my-3">
-            <li><strong>Rua Gonçalves Zarco, 264-4 – Santa Cruz do Bispo – Matosinhos</strong></li>
-            <li><strong>Rua da Portelinha, 483 – Fânzeres – Gondomar</strong></li>
-        </ul>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Os contactos para combinar a entrega estão disponíveis no
-            cartaz.</p>
 
+        <p>
+            Podes entregar os bens nos nossos pontos de recolha, mas pedimos que
+            <strong>marques sempre previamente por telefone</strong>:
+        </p>
+
+        <ul class="mt-3 space-y-4 text-sm text-gray-900">
+            <li class="flex flex-col">
+                <span class="font-medium">
+                    📍 Rua Gonçalves Zarco, 264-4 – Santa Cruz do Bispo – Matosinhos
+                </span>
+                <span class="mt-1 flex flex-wrap items-center gap-3 text-gray-700">
+                    <span class="flex items-center gap-1">
+                        <span>📞</span> 932 412 050
+                    </span>
+                </span>
+            </li>
+
+            <li class="flex flex-col">
+                <span class="font-medium">
+                    📍 Rua da Portelinha, 483 – Fânzeres – Gondomar
+                </span>
+                <span class="mt-1 flex flex-wrap items-center gap-3 text-gray-700">
+                    <span class="flex items-center gap-1">
+                        <span>📞</span> 919 446 418
+                    </span>
+                </span>
+            </li>
+        </ul>
+
+        <p class="mt-3 text-xs text-gray-600">
+            Para garantir que alguém está disponível para receber os bens,
+            <strong>é indispensável fazer contacto prévio</strong> através de um dos números indicados.
+        </p>
         <h3 class="text-lg font-medium mt-6 mb-2">💛 Donativo financeiro</h3>
         <p>Mesmo um pequeno contributo tem um enorme impacto:</p>
         <ul class="list-none ml-0 my-3">
