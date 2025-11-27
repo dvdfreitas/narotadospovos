@@ -254,7 +254,7 @@ $save = function (IfthenpayService $paymentService) {
                 @endif
 
                 {{-- ================================================== --}}
-                {{-- PASSO 2: SUCESSO (COLORIDO E COERENTE) --}}
+                {{-- PASSO 2: SUCESSO (AGORA COM BOTÕES SÓLIDOS IGUAIS) --}}
                 {{-- ================================================== --}}
                 @if($step === 2 && $createdDonation)
                     <div class="p-8 text-center space-y-6 animate-in fade-in duration-500">
@@ -276,34 +276,35 @@ $save = function (IfthenpayService $paymentService) {
 
                         <div class="space-y-3 text-left">
 
-                            {{-- CARTÃO 1: DOADOR (Colorido mas distinto) --}}
-                            <div class="flex items-center justify-between p-4 bg-white border border-blue-100 rounded-xl shadow-sm hover:border-blue-300 transition-colors">
+                            {{-- CARTÃO 1: DOADOR (AGORA COM FUNDO AZUL e BOTÃO SÓLIDO) --}}
+                            <div class="flex items-center justify-between p-4 bg-blue-50 border border-blue-200 rounded-xl shadow-sm hover:border-blue-300 transition-colors">
                                 <div class="flex items-center gap-4">
-                                    {{-- Ícone Azul Bonito --}}
-                                    <div class="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-full text-blue-500 border border-blue-100">
+                                    {{-- Ícone Azul em fundo branco --}}
+                                    <div class="flex items-center justify-center w-10 h-10 bg-white rounded-full text-blue-600 shadow-sm">
+                                        {{-- Ícone de Coração para ser mais "quente" --}}
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                                     </div>
                                     <div class="text-left">
-                                        <p class="text-[10px] font-bold tracking-widest text-blue-400 uppercase">Para Ti</p>
-                                        <p class="text-sm font-bold text-neutral-800">O teu Agradecimento</p>
+                                        <p class="text-[10px] font-bold tracking-widest text-blue-500 uppercase">Para Ti</p>
+                                        <p class="text-sm font-bold text-blue-900">O teu Agradecimento</p>
                                     </div>
                                 </div>
+
+                                {{-- Botão Sólido Azul (igual ao de baixo) --}}
                                 <a href="{{ route('cards.christmas', ['code' => $createdDonation->access_code, 'view' => 'donor']) }}" target="_blank"
-                                class="h-10 px-4 flex items-center gap-2 bg-white border border-neutral-200 text-neutral-700 font-bold rounded-lg text-xs hover:border-blue-400 hover:text-blue-600 transition-all shadow-sm">
+                                class="h-10 px-4 flex items-center gap-2 bg-blue-600 text-white font-bold rounded-lg text-xs hover:bg-blue-700 shadow-md hover:shadow-lg transition-all">
                                     <span>Abrir</span>
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                                 </a>
                             </div>
 
-                            {{-- CARTÃO 2: DESTINATÁRIO (Vibrante e Festivo) --}}
+                            {{-- CARTÃO 2: DESTINATÁRIO --}}
                             @if($createdDonation->is_gift)
-                                <div class="relative overflow-hidden flex items-center justify-between p-4 bg-emerald-50 border border-emerald-200 rounded-xl shadow-sm hover:border-emerald-400 transition-colors group">
+                                <div class="relative overflow-hidden flex items-center justify-between p-4 bg-emerald-50 border border-emerald-200 rounded-xl shadow-sm hover:border-emerald-300 transition-colors group">
 
-                                    {{-- Decoração de Fundo (A tal que gostavas) --}}
                                     <div class="absolute -right-2 -top-2 text-emerald-100/50 text-5xl pointer-events-none group-hover:scale-110 transition-transform">🎁</div>
 
                                     <div class="relative z-10 flex items-center gap-4">
-                                        {{-- Ícone Verde Bonito --}}
                                         <div class="flex items-center justify-center w-10 h-10 bg-white rounded-full text-emerald-600 shadow-sm">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
                                         </div>
