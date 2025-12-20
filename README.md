@@ -27,3 +27,12 @@
 
 # 
 
+
+# Ifthenpay
+
+MBWAY_KEY	Chave específica para MBWay
+MULTIBANCO_KEY	Chave específica para Multibanco
+BACKOFFICE_KEY	Chave geral de autenticação
+ENTIDADE	Identificador Multibanco
+CALLBACK_URL	Endpoint teu
+ANTIPHISHING_KEY	Validação de segurança
