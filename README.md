@@ -5,6 +5,7 @@
 - Melhorar os "números" na página inicial
 - Condensar os parceiros
 
+Acrescentar testes caso faltam elementos no .env
 
 # YouTube
 
