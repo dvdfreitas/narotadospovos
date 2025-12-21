@@ -11,37 +11,33 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('donations', function (Blueprint $table) {
-            $table->id();
-           // 1. DADOS FINANCEIROS
-            $table->decimal('amount', 8, 2);
-            $table->string('donor_email'); // Necessário para recibo/comprovativo
-            $table->string('donor_phone');
-            $table->string('payment_status')->default('pending');
-            $table->string('payment_gateway_id')->nullable();
-            $table->string('nif')->nullable();
+Schema::create('donations', function (Blueprint $table) {
+    $table->id();
 
-            // 2. DADOS DO DOADOR
-            $table->string('donor_name');
+    $table->string('campaign_slug')->index();
+    $table->string('access_code', 64)->unique();
 
-            // 3. EXIBIÇÃO NA ÁRVORE (Público)
-            $table->boolean('is_anonymous')->default(false); // Se true, o nome não aparece publicamente
-            $table->string('public_message', 140)->nullable(); // Mensagem curta visível na lista/árvore
+    $table->decimal('amount', 8, 2);
+    $table->string('currency', 3)->default('EUR');
+    $table->string('status', 20)->default('pendente');
 
-            // 4. OFERTA / PRENDA
-            $table->boolean('is_gift')->default(false);
-            $table->string('gift_recipient_name')->nullable();
-            $table->string('gift_recipient_email')->nullable(); // Email para enviar o postal/notificação
-            $table->text('gift_message')->nullable(); // Mensagem privada para o email da prenda
+    $table->string('donor_name');
+    $table->string('donor_email'); // mais tarde podes encriptar via cast
+    $table->string('donor_phone', 30)->nullable();
+    $table->string('nif', 20)->nullable();
 
-            // 5. CONTROLO INTERNO
-            $table->string('access_code')->nullable()->unique();
+    $table->boolean('is_anonymous')->default(false);
+    $table->json('campaign_data')->nullable();
 
-            // Colunas temporárias do esquema antigo que foram removidas:
-            // is_dedication, dedicated_to_name, dedicated_to_email, dedication_message, show_amount_publicly, show_donor_publicly
+    $table->timestamp('terms_accepted_at')->nullable();
 
-            $table->timestamps();
-        });
+    $table->timestamps();
+    $table->softDeletes();
+
+    $table->index(['campaign_slug', 'status']);
+    $table->index(['campaign_slug', 'created_at']);
+});
+
     }
 
     /**

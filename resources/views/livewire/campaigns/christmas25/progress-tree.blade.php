@@ -38,7 +38,7 @@ state([
 
 $stats = computed(function () {
     // Only count 'paid' donations
-    $total = Donation::where('payment_status', 'paid')->sum('amount');
+    $total = Donation::where('status', 'paid')->sum('amount');
 
     // Calculate percentage (capped at 100% for the progress bar logic,
     // though the total can go higher in value)

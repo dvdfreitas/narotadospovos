@@ -26,7 +26,7 @@ state([
  * Fetch the latest 50 PAID donations from the database.
  */
 $loadDonations = function () {
-    $this->donations = Donation::where('payment_status', 'paid')
+    $this->donations = Donation::where('status', 'paid')
         ->orderByDesc('created_at')
         ->take(50)
         ->get()

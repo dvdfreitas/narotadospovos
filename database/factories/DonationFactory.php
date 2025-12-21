@@ -9,38 +9,42 @@ class DonationFactory extends Factory
 {
     public function definition()
     {
-        $isGift = $this->faker->boolean(20); // 20% das doações são prenda
-        $isAnonymous = $this->faker->boolean(15); // 15% anónimas
+        $isGift = $this->faker->boolean(20);
+        $isAnonymous = $this->faker->boolean(15);
 
         return [
-            // 1. FINANCEIRO
-            'amount' => $this->faker->randomFloat(2, 2, 250), // €2 a €250
-            'donor_email' => $this->faker->safeEmail(),
-            'donor_phone' => $this->faker->numerify('9########'), // nº PT
-            'payment_status' => $this->faker->randomElement(['pending', 'paid', 'failed']),
-            'payment_gateway_id' => $this->faker->optional()->uuid(),
-
-            // 2. DOADOR
-            'donor_name' => $isAnonymous
-                ? 'Anónimo'
-                : $this->faker->name(),
-
-            // 3. EXPOSIÇÃO PÚBLICA
-            'is_anonymous' => $isAnonymous,
-            'public_message' => $this->faker->optional(0.6)->sentence(6, true), // 60% têm mensagem
-
-            // 4. PRENDA / GIFT
-            'is_gift' => $isGift,
-            'gift_recipient_name' => $isGift ? $this->faker->name() : null,
-            'gift_recipient_email' => $isGift ? $this->faker->safeEmail() : null,
-            'gift_message' => $isGift
-                ? $this->faker->optional(0.8)->sentence(10)
-                : null,
-
-            // 5. CONTROLO
+            // 1. CONTEXTO
+            'campaign_slug' => 'natal-25',
             'access_code' => Str::random(12),
 
-            'created_at' => now()->subDays(rand(0, 20)),
+            // 2. FINANCEIRO
+            'amount' => $this->faker->randomFloat(2, 5, 100),
+            'currency' => 'EUR',
+
+            // CORREÇÃO AQUI: Mudámos de 'payment_status' para 'status'
+            'status' => $this->faker->randomElement(['paid', 'paid', 'paid', 'pending']),
+
+            // 3. DOADOR
+            'donor_name' => $this->faker->name(),
+            'donor_email' => $this->faker->safeEmail(),
+            'donor_phone' => '91' . $this->faker->randomNumber(7, true),
+            'nif' => $this->faker->optional()->numerify('#########'),
+
+            // 4. PRIVACIDADE
+            'is_anonymous' => $isAnonymous,
+
+            // 5. JSON MAGIC
+            'campaign_data' => [
+                'item_type' => $this->faker->randomElement(['papas', 'leite', 'crianca', 'familia', 'custom']),
+                'public_message' => $this->faker->boolean(60) ? $this->faker->sentence(6) : null,
+                'is_gift' => $isGift,
+                'gift_recipient_name' => $isGift ? $this->faker->firstName() : null,
+                'gift_message' => $isGift ? $this->faker->sentence(10) : null,
+            ],
+
+            // 6. DATAS
+            'terms_accepted_at' => now(),
+            'created_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'updated_at' => now(),
         ];
     }
