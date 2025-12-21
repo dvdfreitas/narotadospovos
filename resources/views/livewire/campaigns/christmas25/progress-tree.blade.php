@@ -64,16 +64,16 @@ $stats = computed(function () {
     --}}
     <header class="text-center z-10 shrink-0 relative">
         <h2 class="text-xs font-bold uppercase tracking-[0.25em] text-emerald-800 mb-2">
-            Solidarity Christmas Tree
+            Árvore de Natal Solidária
         </h2>
 
         <p class="text-sm text-neutral-600 max-w-xs mx-auto leading-relaxed">
             @if($this->stats['is_complete'])
-                <span class="font-bold text-emerald-600">Goal Reached! 🌟</span><br>
-                Casa da Mamé thanks you!
+                <span class="font-bold text-emerald-600">Objetivo Atingido! 🌟</span><br>
+                A Casa da Mamé agradece!
             @else
-                We have raised <span class="font-bold text-emerald-700">{{ number_format($this->stats['total'], 0, ',', '.') }}€</span>
-                of the {{ number_format($goal, 0, ',', '.') }}€ goal.
+                Já angariámos <span class="font-bold text-emerald-700">{{ number_format($this->stats['total'], 0, ',', '.') }}€</span>
+                do objetivo de {{ number_format($goal, 0, ',', '.') }}€.
             @endif
         </p>
     </header>
@@ -205,7 +205,7 @@ $stats = computed(function () {
     <div class="shrink-0 z-20 bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-emerald-100/50 mx-auto w-full max-w-sm shadow-sm mt-auto">
 
         <div class="flex justify-between items-end mb-2">
-            <span class="text-[10px] uppercase tracking-widest text-neutral-500 font-medium">Progress</span>
+            <span class="text-[10px] uppercase tracking-widest text-neutral-500 font-medium">Progresso</span>
             <div class="text-right">
                 <span class="text-2xl font-bold text-emerald-700 leading-none">{{ $this->stats['percent'] }}%</span>
             </div>
@@ -222,9 +222,9 @@ $stats = computed(function () {
 
         <p class="mt-2 text-[10px] text-center text-neutral-400">
             @if(!$this->stats['is_complete'])
-                Only <strong>{{ number_format($this->stats['remain'], 0, ',', '.') }}€</strong> left to light the star.
+                Faltam apenas <strong>{{ number_format($this->stats['remain'], 0, ',', '.') }}€</strong> para acender a estrela.
             @else
-                Goal accomplished! Thank you! ❤️
+                Objetivo cumprido! Obrigado! ❤️
             @endif
         </p>
     </div>
