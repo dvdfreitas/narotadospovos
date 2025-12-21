@@ -2,11 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\Donation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Enums\DonationStatus;
 
 class DonationFactory extends Factory
 {
+    protected $model = Donation::class;
+
     public function definition()
     {
         $isGift = $this->faker->boolean(20);
@@ -15,14 +19,21 @@ class DonationFactory extends Factory
         return [
             // 1. CONTEXTO
             'campaign_slug' => 'natal-25',
-            'access_code' => Str::random(12),
+            // Se já estás a usar o Trait 'GeneratesAccessCode', podes remover esta linha,
+            // mas mantê-la aqui na Factory não faz mal (sobrescreve o automático).
+            'access_code' => Str::upper(Str::random(12)), 
 
             // 2. FINANCEIRO
             'amount' => $this->faker->randomFloat(2, 5, 100),
             'currency' => 'EUR',
-
-            // CORREÇÃO AQUI: Mudámos de 'payment_status' para 'status'
-            'status' => $this->faker->randomElement(['paid', 'paid', 'paid', 'pending']),
+            
+            // IMPORTANTE: Usa 'paid' para bater certo com o código da Árvore
+            'status' => $this->faker->randomElement([
+                DonationStatus::Paid, 
+                DonationStatus::Paid, 
+                DonationStatus::Pending
+            ]),
+            // REMOVIDO: 'confirmed_at' => ... (Esta coluna não existe na BD)
 
             // 3. DOADOR
             'donor_name' => $this->faker->name(),

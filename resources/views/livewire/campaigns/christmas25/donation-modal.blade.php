@@ -9,6 +9,8 @@ use App\Services\Payments\IfThenPay\IfThenPayService;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use function Livewire\Volt\{state, rules, on};
+use App\Enums\DonationStatus;
+
 
 // -----------------------------------------------------------------------------
 // STATE
@@ -130,32 +132,32 @@ $save = function (IfThenPayService $paymentService) {
         // 2. PEDIR AO GATEWAY
         $result = $paymentService->requestMbWayPayment($this->donor_phone, $this->amount, (string) $donation->id, 'Donativo #' . $donation->id);
 
-        // 3. REGISTAR O PAGAMENTO
-        $donation->payments()->create([
-            'method' => 'mbway',
-            'amount' => $this->amount,
-            'status' => $result->isSuccess() ? 'pending' : 'failed',
-            'provider_request_id' => $result->requestId,
-            'provider_status' => $result->isSuccess() ? '000' : 'ERR',
-            'provider_message' => $result->message,
-        ]);
 
-        // 4. SUCESSO E FORÇA O ESTADO "PAGO" (Para veres na árvore)
-        if ($result->isSuccess()) {
-            // 🚨 FORÇAR PAGAMENTO IMEDIATO PARA TESTES 🚨
-            $donation->update(['status' => 'paid']);
-            $donation
-                ->payments()
-                ->latest()
-                ->first()
-                ->update(['status' => 'paid']);
+try {
+    $result = $paymentService->requestMbWayPayment(
+        $this->donor_phone,
+        $this->amount,
+        (string) $donation->id,
+        'Donativo #' . $donation->id
+    );
 
-            $this->createdDonation = $donation;
-            $this->step = 2;
-            $this->dispatch('donation-added');
-        } else {
-            $this->addError('donor_phone', 'Erro MB WAY: ' . $result->message);
-        }
+    if ($result->isSuccess()) {
+        // Não forçar 'paid'. Mantém como pending até integrares callback.
+        // Se quiseres simular confirmação temporariamente:
+        // $donation->update(['status' => DonationStatus::Confirmed]);
+
+        $this->createdDonation = $donation;
+        $this->step = 2;
+        $this->dispatch('donation-added');
+    } else {
+        $this->addError('donor_phone', 'Erro MB WAY: ' . $result->message);
+    }
+} catch (\RuntimeException $e) {
+    $this->addError('donor_phone', 'Erro na resposta do fornecedor: ' . $e->getMessage());
+} catch (\Exception $e) {
+    $this->addError('donor_phone', 'Erro técnico: ' . $e->getMessage());
+}
+
     } catch (\RuntimeException $e) {
         $this->addError('donor_phone', 'Erro na resposta do fornecedor: ' . $e->getMessage());
     } catch (\Exception $e) {

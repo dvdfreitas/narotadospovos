@@ -2,39 +2,74 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; // Não te esqueças disto para o Seeder funcionar
+use App\Enums\DonationStatus;
+use App\Models\Concerns\GeneratesAccessCode;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 class Donation extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
+    use GeneratesAccessCode;
 
-    protected $fillable = [
-        'campaign_slug',
-        'access_code',
-        'amount',
-        'currency',
-        'status',          // Confirmado: 'status' e não 'payment_status'
-        'donor_name',
-        'donor_email',
-        'donor_phone',
-        'nif',
-        'is_anonymous',
-        'campaign_data',   // O campo JSON
-        'terms_accepted_at',
-    ];
-
+    protected $guarded = [];
 
     protected $casts = [
-        'campaign_data' => 'array',         'is_anonymous' => 'boolean',
-        'terms_accepted_at' => 'datetime',
         'amount' => 'decimal:2',
+        'status' => DonationStatus::class,
+
+        'is_anonymous' => 'boolean',
+        'campaign_data' => 'array',
+        'terms_accepted_at' => 'datetime',
+
+        // Só mantém isto se adicionares a coluna na tabela:
+        'confirmed_at' => 'datetime',
     ];
 
-    // ... Relações (payments) ...
-    public function payments()
+    protected static function booted(): void
     {
-        return $this->hasMany(Payment::class);
+        static::creating(function (self $donation) {
+            // NÃO gerar access_code aqui — isso fica no trait.
+
+            if (blank($donation->status)) {
+                $donation->status = DonationStatus::Pending;
+            }
+        });
+    }
+
+    public function scopePending(Builder $query): Builder
+    {
+        return $query->where('status', DonationStatus::Pending);
+    }
+
+    public function scopeConfirmed(Builder $query): Builder
+    {
+        return $query->where('status', DonationStatus::Confirmed);
+    }
+
+    public function markAsConfirmed(?Carbon $when = null): void
+    {
+        $this->status = DonationStatus::Confirmed;
+        $this->confirmed_at = $when ?? now();
+        $this->save();
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === DonationStatus::Pending;
+    }
+
+    public function isConfirmed(): bool
+    {
+        return $this->status === DonationStatus::Confirmed;
+    }
+
+    public function statusLabelPt(): string
+    {
+        return $this->status->labelPt();
     }
 }
