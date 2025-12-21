@@ -6,6 +6,7 @@ use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\StoryController;
 use App\Models\Donation;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 // Para teste
 // auth()->loginUsingId(1);
@@ -58,14 +59,15 @@ Route::get('/historias', function () {
     return view('tales.index');
 })->name('tales');
 
-Route::get('/natal', function () {
-    return view('christmas-board');
-})->name('christmas-board');
 
-Route::get('/cards/christmas/{code}', function ($code) {
-    $donation = Donation::where('access_code', $code)->firstOrFail();
-    return view('cards.christmas', ['donation' => $donation]);
-})->name('cards.christmas');
+Volt::route('/natal', 'campaigns.christmas25.board')
+    ->name('christmas.board');
+
+Volt::route('/cards/christmas/{code}', 'campaigns.christmas25.card')
+    ->name('cards.christmas');
+
+Volt::route('/natal/privacidade', 'campaigns.christmas25.privacy-policy')
+    ->name('christmas.privacy');
 
 
 Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');
