@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('order_id')->unique();
+            $table->string('method'); // MBWay, multibanco, etc.
+            $table->decimal('amount', 10, 2);
+            $table->string('status');
+            $table->string('provider_request_id')->nullable();
+            $table->string('provider_status')->nullable();
+            $table->text('provider_message')->nullable();
             $table->timestamps();
         });
     }

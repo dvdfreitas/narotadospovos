@@ -36,8 +36,13 @@ return [
     ],
 
     'ifthenpay' => [
-        'mbway_key' => env('IFTHENPAY_MBWAY_KEY'), // Coloca no .env
-        'callback_key' => env('IFTHENPAY_CALLBACK_KEY'), // Chave anti-phishing
+        'env' => env('IFTHENPAY_ENV', 'production'),
+        'mbway' => [
+            'key' => env('IFTHENPAY_MBWAY_KEY'),
+        ],
+        'endpoints' => [
+            'mbway' => 'https://mbway.ifthenpay.com/IfthenPayMBW.asmx/SetPedidoJSON',
+        ],
+        'antiphishing_key' => env('IFTHENPAY_ANTIPHISHING_KEY'),
     ],
-
 ];
