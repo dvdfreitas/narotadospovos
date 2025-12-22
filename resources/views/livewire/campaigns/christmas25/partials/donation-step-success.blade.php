@@ -1,9 +1,5 @@
-{{--
-    FILE: resources/views/livewire/campaigns/christmas25/partials/donation-step-success.blade.php
---}}
-
 @php
-    $isGiftDonation = (bool) data_get($createdDonation->campaign_data, 'is_gift', false);
+$isGiftDonation = (bool) data_get($createdDonation->campaign_data, 'is_gift', false);
 @endphp
 
 <div class="p-8 text-center space-y-6 animate-in fade-in duration-500">
@@ -29,11 +25,10 @@
         <a
             href="{{ route('cards.christmas', ['code' => $createdDonation->access_code, 'view' => 'donor']) }}"
             target="_blank"
-            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow transition-colors flex items-center justify-center gap-2"
-        >
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow transition-colors flex items-center justify-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
                 </path>
             </svg>
             <span>Ver o meu postal</span>
@@ -41,30 +36,28 @@
 
         {{-- Postal para oferecer (se for prenda) --}}
         @if ($isGiftDonation)
-            <a
-                href="{{ route('cards.christmas', ['code' => $createdDonation->access_code]) }}"
-                target="_blank"
-                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow transition-colors flex items-center justify-center gap-2"
-            >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7">
-                    </path>
-                </svg>
-                <span>Postal para oferecer</span>
-            </a>
+        <a
+            href="{{ route('cards.christmas', ['code' => $createdDonation->access_code, 'view' => 'gift']) }}"
+            target="_blank"
+            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow transition-colors flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7">
+                </path>
+            </svg>
+            <span>Postal para oferecer</span>
+        </a>
 
-            <p class="text-xs text-neutral-400">
-                Copia o link deste postal e envia à pessoa.
-            </p>
+        <p class="text-xs text-neutral-400">
+            Copia o link deste postal e envia à pessoa.
+        </p>
         @endif
     </div>
 
     <button
         wire:click="$set('showModal', false)"
         class="text-sm text-neutral-400 underline hover:text-neutral-600 pt-2"
-        type="button"
-    >
+        type="button">
         Fechar janela
     </button>
 </div>

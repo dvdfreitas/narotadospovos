@@ -1,13 +1,9 @@
-{{--
-    FILE: resources/views/livewire/campaigns/christmas25/donation-modal.blade.php
---}}
-
 <?php
 
 use App\Enums\DonationStatus;
 use App\Models\Donation;
 use App\Services\Payments\IfThenPay\IfThenPayService;
-use function Livewire\Volt\{state, rules, on};
+use function Livewire\Volt\{state, rules, on, updated};
 
 // -----------------------------------------------------------------------------
 // STATE
@@ -59,6 +55,27 @@ rules([
     'terms' => 'accepted',
 ]);
 
+updated([
+    'nif' => function ($value) {
+        // 1) Trim
+        $value = trim((string) $value);
+
+        // 2) Remove tudo o que não for dígito (espaços, hífens, etc.)
+        $value = preg_replace('/\D+/', '', $value) ?? '';
+
+        // 3) Converte string vazia para null
+        $this->nif = ($value === '') ? null : $value;
+    },
+    'donor_phone' => function ($value) {
+        // Trim + só dígitos (remove espaços, hífens, etc.)
+        $value = trim((string) $value);
+        $value = preg_replace('/\D+/', '', $value) ?? '';
+
+        // Se ficar vazio, usa string vazia (porque o campo é required)
+        $this->donor_phone = $value;
+    },
+]);
+
 // -----------------------------------------------------------------------------
 // EVENTS
 // -----------------------------------------------------------------------------
@@ -71,15 +88,14 @@ on([
             'donor_email',
             'donor_phone',
             'nif',
+            'is_anonymous',
             'public_message',
+            'is_gift',
             'gift_recipient_name',
             'gift_message',
             'createdDonation',
             'terms',
         ]);
-
-        $this->is_anonymous = false;
-        $this->is_gift = false;
 
         $this->selectedProduct = $type;
         $this->amount = $amount;
@@ -228,28 +244,25 @@ state(['products' => [
         x-show="show"
         x-on:keydown.escape.window="show = false"
         class="fixed inset-0 z-50 overflow-y-auto"
-        style="display: none;"
-    >
+        style="display: none;">
         {{-- Backdrop --}}
         <div
             x-show="show"
             class="fixed inset-0 bg-emerald-950/40 backdrop-blur-sm transition-opacity"
-            @click="show = false"
-        ></div>
+            @click="show = false"></div>
 
         <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
             <div
                 x-show="show"
-                class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl border border-emerald-100"
-            >
+                class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl border border-emerald-100">
                 @if ($step === 1)
-                    @include('livewire.campaigns.christmas25.partials.donation-step-form', [
-                        'products' => $products,
-                    ])
+                @include('livewire.campaigns.christmas25.partials.donation-step-form', [
+                'products' => $products,
+                ])
                 @endif
 
                 @if ($step === 2 && $createdDonation)
-                    @include('livewire.campaigns.christmas25.partials.donation-step-success')
+                @include('livewire.campaigns.christmas25.partials.donation-step-success')
                 @endif
             </div>
         </div>
