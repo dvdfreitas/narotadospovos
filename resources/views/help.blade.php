@@ -133,11 +133,6 @@
 
             <div class="my-8 mt-16"></div>
 
-            <h2>Bens essenciais</h2>
-
-
-            <p></p>
-
 
             <div class="my-8 mt-16" id="firquidja"></div>
 
