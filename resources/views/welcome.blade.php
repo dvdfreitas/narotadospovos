@@ -1,8 +1,10 @@
 <x-guestLayout>
 
-    {{-- <x-irs/> --}}
+    {{--<x-irs/>--}}
+    <x-campaign.irs/>
     <x-motto/>
-    <x-hero/>
+    <x-campaign.carousel/>
+    <!-- <x-hero/> -->
     <x-welcome.about/>
     <x-stories/>
     <x-welcome.projects/>

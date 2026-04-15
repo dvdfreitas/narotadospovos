@@ -6,6 +6,9 @@
             <h1>How to help</h1>
         @endif
 
+                <x-campaign.carousel/>
+
+
         @if (session('language') === 'pt')
             <p>Se der um pouco vai faltar menos.</p>
             <p>Neste processo de fazer do mundo um lugar melhor, todos contam.</p>
@@ -17,6 +20,9 @@
         @endif
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 rounded my-6">
+
+
+
                 <a href="#firquidja" class="rounded bg-nrp-blue  px-2">
                     <div class="px-2 rounded text-center">
                         @if (session('language') === 'pt')
