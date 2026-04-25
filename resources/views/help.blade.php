@@ -8,6 +8,9 @@
 
                 <x-campaign.carousel/>
 
+        <a href="/stories/campanha-recolha-2026" class="block mt-6">
+            <img src="/stories/2026/04/contentor.jpeg" alt="Campanha de Recolha de Bens para Catió" class="w-full rounded-xl hover:opacity-90 transition-opacity">
+        </a>
 
         @if (session('language') === 'pt')
             <p>Se der um pouco vai faltar menos.</p>
