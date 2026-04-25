@@ -9,7 +9,7 @@
         @endif
 
         @php
-            $years = [2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016];
+            $years = [2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016];
             $labels = ['Balanço', 'Parecer do Conselho Fiscal', 'Demonstração de Resultados', 'Relatório da Direção'];
         @endphp
 
@@ -17,24 +17,30 @@
             @foreach ($years as $year)
                 <div class="border-solid p-4 border-2 rounded border-nrp-blue">
                     <div class="text-xl text-nrp-blue font-bold">Ano {{ $year }}</div>
-                    @foreach ($labels as $label)
-                        @php
-                            $file = ".pdf";
-                            if ($label == "Balanço") $file = "Balanco_" . $year . $file;
-                            elseif ($label == "Parecer do Conselho Fiscal") $file = 'Parecer-Conselho-Fiscal_' . $year . $file;
-                            elseif ($label == "Demonstração de Resultados") $file = 'Demonstracao-de-Resultados_'  . $year . $file;
-                            elseif ($label == "Relatório da Direção") $file = 'Relatorio-da-Direcao_'  . $year .  $file;
-                        @endphp
-
-                        {{-- @if ($label != "Relatório da Direção" || $year!=2024) --}}
+                    @if ($year == 2025)
+                        <a href="/docs/relatorios/2025/relatorio_2025.pdf">
+                            <div class="flex hover:opacity-50 cursor-pointer">
+                                <img class="h-12 p-2" src="/images/icons/pdf.svg">
+                                <div class="text-md self-center">Relatórios e Contas</div>
+                            </div>
+                        </a>
+                    @else
+                        @foreach ($labels as $label)
+                            @php
+                                $file = ".pdf";
+                                if ($label == "Balanço") $file = "Balanco_" . $year . $file;
+                                elseif ($label == "Parecer do Conselho Fiscal") $file = 'Parecer-Conselho-Fiscal_' . $year . $file;
+                                elseif ($label == "Demonstração de Resultados") $file = 'Demonstracao-de-Resultados_'  . $year . $file;
+                                elseif ($label == "Relatório da Direção") $file = 'Relatorio-da-Direcao_'  . $year .  $file;
+                            @endphp
                             <a href="/docs/relatorios/{{$year}}/{{$file}}">
                                 <div class="flex hover:opacity-50 cursor-pointer">
                                     <img class="h-12 p-2 " src="/images/icons/pdf.svg">
                                     <div class="text-md self-center">{{ $label}}</div>
                                 </div>
                             </a>
-                        {{-- @endif --}}
-                    @endforeach
+                        @endforeach
+                    @endif
                 </div>
             @endforeach
         </div>

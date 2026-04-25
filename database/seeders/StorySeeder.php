@@ -22,6 +22,8 @@ class StorySeeder extends Seeder
         $viagens = Category::where('slug', 'viagens')->first();
         $tito = Category::where('slug', 'tito')->first();
 
+
+
         $story = Story::create([
             'title' => 'Caminhada com a Rota',
             'date' => '2024-10-06',
@@ -102,6 +104,15 @@ class StorySeeder extends Seeder
             'image' => '2025/11/recolha2025.png',
             'slug' => 'recolha-bens-essenciais',
             'url' => '2025/11/campanha_recolha',
+        ]);
+
+        $story = Story::create([
+            'title' => 'Campanha de Recolha de Bens para Catió',
+            'date' => '2026-04-25',
+            'summary' => 'Faz a diferença com a tua doação! A NRP está a recolher bens alimentares e produtos de higiene para as crianças de Catió, na Guiné-Bissau. Podes entregar nos pontos de recolha em Matosinhos, Leça da Palmeira e Gondomar, ou fazer uma transferência (IBAN: PT50 0036 0407 9910 6015 0401 9) ou MBWay (932 412 050).',
+            'image' => '2026/04/contentor.jpeg',
+            'slug' => 'campanha-recolha-2026',
+            'url' => '2026/04/contentor',
         ]);
 
     }
