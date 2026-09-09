@@ -133,13 +133,13 @@ class PartnerSeeder extends Seeder
             'visible' => true
         ]);
 
-        DB::table('partners')->insert([
-            'name' => 'Cegonha - Bando de Criação',
-            'slug' => 'cegonha',
-            'logo' => 'cegonha.jpeg',
-            'website' => 'https://www.facebook.com/cegonhabando/',
-            'visible' => false
-        ]);
+        // DB::table('partners')->insert([
+        //     'name' => 'Cegonha - Bando de Criação',
+        //     'slug' => 'cegonha',
+        //     'logo' => 'cegonha.jpeg',
+        //     'website' => 'https://www.facebook.com/cegonhabando/',
+        //     'visible' => false
+        // ]);
 
         DB::table('partners')->insert([
             'name' => 'Minimercado Cunha',
