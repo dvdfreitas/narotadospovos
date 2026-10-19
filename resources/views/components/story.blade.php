@@ -20,27 +20,27 @@
         <div class="p-4 flex flex-col flex-1">
 
             <div class="flex items-center gap-2 mb-2">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+                <span class="text-xs font-bold uppercase tracking-widest text-neutral-400">
                     {{ $story->date }}
                 </span>
                 @if($story->categories->isNotEmpty())
                    <span class="w-1 h-1 rounded-full bg-neutral-300"></span>
-                   <span class="text-[10px] font-bold uppercase tracking-widest text-neutral-800">
+                   <span class="text-xs font-bold uppercase tracking-widest text-neutral-800">
                        {{ $story->categories->first()->name }}
                    </span>
                 @endif
             </div>
 
-            <h3 class="text-base font-bold leading-tight text-neutral-900 mb-2 group-hover:text-black">
+            <h3 class="text-lg font-bold leading-tight text-neutral-900 mb-2 group-hover:text-black">
                 {{ $story->title }}
             </h3>
 
-            <p class="text-neutral-500 text-xs leading-relaxed line-clamp-3 mb-3">
+            <p class="text-neutral-600 text-sm leading-relaxed line-clamp-3 mb-3">
                 {{ $story->summary }}
             </p>
 
             <div class="mt-auto pt-3 border-t border-neutral-100">
-                <span class="text-xs font-semibold text-neutral-900 flex items-center gap-1 group-hover:gap-2 transition-all">
+                <span class="text-sm font-semibold text-neutral-900 flex items-center gap-1 group-hover:gap-2 transition-all">
                     Ler mais
                     <svg class="w-3 h-3 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </span>

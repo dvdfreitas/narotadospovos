@@ -8,6 +8,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+        <link rel="icon" type="image/png" sizes="160x161" href="{{ asset('images/logo.png') }}">
+
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
 
         <meta property="og:title" content="@yield('social_description')">
         <meta property="og:image" content="@yield('social_image')">
@@ -25,9 +29,12 @@
         <!-- Styles -->
         @livewireStyles
 
+        {{-- Cada página pode empurrar as suas meta tags para aqui com @push('meta') --}}
+        @stack('meta')
+
     </head>
 
-    <body class="text-gray-900 antialiased px-1 md:px-0">
+    <body class="font-sans text-gray-900 antialiased px-1 md:px-0">
         <x-menu/>
 
         <main>

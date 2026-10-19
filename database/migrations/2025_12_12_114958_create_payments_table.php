@@ -13,22 +13,28 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('donation_id')->constrained()->cascadeOnDelete();
+            // Nullable porque a referência deriva do id, que só existe depois
+            // da inserção. É atribuída logo a seguir, na mesma transação.
+            // O índice único permite vários NULL e continua a impedir
+            // referências repetidas — que a ifthenpay aceitaria, cobrando
+            // duas vezes.
+            $table->string('reference', 15)->nullable()->unique();
+            $table->morphs('payable');
 
-            $table->string('method', 30);
+            $table->string('method', 30)->default('mbway');
             $table->decimal('amount', 10, 2);
-            $table->string('status', 20);
+            $table->string('status', 20)->default('pending');
 
             $table->string('provider_request_id', 100)->nullable();
             $table->string('provider_status', 50)->nullable();
             $table->text('provider_message')->nullable();
             $table->json('provider_payload')->nullable();
 
+            $table->timestamp('expires_at')->nullable();
             $table->timestamp('confirmed_at')->nullable();
             $table->timestamps();
 
-            $table->index(['donation_id', 'status']);
-            $table->index('provider_request_id');
+            $table->index(['status', 'expires_at']);
         });
     }
 

@@ -2,8 +2,6 @@
 
 use App\Enums\DonationStatus;
 use App\Models\Donation;
-use App\Services\Payments\IfThenPay\IfThenPayService;
-use App\Services\Payments\IfThenPay\MbWayPaymentResult; // Assumindo que tens este DTO ou similar
 use Livewire\Volt\Volt;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

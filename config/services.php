@@ -35,14 +35,9 @@ return [
         ],
     ],
 
+    // Ver documentation/ifthenpay.md
     'ifthenpay' => [
-        'env' => env('IFTHENPAY_ENV', 'production'),
-        'mbway' => [
-            'key' => env('IFTHENPAY_MBWAY_KEY'),
-        ],
-        'endpoints' => [
-            'mbway' => 'https://mbway.ifthenpay.com/IfthenPayMBW.asmx/SetPedidoJSON',
-        ],
-        'antiphishing_key' => env('IFTHENPAY_ANTIPHISHING_KEY'),
+        'mbway_key'         => env('IFTHENPAY_MBWAY_KEY'),
+        'anti_phishing_key' => env('IFTHENPAY_ANTI_PHISHING_KEY'),
     ],
 ];

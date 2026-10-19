@@ -60,14 +60,28 @@ Route::get('/historias', function () {
 })->name('tales');
 
 
-Volt::route('/natal', 'campaigns.christmas25.board')
-    ->name('christmas.board');
+// Campanha de Natal — DESACTIVADA.
+// O modal cria donativos sem pedir pagamento. Reactivar quando o MB Way
+// estiver a funcionar. Ver documentation/backlog.md
+//
+// Volt::route('/natal', 'campaigns.christmas25.board')
+//     ->name('christmas.board');
+//
+// Volt::route('/cards/christmas/{code}', 'campaigns.christmas25.card')
+//     ->name('cards.christmas');
 
-Volt::route('/cards/christmas/{code}', 'campaigns.christmas25.card')
-    ->name('cards.christmas');
 
-Volt::route('/natal/privacidade', 'campaigns.christmas25.privacy-policy')
-    ->name('christmas.privacy');
+// Política de privacidade — cobre os donativos, a Loja Solidária e as campanhas.
+Volt::route('/privacidade', 'privacy-policy')
+    ->name('privacy');
+
+// A morada antiga circulou nos donativos de Natal.
+Route::redirect('/natal/privacidade', '/privacidade', 301);
+
+
+// Loja Solidária — acessível por link directo, fora do menu.
+Volt::route('/loja-solidaria', 'shop.index')
+    ->name('shop.index');
 
 
 Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');

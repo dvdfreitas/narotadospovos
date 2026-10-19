@@ -26,7 +26,7 @@
         <p>A “Na Rota dos Povos” tem por objeto apoiar e desenvolver ações para a defesa, elevação e manutenção da qualidade de vida do ser humano e do meio ambiente, através do desenvolvimento de atividades de carácter educativo, social, cultural, ambiental e desportivo, bem como da cooperação, do diálogo intercultural e do apoio direto e efetivo a projetos de organizações congéneres nacionais ou internacionais, nomeadamente através da conceção, execução, facilitação e realização de programas nas seguintes áreas privilegiadas:</p>
         <br>
         1 – Áreas privilegiadas:
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
             <li class="list-item list-inside">Educação como sendo o único caminho para o desenvolvimento,</li>
             <li class="list-item list-inside">Proteção e promoção da ética, da paz, da cidadania, dos direitos humanos, da democracia e de outros valores,</li>
             <li class="list-item list-inside">Promoção dos direitos das pessoas portadoras de quaisquer necessidades especiais ou deficiência;</li>
@@ -84,7 +84,7 @@
         <p class="text-xl text-nrp-green text-center pt-2">Artigo 8º</p>
 
         <p>São direitos dos associados efetivos e fundadores:</p>
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
             <li class="list-item list-inside">Participar nas Assembleias Gerais;</li>
             <li class="list-item list-inside">Participar de todas as atividades associativas;</li>
             <li class="list-item list-inside">Eleger e serem eleitos para os cargos sociais;</li>
@@ -100,7 +100,7 @@
 
         <p>São deveres dos associados:</p>
 
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
             <li class="list-item list-inside">Pagar atempadamente as suas quotas desde que sejam associados efetivos;</li>
             <li class="list-item list-inside">Acatar as deliberações dos Corpos Diretivos e das Assembleias Gerais</li>
             <li class="list-item list-inside">Desempenhar com zelo, dedicação e eficiência os cargos para que forem eleitos;</li>
@@ -135,7 +135,7 @@
 
         <p>Compete, designadamente, à Mesa da Assembleia Geral:</p>
 
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
             <li class="list-item list-inside">Convocar a sua realização.</li>
             <li class="list-item list-inside">Presidir e fiscalizar o processo eleitoral.</li>
             <li class="list-item list-inside">Dirigir, orientar e disciplinar os trabalhos da Assembleia Geral.</li>
@@ -147,7 +147,7 @@
         <p class="text-xl text-nrp-green text-center pt-2">Artigo 14º</p>
 
         <p>As assembleias reúnem-se em sessões ordinárias e extraordinárias;</p>
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
             <li class="list-item list-inside">Ordinariamente no final de cada mandato, para eleição de novos corpos sociais e até trinta e um de março de cada ano para apreciação e votação do Relatório da Direção, Demonstração de Resultados e Balanço Anual e demais relatórios financeiros do exercício anterior, e o Orçamento e Plano Anual de Atividades para o novo exercício;</li>
             <li class="list-item list-inside">Extraordinariamente, apenas quando convocada pelo Presidente da Mesa da Assembleia Geral, Direção ou por pelo menos metade mais um dos Associados.</li>
         </ul>
@@ -168,7 +168,7 @@
 
         <p>A Assembleia Geral não pode deliberar, em primeira convocação, sem pelo menos, a presença de metade mais um, dos seus associados.</p>
         <p>São tomadas por maioria absoluta dos associados presentes e com direito a voto, nomeadamente, as deliberações que versem sobre:</p>
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
             <li class="list-item list-inside">Admissão de novos associados efetivos;</li>
             <li class="list-item list-inside">Nomeação dos membros dos Conselho Superior e Consultivo;</li>
             <li class="list-item list-inside">Deliberação sobre casos omissos e não previstos nestes Estatutos.</li>
@@ -188,7 +188,7 @@
         <p class="text-xl text-nrp-green text-center pt-2">Artigo 19º</p>
 
         <p>A Direção da “Na Rota dos Povos”, deverá assumir as seguintes atribuições:</p>
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
         <li class="list-item list-inside">Coordenar a gestão, funcionamento e administração da “Na Rota dos Povos” e dinamizar e impulsionar a sua atividade.</li>
         <li class="list-item list-inside">Garantir a boa implementação das linhas gerais da atividade da “Na Rota dos Povos” e propor eventuais revisões à deliberação da Assembleia Geral.</li>
         <li class="list-item list-inside">Elaborar e aprovar o regulamento interno, o organograma funcional e outros instrumentos previstos nos Estatutos ou outros necessários à organização da “Na Rota dos Povos” e à boa prossecução dos seus fins, cuja aprovação não esteja reservada a outro órgão.</li>
@@ -225,7 +225,7 @@
 
         <p>O Presidente da “Na Rota dos Povos” visando imprimir maior operacionalidade às ações da Associação, poderá constituir uma Comissão Executiva com outros dois elementos da direção, e por si presidida, de modo a agilizar a gestão corrente da Associação, sem prejuízo de assumir as seguintes atribuições:</p>
 
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
             <li class="list-item list-inside">Convocar, reunir e presidir às reuniões da Direção, pelo menos uma vez por mês; </li>
             <li class="list-item list-inside">Assinar, rubricar os termos de Abertura e Encerramento do Livro de Atas da Direção; </li>
             <li class="list-item list-inside">Coordenar e dirigir as atividades gerais específicas da “Na Rota dos Povos”;    </li>
@@ -327,7 +327,7 @@
         <p class="text-xl text-nrp-green text-center pt-2">Artigo 38º</p>
 
         <p>São receitas da “Na Rota dos Povos”, entre outras:</p>
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
             <li class="list-item list-inside">As quotas dos membros associados;  </li>
             <li class="list-item list-inside">Os rendimentos de bens próprios;   </li>
             <li class="list-item list-inside">As doações, legados, heranças e respetivos rendimentos;</li>
@@ -370,7 +370,7 @@
 
         <p>A “Na Rota dos Povos” observará as normas de prestação de contas, que determinarão, no mínimo:</p>
 
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
             <p>A observância dos princípios fundamentais de contabilidade e das Normas Portuguesas de Contabilidade;</p>
             <p>Que se dê publicidade por qualquer meio eficaz, no encerramento do exercício fiscal, ao relatório de atividades e das demonstrações financeiras da entidade.</p>
         </ul>
@@ -390,7 +390,7 @@
         <p class="text-center">(Penas Disciplinares)</p>
         <br>
         <p>As penas disciplinares são as seguintes:</p>
-        <ul class="list-disc font-thin space-y-1">
+        <ul class="list-disc font-light space-y-1">
         <li class="list-item list-inside">Advertência;</li>
         <li class="list-item list-inside">Repreensão registada;</li>
         <li class="list-item list-inside">Suspensão Temporária;</li>

@@ -1,0 +1,190 @@
+openapi: 3.0.3
+info: 
+  version: v.2.0
+  title: MB WAY - REST
+  description: |-
+    <img src="../../assets/images/ifthenpay-w.png" style="text-align: left;" id="logotipo">
+    <br>
+    Welcome to the Rest MB WAY API documentation. This API allows you to initiate MB WAY payment requests with ease.
+
+    To integrate with this API, you will need an <b>'MBWAY KEY'</b> provided by <b>ifthenpay</b>, assigned to your merchant account. If you do not have this 'MBWAY KEY', please contact <b>ifthenpay</b>.
+    
+    <br>
+
+    Before implementation, please verify if an existing integration is already available for your platform, whether developed by Ifthenpay, the platform provider, or a third party.
+
+    You can check the list of available plugins and their corresponding e-commerce platforms [here](https://helpdesk.ifthenpay.com/pt-PT/support/solutions/articles/79000086132-plugins-para-plataformas-de-ecommerce).  
+
+    <br>
+
+    <b>ifthenpay</b> offers free technical support to all customers through the following channels:
+    - Email: [suporte@ifthenpay.com](suporte@ifthenpay.com)
+    - Phone: <a href='tel:808222777'>808 222 777</a> | <a href='tel:+351256245560'>+351 256 245 560</a>
+    - Helpdesk: [submit a ticket](https://helpdesk.ifthenpay.com)    
+    - Site: [www.ifthenpay.com](https://ifthenpay.com)    
+
+    <br><br>
+    [« go to index](../../index.html#mbway)
+
+  termsOfService: https://www.ifthenpay.com/politica-de-privacidade/?lang=en
+  contact:
+    email: suporte@ifthenpay.com
+servers:
+  - url: https://api.ifthenpay.com/spg/payment
+tags:
+  - name: MB WAY
+    description: |-
+      There are 2 methods available for this API.
+      - <b>/mbway</b><br>request a new payment​
+      - <b>/mbway/status</b><br>check payment status      
+paths:
+  /mbway:
+    post:
+      tags:
+        - MB WAY
+      summary: Request New Payment
+      description: Request a new MB WAY payment
+      operationId: mbway
+      requestBody:
+        description: 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request-Payment'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response-Payment'
+  /mbway/status:
+    get:
+      tags:
+        - MB WAY
+      summary: Check Payment Status
+      description: Check MB WAY payment status
+      operationId: status
+      parameters:
+        - name: mbWayKey
+          in: query
+          description: assigned by ifthenpay
+          required: true
+          schema:
+            type: string
+            default: "MBWAY_KEY"
+        - name: requestId 
+          in: query
+          description: obtained in response to the request
+          required: true
+          schema:
+            type: string
+            default: i2szvoUfPYBMWdSxqO3n
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response-Status'
+components:
+  schemas:
+    Request-Payment:
+      required:
+        - mbWayKey
+        - orderId
+        - amount
+        - mobileNumber
+      type: object
+      properties:
+        mbWayKey:
+          type: string
+          example: "MBWAY_KEY"
+          description: assigned by ifthenpay
+        orderId:
+          type: string
+          example: "1887"
+          maxLength: 15
+          description: payment identifier defined by the client (e.g., invoice number, order number, etc.)<br>maximum length of 15 characters
+        amount:
+          type: string
+          example: "10.99"
+          description: decimal separator "."
+        mobileNumber:
+          type: string
+          example: 351#912345678
+          description: place the country code before the mobile number without any spaces (use '#'' to separate the country code from the mobile number - p.e. 351#912345678)
+        email:
+          type: string
+          example: empresa@empresa.com
+          maxLength: 100
+          description: maximum length of 100 characters
+        description:
+          type: string
+          example: order 1 payment
+          maxLength: 100
+          description: maximum length of 100
+        notificationUrl:
+          type: string
+          example: https://www.yoursite.com/notification.php
+          maxLength: 500
+          description: optional URL that will receive a POST notification with the final status of the payment (paid, declined by the user or expired)<br>maximum length of 500 characters<br>for the request format and how to validate it, refer to the guide at <a href='https://ifthenpay.com/docs/en/guides/callback/#mbway-notification' target='_blank'>https://ifthenpay.com/docs/en/guides/callback/</a>
+    Response-Payment:
+      type: object
+      properties:
+        Amount:
+          type: number
+          format: double
+          example: 10.99
+        Message:
+          type: string
+          example: Pending
+          description: message associated with the Status
+        orderId:
+          type: string
+          example: 1887
+          description: payment identifier defined by the client (e.g., invoice number, order number, etc.)<br>maximum length of 15 characters
+        RequestId:
+          type: string
+          example: i2szvoUfPYBMWdSxqO3n
+          description: token associated with the request. It is essential to always store the RequestId from the response, as it serves to uniquely identify the transaction.
+        Status:
+          type: string
+          enum:
+            - 000 - Request initialized successfully (pending acceptance).
+            - 100 - The initialization request could not be completed. You can try again.
+            - 122 - Transaction declined to the user.
+            - 999 - Error on initializing the request. You can try again.          
+          example: "000"
+          description: "Below the response codes you can get when initializing the payment request:"
+    Response-Status:
+      type: object
+      properties:
+        CreatedAt:
+          type: string
+          format: datetime
+          example: "03-01-2024 15:15:06"
+          description: creation datetime
+        Message:
+          type: string
+          example: "Success"
+          description: message associated with the Status
+        RequestId:
+          type: string
+          example: i2szvoUfPYBMWdSxqO3n
+          description: token associated with the request. It is essential to always store the RequestId from the response, as it serves to uniquely identify the transaction.
+        Status:
+          type: string
+          enum:
+            - 000 - Transaction successfully completed (Payment confirmed).
+            - 020 - Transaction rejected by the user.
+            - 101 - Transaction expired (the user has 4 minutes to accept the payment in the MB WAY App before expiring).
+            - 122 - Transaction declined to the user.
+          example: "000"
+          description: "Below the response codes you can get when checking payment status:"          
+        UpdateAt:
+          type: string
+          format: datetime
+          example: "03-01-2024 15:15:16"  
+          description: creation datetime        

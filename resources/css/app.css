@@ -20,7 +20,7 @@
     }
 
     p {
-        @apply text-justify my-1 text-xl space-y-1 text-gray-900 font-extralight leading-relaxed;
+        @apply my-1 text-xl text-gray-900 font-normal leading-relaxed;
     }
 
 }

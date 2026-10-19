@@ -19,7 +19,7 @@ Schema::create('donations', function (Blueprint $table) {
 
     $table->decimal('amount', 8, 2);
     $table->string('currency', 3)->default('EUR');
-    $table->string('status', 20)->default('pendente');
+    $table->string('status', 20)->default('pending');
 
     $table->string('donor_name');
     $table->string('donor_email'); // mais tarde podes encriptar via cast

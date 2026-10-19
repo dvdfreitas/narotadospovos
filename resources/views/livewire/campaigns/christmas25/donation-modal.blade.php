@@ -2,7 +2,6 @@
 
 use App\Enums\DonationStatus;
 use App\Models\Donation;
-use App\Services\Payments\IfThenPay\IfThenPayService;
 use function Livewire\Volt\{state, rules, on, updated};
 
 // -----------------------------------------------------------------------------
@@ -124,7 +123,7 @@ $selectProduct = function ($type, $value) {
     $this->amount = $value;
 };
 
-$save = function (IfThenPayService $paymentService) {
+$save = function () {
     $this->validate(null, [
         'donor_phone.required' => 'O telemóvel é necessário para o MB WAY.',
         'donor_phone.regex' => 'Introduza um número válido (91, 92, 93 ou 96).',
@@ -156,32 +155,12 @@ $save = function (IfThenPayService $paymentService) {
         ],
     ]);
 
-    // 2) PEDIR PAGAMENTO AO GATEWAY (MB WAY)
-    try {
-        $result = $paymentService->requestMbWayPayment(
-            $this->donor_phone,
-            $this->amount,
-            (string) $donation->id,
-            'Donativo #' . $donation->id
-        );
+    // 2) PAGAMENTO — desligado de propósito.
+    //    O cliente MB Way vai ser reescrito de raiz; ver docs/mbway-loja.md
+    $this->createdDonation = $donation;
+    $this->step = 2;
 
-        if ($result->isSuccess()) {
-            // Mantém como Pendente até existir callback/confirmação real.
-            $this->createdDonation = $donation;
-            $this->step = 2;
-
-            $this->dispatch('donation-added');
-        } else {
-            $this->addError(
-                'donor_phone',
-                'Não foi possível iniciar o pagamento por MB WAY. Tenta novamente.'
-            );
-        }
-    } catch (\RuntimeException $e) {
-        $this->addError('donor_phone', 'Erro na resposta do fornecedor: ' . $e->getMessage());
-    } catch (\Exception $e) {
-        $this->addError('donor_phone', 'Erro técnico: ' . $e->getMessage());
-    }
+    $this->dispatch('donation-added');
 };
 
 // -----------------------------------------------------------------------------

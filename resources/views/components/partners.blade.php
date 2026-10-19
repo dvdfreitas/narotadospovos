@@ -15,7 +15,7 @@
 <div class="max-w-8xl m-auto my-16">
 
     <h1>Parceiros</h1>
-    <div class="max-w-sm space-y-0 leading-tight font-extralight my-4">
+    <div class="max-w-sm space-y-0 leading-tight font-light my-4">
         <div>{!! $quote !!}</div>
     </div>
     <p>{{ $description }}</p>

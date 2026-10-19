@@ -1,3 +1,31 @@
+# Desenvolvimento local
+
+A aplicação usa PHP, Composer, MySQL e Node.js instalados localmente.
+As dependências de testes atuais suportam PHP 8.2 a 8.4.
+
+No `.env`, configura a ligação à base de dados local:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nrp
+DB_USERNAME=nrp
+DB_PASSWORD="password do utilizador MySQL nrp"
+```
+
+A base de dados e o utilizador MySQL devem existir antes de executar as migrations.
+Para instalar as dependências e preparar as tabelas:
+
+```bash
+composer install
+npm ci
+php artisan config:clear
+php artisan migrate
+```
+
+Para desenvolver, executa `php artisan serve` e, noutro terminal, `npm run dev`.
+
 # Próximos
 
 - Setas no Hero

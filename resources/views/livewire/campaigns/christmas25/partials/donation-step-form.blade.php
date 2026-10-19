@@ -230,7 +230,7 @@
                 <div class="text-xs text-neutral-500">
                     Aceito a
                     <a
-                        href="{{ route('christmas.privacy') }}"
+                        href="{{ route('privacy') }}"
                         target="_blank"
                         class="font-bold text-emerald-700 hover:underline"
                     >

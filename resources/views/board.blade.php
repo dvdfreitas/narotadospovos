@@ -24,7 +24,7 @@
                 <div>
                     <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Assembleia Geral</h3>
                     <ul class="space-y-3 text-sm text-gray-700">
-                        <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> <span class="font-bold text-gray-900 text-base">Maria Alcina Jorge Almeida</span></li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Maria Alcina Jorge Almeida</li>
                         <li><span class="block text-xs text-gray-400 font-semibold">1º Vice-Presidente</span> Filomena Maria Silva Ramos</li>
                         <li><span class="block text-xs text-gray-400 font-semibold">2º Vice-Presidente</span> Rita Bandeira Coelho</li>
                         <li><span class="block text-xs text-gray-400 font-semibold">Secretária</span> Maria Manuela Fidalgo</li>
@@ -32,9 +32,9 @@
                 </div>
 
                 <div>
-                    <h3 class="font-bold text-sm text-nrp-blue uppercase border-b border-nrp-blue/30 pb-2 mb-4">Direção</h3>
+                    <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Direção</h3>
                     <ul class="space-y-3 text-sm text-gray-700">
-                        <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> <span class="font-bold text-gray-900 text-lg">Susana Rute Ribeiro Ramos Antunes</span></li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Susana Rute Ribeiro Ramos Antunes</li>
                         <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Manuel Octávio Braga Soares Coelho</li>
                         <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Mário José Gomes Gouveia</li>
                         <li><span class="block text-xs text-gray-400 font-semibold">Tesoureiro</span> Tito Osvaldo Dias Baião</li>
@@ -47,7 +47,7 @@
                 <div>
                     <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Conselho Fiscal</h3>
                     <ul class="space-y-3 text-sm text-gray-700">
-                        <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> <span class="font-bold text-gray-900 text-base">Ivone Carla dos Santos M. B. Vasco</span></li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Ivone Carla dos Santos M. B. Vasco</li>
                         <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Alfredo da Fonseca Vieira</li>
                         <li><span class="block text-xs text-gray-400 font-semibold">Vogais</span> Abel Alvaro Duarte Gomes<br>Luis Miguel Soares da Costa Seabra<br>Susana Isabel Duarte Teles Andrade</li>
                     </ul>
@@ -64,224 +64,271 @@
 
         <div class="space-y-6">
 
-            <div class="border-2 border-nrp-blue rounded-lg p-6 bg-white">
-                <p class="font-bold text-lg text-gray-900 mb-4">22 de Fevereiro 2025 a 31 de Dezembro 2025</p>
-
-                <div class="mb-4">
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">MESA DA ASSEMBLEIA GERAL</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Tito Osvaldo Dias Baião</p>
-                        <p>1º Vice-Presidente: Teresa Natália da Costa Leite Pinheiro</p>
-                        <p>2º Vice-Presidente: Isabel Margarida da Silva Soares Lopes</p>
-                        <p>Secretária: Maria Manuela Fidalgo</p>
-                    </div>
+            <div class="bg-white border-l-4 border-nrp-blue shadow-sm rounded-r-xl overflow-hidden">
+                <div class="bg-gray-50 px-8 py-5 border-b border-gray-100">
+                    <p class="text-lg font-bold text-nrp-blue">
+                        22 de Fevereiro 2025 a 31 de Dezembro 2025
+                    </p>
                 </div>
 
-                <div class="mb-4">
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">DIRECÇÃO</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Susana Rute Ribeiro Ramos Antunes</p>
-                        <p>1º Vice-Presidente: Fernando Manuel Lino Pinheiro</p>
-                        <p>2º Vice-Presidente: Manuel Octávio Braga Soares Coelho</p>
-                        <p>Tesoureira: Anabela Fernanda Santos Bandeira de Sousa</p>
-                        <p>Secretário: David Correia Teixeira Freitas</p>
-                        <p>Vogal: Maria Alcina Jorge Almeida</p>
-                        <p>Vogal: Rita Bandeira Coelho</p>
+                <div class="p-8 grid md:grid-cols-3 gap-12">
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Mesa da Assembleia Geral</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Tito Osvaldo Dias Baião</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">1º Vice-Presidente</span> Teresa Natália da Costa Leite Pinheiro</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">2º Vice-Presidente</span> Isabel Margarida da Silva Soares Lopes</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Secretária</span> Maria Manuela Fidalgo</li>
+                        </ul>
                     </div>
-                </div>
 
-                <div>
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">CONSELHO FISCAL</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Luis Armando Gonçalves Monteiro</p>
-                        <p>Vice-Presidente: Ivone Carla dos Santos Miranda Branco Vasco</p>
-                        <p>Vogal: Paula Alexandra Beirão Vieira</p>
-                        <p>Vogal: Luis Miguel Soares da Costa Seabra</p>
-                        <p>Vogal: Susana Isabel Duarte Teles Andrade</p>
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Direcção</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Susana Rute Ribeiro Ramos Antunes</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">1º Vice-Presidente</span> Fernando Manuel Lino Pinheiro</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">2º Vice-Presidente</span> Manuel Octávio Braga Soares Coelho</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Tesoureira</span> Anabela Fernanda Santos Bandeira de Sousa</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> David Correia Teixeira Freitas</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vogais</span> Maria Alcina Jorge Almeida<br>Rita Bandeira Coelho</li>
+                        </ul>
                     </div>
-                </div>
-            </div>
 
-            <div class="border-2 border-nrp-blue rounded-lg p-6 bg-white">
-                <p class="font-bold text-lg text-gray-900 mb-4">28 de Maio 2022 a 21 de Fevereiro 2025</p>
-
-                <div class="mb-4">
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">MESA DA ASSEMBLEIA GERAL</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Teresa Costa Pinheiro</p>
-                        <p>1º Vice-Presidente: Manuel Rúben Sá Almeida (Cessou funções)</p>
-                        <p>2º Vice-Presidente: Maria Cristina Cunha Leite</p>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">DIRECÇÃO</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Susana Rute Ribeiro Ramos Antunes</p>
-                        <p>1º Vice-Presidente: Fernando Manuel Lino Pinheiro</p>
-                        <p>2º Vice-Presidente: Manuel Octávio Coelho</p>
-                        <p>Tesoureiro: Ivone Carla dos Santos Branco Vasco</p>
-                        <p>Secretário: Domingos Paulo Soares Lopes</p>
-                        <p>Vogal: Anabela Bandeira Sousa</p>
-                        <p>Vogal: David Correia Teixeira Freitas</p>
-                        <p>Vogal: Maria Alcina Almeida</p>
-                        <p>Vogal: Rui Alberto Silva</p>
-                        <p>Suplente: Sandra Cristina Rocha Baptista</p>
-                    </div>
-                </div>
-
-                <div>
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">CONSELHO FISCAL</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Luis Armando Monteiro</p>
-                        <p>Vice-Presidente: Paula Alexandra Beirão Vieira</p>
-                        <p>Vogal: Inês Lobo Pereira</p>
-                        <p>Vogal: Luis Miguel Soares Seabra</p>
-                        <p>Vogal: Susana Teles Andrade</p>
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Conselho Fiscal</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Luis Armando Gonçalves Monteiro</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Ivone Carla dos Santos Miranda Branco Vasco</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vogais</span> Paula Alexandra Beirão Vieira<br>Luis Miguel Soares da Costa Seabra<br>Susana Isabel Duarte Teles Andrade</li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="border-2 border-nrp-blue rounded-lg p-6 bg-white">
-                <p class="font-bold text-lg text-gray-900 mb-4">30 de Março 2019 a 27 de Maio 2022</p>
-
-                <div class="mb-4">
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">MESA DA ASSEMBLEIA GERAL</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: António Júlio Montenegro Silva</p>
-                        <p>Vice-Presidente: Maria Alcina Jorge Almeida</p>
-                        <p>Secretário: Ivone Carla dos Santos Branco Vasco</p>
-                    </div>
+            <div class="bg-white border-l-4 border-nrp-blue shadow-sm rounded-r-xl overflow-hidden">
+                <div class="bg-gray-50 px-8 py-5 border-b border-gray-100">
+                    <p class="text-lg font-bold text-nrp-blue">
+                        28 de Maio 2022 a 21 de Fevereiro 2025
+                    </p>
                 </div>
 
-                <div class="mb-4">
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">DIRECÇÃO</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Tito Osvaldo Dias Baião</p>
-                        <p>Vice-Presidente: Zélia Maria Fernandes Santos</p>
-                        <p>Secretário: Manuel Octávio Coelho</p>
-                        <p>Tesoureiro: Susana Rute Ribeiro Ramos Antunes</p>
-                        <p>Vogal: Fernando Manuel Lino Pinheiro</p>
+                <div class="p-8 grid md:grid-cols-3 gap-12">
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Mesa da Assembleia Geral</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Teresa Costa Pinheiro</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">1º Vice-Presidente</span> Manuel Rúben Sá Almeida (Cessou funções)</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">2º Vice-Presidente</span> Maria Cristina Cunha Leite</li>
+                        </ul>
                     </div>
-                </div>
 
-                <div>
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">CONSELHO FISCAL</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Alfredo Fonseca Vieira</p>
-                        <p>Vogal: José Bernardo Sampaio Pimentel</p>
-                        <p>Vogal: Fernanda Isabel Silva</p>
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Direcção</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Susana Rute Ribeiro Ramos Antunes</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">1º Vice-Presidente</span> Fernando Manuel Lino Pinheiro</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">2º Vice-Presidente</span> Manuel Octávio Coelho</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Tesoureiro</span> Ivone Carla dos Santos Branco Vasco</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Domingos Paulo Soares Lopes</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vogais</span> Anabela Bandeira Sousa<br>David Correia Teixeira Freitas<br>Maria Alcina Almeida<br>Rui Alberto Silva</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Suplente</span> Sandra Cristina Rocha Baptista</li>
+                        </ul>
                     </div>
-                </div>
-            </div>
 
-            <div class="border-2 border-nrp-blue rounded-lg p-6 bg-white">
-                <p class="font-bold text-lg text-gray-900 mb-4">2 de Abril 2016 a 29 de Março 2019</p>
-
-                <div class="mb-4">
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">MESA DA ASSEMBLEIA GERAL</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: António Júlio Montenegro Silva</p>
-                        <p>Vice-Presidente: Raquel Maria Moura Pacheco</p>
-                        <p>Secretário: Arnaldo Saejo Baldé</p>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">DIRECÇÃO</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Tito Osvaldo Dias Baião</p>
-                        <p>Vice-Presidente: Luis Armando Gonçalves Monteiro</p>
-                        <p>Secretário: Zélia Maria Fernandes Santos</p>
-                        <p>Tesoureiro: Susana Rute Ribeiro Ramos Antunes</p>
-                        <p>Vogal: Luis André Quinteiros</p>
-                    </div>
-                </div>
-
-                <div>
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">CONSELHO FISCAL</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Alfredo Fonseca Vieira</p>
-                        <p>Vogal: José Bernardo Sampaio Pimentel</p>
-                        <p>Vogal: António Sérgio Reis Ferreira</p>
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Conselho Fiscal</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Luis Armando Monteiro</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Paula Alexandra Beirão Vieira</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vogais</span> Inês Lobo Pereira<br>Luis Miguel Soares Seabra<br>Susana Teles Andrade</li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="border-2 border-nrp-blue rounded-lg p-6 bg-white">
-                <p class="font-bold text-lg text-gray-900 mb-4">8 de Setembro 2012 a 1 de Abril 2016</p>
+            <div class="bg-white border-l-4 border-nrp-blue shadow-sm rounded-r-xl overflow-hidden">
+                <div class="bg-gray-50 px-8 py-5 border-b border-gray-100">
+                    <p class="text-lg font-bold text-nrp-blue">
+                        30 de Março 2019 a 27 de Maio 2022
+                    </p>
+                </div>
 
-                <div class="mb-4">
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">MESA DA ASSEMBLEIA GERAL</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: António Júlio Montenegro Silva</p>
-                        <p>Vice-Presidente: Raquel Maria Moura Pacheco</p>
-                        <p>Secretário: Arnaldo Saejo Baldé</p>
+                <div class="p-8 grid md:grid-cols-3 gap-12">
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Mesa da Assembleia Geral</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> António Júlio Montenegro Silva</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Maria Alcina Jorge Almeida</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Ivone Carla dos Santos Branco Vasco</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Direcção</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Tito Osvaldo Dias Baião</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Zélia Maria Fernandes Santos</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Manuel Octávio Coelho</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Tesoureiro</span> Susana Rute Ribeiro Ramos Antunes</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vogal</span> Fernando Manuel Lino Pinheiro</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Conselho Fiscal</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Alfredo Fonseca Vieira</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vogais</span> José Bernardo Sampaio Pimentel<br>Fernanda Isabel Silva</li>
+                        </ul>
                     </div>
                 </div>
+            </div>
 
-                <div class="mb-4">
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">DIRECÇÃO</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Tito Osvaldo Dias Baião</p>
-                        <p>Vice-Presidente: Luis Armando Gonçalves Monteiro</p>
-                        <p>Secretário: Zélia Maria Fernandes Santos</p>
-                        <p>Tesoureiro: Susana Rute Ribeiro Ramos Antunes</p>
-                        <p>Vogal: Luis André Quinteiros</p>
+            <div class="bg-white border-l-4 border-nrp-blue shadow-sm rounded-r-xl overflow-hidden">
+                <div class="bg-gray-50 px-8 py-5 border-b border-gray-100">
+                    <p class="text-lg font-bold text-nrp-blue">
+                        2 de Abril 2016 a 29 de Março 2019
+                    </p>
+                </div>
+
+                <div class="p-8 grid md:grid-cols-3 gap-12">
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Mesa da Assembleia Geral</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> António Júlio Montenegro Silva</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Raquel Maria Moura Pacheco</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Arnaldo Saejo Baldé</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Direcção</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Tito Osvaldo Dias Baião</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Luis Armando Gonçalves Monteiro</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Zélia Maria Fernandes Santos</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Tesoureiro</span> Susana Rute Ribeiro Ramos Antunes</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vogal</span> Luis André Quinteiros</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Conselho Fiscal</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Alfredo Fonseca Vieira</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vogais</span> José Bernardo Sampaio Pimentel<br>António Sérgio Reis Ferreira</li>
+                        </ul>
                     </div>
                 </div>
+            </div>
 
-                <div>
-                    <p class="font-semibold text-gray-800 uppercase text-sm mb-2">CONSELHO FISCAL</p>
-                    <div class="text-sm text-gray-600 space-y-1">
-                        <p>Presidente: Alfredo Fonseca Vieira</p>
-                        <p>Vogal: José Bernardo Sampaio Pimentel</p>
-                        <p>Vogal: António Sérgio Reis Ferreira</p>
+            <div class="bg-white border-l-4 border-nrp-blue shadow-sm rounded-r-xl overflow-hidden">
+                <div class="bg-gray-50 px-8 py-5 border-b border-gray-100">
+                    <p class="text-lg font-bold text-nrp-blue">
+                        8 de Setembro 2012 a 1 de Abril 2016
+                    </p>
+                </div>
+
+                <div class="p-8 grid md:grid-cols-3 gap-12">
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Mesa da Assembleia Geral</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> António Júlio Montenegro Silva</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Raquel Maria Moura Pacheco</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Arnaldo Saejo Baldé</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Direcção</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Tito Osvaldo Dias Baião</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> Luis Armando Gonçalves Monteiro</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Zélia Maria Fernandes Santos</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Tesoureiro</span> Susana Rute Ribeiro Ramos Antunes</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vogal</span> Luis André Quinteiros</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900 uppercase border-b border-gray-200 pb-2 mb-4">Conselho Fiscal</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Alfredo Fonseca Vieira</li>
+                            <li><span class="block text-xs text-gray-400 font-semibold">Vogais</span> José Bernardo Sampaio Pimentel<br>António Sérgio Reis Ferreira</li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="border-2 border-nrp-blue rounded-lg p-6 bg-white">
-                <p class="font-bold text-gray-900 mb-3">2 de Janeiro 2011 a 7 de Setembro 2012</p>
-                <div class="text-sm text-gray-600 space-y-1">
-                    <p>Presidente: Tito Osvaldo Dias Baião</p>
-                    <p>Vice-Presidente: João Pedro Silva Pereira</p>
-                    <p>Secretário: Jorge Porfírio Dias Santos Silva</p>
-                    <p>Tesoureiro: Sónia Maria Crista Vieira</p>
-                    <p>Vogal: Isabel Cristina Pires Dias</p>
+            <div class="bg-white border-l-4 border-nrp-blue shadow-sm rounded-r-xl overflow-hidden">
+                <div class="bg-gray-50 px-8 py-5 border-b border-gray-100">
+                    <p class="text-lg font-bold text-nrp-blue">
+                        2 de Janeiro 2011 a 7 de Setembro 2012
+                    </p>
+                </div>
+
+                <div class="p-8">
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Tito Osvaldo Dias Baião</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> João Pedro Silva Pereira</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Jorge Porfírio Dias Santos Silva</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Tesoureiro</span> Sónia Maria Crista Vieira</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Vogal</span> Isabel Cristina Pires Dias</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="border-2 border-nrp-blue rounded-lg p-6 bg-white">
-                <p class="font-bold text-gray-900 mb-3">1 de Outubro 2007 a 1 de Janeiro 2011</p>
-                <div class="text-sm text-gray-600 space-y-1">
-                    <p>Presidente: Tito Osvaldo Dias Baião</p>
-                    <p>Vice-Presidente: João Pedro Silva Pereira</p>
-                    <p>Secretário: Jorge Porfírio Dias Santos Silva</p>
-                    <p>Tesoureiro: Sónia Maria Crista Vieira</p>
-                    <p>Vogal: Isabel Cristina Pires Dias</p>
+            <div class="bg-white border-l-4 border-nrp-blue shadow-sm rounded-r-xl overflow-hidden">
+                <div class="bg-gray-50 px-8 py-5 border-b border-gray-100">
+                    <p class="text-lg font-bold text-nrp-blue">
+                        1 de Outubro 2007 a 1 de Janeiro 2011
+                    </p>
+                </div>
+
+                <div class="p-8">
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Tito Osvaldo Dias Baião</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> João Pedro Silva Pereira</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Jorge Porfírio Dias Santos Silva</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Tesoureiro</span> Sónia Maria Crista Vieira</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Vogal</span> Isabel Cristina Pires Dias</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="border-2 border-nrp-blue rounded-lg p-6 bg-white">
-                <p class="font-bold text-gray-900 mb-3">1 de Outubro 2004 a 30 de Setembro 2007</p>
-                <div class="text-sm text-gray-600 space-y-1">
-                    <p>Presidente: Tito Osvaldo Dias Baião</p>
-                    <p>Vice-Presidente: João Pedro Silva Pereira</p>
-                    <p>Secretário: Jorge Porfírio Dias Santos Silva</p>
-                    <p>Tesoureiro: Sónia Maria Crista Vieira</p>
-                    <p>Vogal: Isabel Cristina Pires Dias</p>
+            <div class="bg-white border-l-4 border-nrp-blue shadow-sm rounded-r-xl overflow-hidden">
+                <div class="bg-gray-50 px-8 py-5 border-b border-gray-100">
+                    <p class="text-lg font-bold text-nrp-blue">
+                        1 de Outubro 2004 a 30 de Setembro 2007
+                    </p>
+                </div>
+
+                <div class="p-8">
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Tito Osvaldo Dias Baião</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> João Pedro Silva Pereira</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Jorge Porfírio Dias Santos Silva</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Tesoureiro</span> Sónia Maria Crista Vieira</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Vogal</span> Isabel Cristina Pires Dias</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="border-2 border-nrp-blue rounded-lg p-6 bg-white">
-                <p class="font-bold text-gray-900 mb-3">2 de Outubro 2001 a 30 de Setembro 2004</p>
-                <div class="text-sm text-gray-600 space-y-1">
-                    <p>Presidente: Tito Osvaldo Dias Baião</p>
-                    <p>Vice-Presidente: João Pedro Silva Pereira</p>
-                    <p>Secretário: Jorge Porfírio Dias Santos Silva</p>
-                    <p>Tesoureiro: Sónia Maria Crista Vieira</p>
-                    <p>Vogal: Isabel Cristina Pires Dias</p>
+            <div class="bg-white border-l-4 border-nrp-blue shadow-sm rounded-r-xl overflow-hidden">
+                <div class="bg-gray-50 px-8 py-5 border-b border-gray-100">
+                    <p class="text-lg font-bold text-nrp-blue">
+                        2 de Outubro 2001 a 30 de Setembro 2004
+                    </p>
+                </div>
+
+                <div class="p-8">
+                    <ul class="space-y-3 text-sm text-gray-700">
+                        <li><span class="block text-xs text-gray-400 font-semibold">Presidente</span> Tito Osvaldo Dias Baião</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Vice-Presidente</span> João Pedro Silva Pereira</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Secretário</span> Jorge Porfírio Dias Santos Silva</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Tesoureiro</span> Sónia Maria Crista Vieira</li>
+                        <li><span class="block text-xs text-gray-400 font-semibold">Vogal</span> Isabel Cristina Pires Dias</li>
+                    </ul>
                 </div>
             </div>
 
