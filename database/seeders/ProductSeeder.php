@@ -20,24 +20,24 @@ class ProductSeeder extends Seeder
             [
                 'Papas lácteas', 'papas-lacteas', 'un',
                 'Contribua com um pacote de papas lácteas para a alimentação das crianças apoiadas pela associação.',
-                [['1 pacote', 1, 2.50, null]],
+                [['1 pacote', 1, 0.01, null]],
             ],
             [
                 'Azeite', 'azeite', 'L',
                 'Ajude a preparar as refeições de quem precisa, contribuindo com um litro de azeite.',
-                [['1 L', 1, 5.50, null]],
+                [['1 L', 1, 0.01, null]],
             ],
             [
                 'Leite lactentes', 'leite-lactentes', 'lata',
                 'Uma lata de leite para lactentes para apoiar a alimentação dos bebés acompanhados pela associação.',
-                [['1 lata', 1, 12.50, null]],
+                [['1 lata', 1, 0.01, null]],
             ],
             [
                 'Cabaz', 'cabaz-solidario', 'un',
                 'Contribua para um cabaz de bens essenciais. Escolha entre as opções Solidário e Família.',
                 [
-                    ['Solidário', 1, 25.00, '1 kg de arroz, 1 kg de massa, 1 L de azeite e 2 latas de conserva.'],
-                    ['Família', 1, 50.00, '2 kg de arroz, 2 kg de massa, 2 L de azeite e 4 latas de conserva — o dobro das quantidades do Solidário.'],
+                    ['Solidário', 1, 0.01, '1 kg de arroz, 1 kg de massa, 1 L de azeite e 2 latas de conserva.'],
+                    ['Família', 1, 0.01, '2 kg de arroz, 2 kg de massa, 2 L de azeite e 4 latas de conserva — o dobro das quantidades do Solidário.'],
                 ],
             ],
         ];
