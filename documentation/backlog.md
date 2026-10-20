@@ -6,11 +6,14 @@ Lista directa do que ficou pendente. Actualizar à medida que se resolve.
 
 ## Antes de a loja ir para o ar
 
-- [ ] **Email de confirmação do contributo.** Não existe. Hoje a pessoa só tem a
-  referência no ecrã — se fechar o separador, fica sem comprovativo.
-  Falta a mensagem **e** a configuração: `mail.default` está em `log` e o
-  remetente é `hello@example.com`, os valores por omissão do Laravel.
-  Enviar quando o pagamento ficar `paid`, tanto pela notificação como pelo polling.
+- [x] **Email de confirmação do contributo.** `ContributionConfirmed`, enviado pela
+  fila quando o pagamento fica `paid`, por qualquer dos três caminhos. Sai uma só
+  vez mesmo que dois caminhos confirmem ao mesmo tempo (`Payment::markAsPaid`).
+
+- [ ] **Configurar o envio de email em produção.** `mail.default` está em `log` e o
+  remetente é `hello@example.com`, os valores por omissão do Laravel. Falta SMTP,
+  remetente do domínio com SPF/DKIM, e o `schedule:run` no cron — sem ele a fila
+  não é processada e os emails ficam parados na tabela `jobs`.
 
 - [ ] **Ver a tarifa no contrato.** São 0,09 € por transação nos valores pequenos
   (verificado). Confirmar se se mantém fixa nos valores altos ou se passa a

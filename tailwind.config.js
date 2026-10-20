@@ -22,6 +22,16 @@ export default {
                 'nrp-blue': '#0083b3',
                 'nrp-green': '#91be4a',
             },
+            // O caminho em pontos do lema: cada ciclo avança dois pontos
+            // (o stroke-dasharray é de 12), por isso o recomeço não se vê.
+            keyframes: {
+                route: {
+                    to: { strokeDashoffset: '-24' },
+                },
+            },
+            animation: {
+                route: 'route 2.4s linear infinite',
+            },
         },
     },
     plugins: [forms, typography],
