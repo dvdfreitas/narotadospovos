@@ -67,11 +67,16 @@ class CheckMbWayPayment
      * ou o Mailable rebentar ao ser serializado, o pagamento continua pago e
      * o erro fica no log.
      *
+     * Só agradece quem fez a transição: se outro caminho chegou primeiro,
+     * o email já é dele.
+     *
      * Um email que não sai não pode desfazer um pagamento que entrou.
      */
     private function confirm(Payment $payment): void
     {
-        $payment->markAsPaid();
+        if (! $payment->markAsPaid()) {
+            return;
+        }
 
         $payable = $payment->payable;
 
@@ -81,7 +86,7 @@ class CheckMbWayPayment
 
         try {
             Mail::to($payable->buyer_email)
-                ->send(new ContributionConfirmed($payable, $payment->fresh()));
+                ->send(new ContributionConfirmed($payable, $payment));
         } catch (\Throwable $e) {
             Log::error('Falha ao enviar confirmação de contributo', [
                 'payment_id' => $payment->id,

@@ -31,6 +31,14 @@ class Payment extends Model
     /** A ifthenpay recusou criar o pedido. Nada foi criado, com certeza. */
     public const STATUS_FAILED = 'failed';
 
+    /** Estados de onde um pagamento já não sai. */
+    public const FINAL_STATUSES = [
+        self::STATUS_PAID,
+        self::STATUS_REJECTED,
+        self::STATUS_EXPIRED,
+        self::STATUS_FAILED,
+    ];
+
     /**
      * payable_type e payable_id ficam de fora de propósito: um pagamento
      * cria-se sempre através da relação — $order->payments()->create([...]) —
@@ -80,12 +88,7 @@ class Payment extends Model
      */
     public function isFinal(): bool
     {
-        return in_array($this->status, [
-            self::STATUS_PAID,
-            self::STATUS_REJECTED,
-            self::STATUS_EXPIRED,
-            self::STATUS_FAILED,
-        ]);
+        return in_array($this->status, self::FINAL_STATUSES);
     }
 
     /**
@@ -130,13 +133,36 @@ class Payment extends Model
      * A hora é a nossa, a de quando soubemos. A ifthenpay devolve também
      * a hora a que o pagamento foi aceite (UpdateAt), mais exacta para o
      * recibo — acrescenta-se quando houver quem a passe.
+     *
+     * A condição vai no próprio UPDATE, e não num isFinal() lido antes: o
+     * ecrã de espera e a notificação podem chegar no mesmo instante, ambos a
+     * ver requested. Lido em PHP, os dois passavam e o comprador recebia dois
+     * agradecimentos. Na base de dados só um muda a linha.
+     *
+     * Devolve true só a quem a mudou — é quem pode agradecer. O outro fica
+     * com o modelo recarregado, já pago, com a hora de quem chegou primeiro.
      */
-    public function markAsPaid(): void
+    public function markAsPaid(): bool
     {
-        $this->update([
+        $values = [
             'status'       => self::STATUS_PAID,
             'confirmed_at' => now(),
-        ]);
+        ];
+
+        $changed = static::query()
+            ->whereKey($this->getKey())
+            ->whereNotIn('status', self::FINAL_STATUSES)
+            ->update($values);
+
+        if ($changed === 0) {
+            $this->refresh();
+
+            return false;
+        }
+
+        $this->forceFill($values)->syncOriginal();
+
+        return true;
     }
 
     /**

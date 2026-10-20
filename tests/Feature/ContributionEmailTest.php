@@ -62,3 +62,28 @@ it('mantém o pagamento pago mesmo que o email rebente', function () {
     // O dinheiro entrou. Um email que não sai não desfaz isso.
     expect($payment->fresh()->status)->toBe(Payment::STATUS_PAID);
 });
+
+it('agradece uma só vez quando dois caminhos confirmam ao mesmo tempo', function () {
+    Mail::fake();
+    Http::fake(['api.ifthenpay.com/*' => Http::response(['Status' => '000', 'Message' => 'Success'])]);
+
+    // O ecrã de espera e a notificação carregam o pagamento no mesmo
+    // instante: ambos o veem requested, antes de qualquer um confirmar.
+    $payment         = contributo();
+    $pelaNotificacao = Payment::find($payment->id);
+    $peloEcra        = Payment::find($payment->id);
+
+    $check = new CheckMbWayPayment(new MbWayClient('UWP-TESTE'));
+
+    $check->check($pelaNotificacao);
+    $primeiraHora = $pelaNotificacao->fresh()->confirmed_at;
+
+    $this->travel(5)->seconds();
+    $check->check($peloEcra);
+
+    Mail::assertQueuedCount(1);
+
+    // Quem chegou em segundo não reescreve a hora de quem chegou primeiro.
+    expect($payment->fresh()->confirmed_at->equalTo($primeiraHora))->toBeTrue()
+        ->and($peloEcra->status)->toBe(Payment::STATUS_PAID);
+});

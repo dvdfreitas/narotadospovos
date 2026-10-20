@@ -28,10 +28,7 @@ Para desenvolver, executa `php artisan serve` e, noutro terminal, `npm run dev`.
 
 # Próximos
 
-- Setas no Hero
-- Melhorar padding e margens
 - Melhorar os "números" na página inicial
-- Condensar os parceiros
 
 Acrescentar testes caso faltam elementos no .env
 
