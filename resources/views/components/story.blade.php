@@ -4,7 +4,7 @@
     $url = Str::startsWith($story->url, '/') ? $story->url : '/noticias/' . $story->url;
     $imageUrl = $story->image ? '/stories/' . $story->image : '/images/default.jpg';
 
-    // 'compact' cabe duas por linha no telemóvel: sem resumo nem "Ler mais",
+    // 'compact' cabe duas por linha no telemóvel: sem resumo nem categoria,
     // que voltam a aparecer a partir de sm.
     $compact = $format === 'compact';
 @endphp
@@ -35,7 +35,7 @@
                 @endif
             </div>
 
-            <h3 class="{{ $compact ? 'mt-1 mb-0 line-clamp-3 sm:mt-4 text-sm sm:mb-2 sm:line-clamp-none sm:text-lg' : 'text-lg mb-2' }} font-bold leading-tight text-neutral-900 group-hover:text-black">
+            <h3 class="{{ $compact ? 'mt-1 mb-2 line-clamp-3 sm:mt-4 text-sm sm:line-clamp-none sm:text-lg' : 'text-lg mb-2' }} font-bold leading-tight text-neutral-900 group-hover:text-black">
                 {{ $story->title }}
             </h3>
 
@@ -43,8 +43,8 @@
                 {{ $story->summary }}
             </p>
 
-            <div class="{{ $compact ? 'max-sm:hidden' : '' }} mt-auto pt-3 border-t border-neutral-100">
-                <span class="text-sm font-semibold text-neutral-900 flex items-center gap-1 group-hover:gap-2 transition-all">
+            <div class="mt-auto {{ $compact ? 'pt-2 sm:pt-3' : 'pt-3' }} border-t border-neutral-100">
+                <span class="{{ $compact ? 'text-xs sm:text-sm' : 'text-sm' }} font-semibold text-neutral-900 flex items-center gap-1 group-hover:gap-2 transition-all">
                     Ler mais
                     <svg class="w-3 h-3 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </span>
