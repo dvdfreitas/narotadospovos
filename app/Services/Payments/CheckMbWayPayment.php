@@ -2,8 +2,12 @@
 
 namespace App\Services\Payments;
 
+use App\Mail\ContributionConfirmed;
+use App\Models\Order;
 use App\Models\Payment;
 use App\Services\IfThenPay\MbWayClient;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Pergunta à ifthenpay o que aconteceu a um pagamento e aplica o resultado.
@@ -46,12 +50,44 @@ class CheckMbWayPayment
         // Sem default a adivinhar: um código desconhecido deixa o pagamento
         // onde está, para ser consultado de novo mais tarde.
         match (true) {
-            $status->isPaid()     => $payment->markAsPaid(),
+            $status->isPaid()     => $this->confirm($payment),
             $status->isRejected() => $payment->markAsRejected(),
             $status->isExpired()  => $payment->markAsExpired(),
             default               => null,
         };
 
         return $payment;
+    }
+
+    /**
+     * Marca como pago e agradece.
+     *
+     * O email vai para a fila, por isso esta chamada não espera pelo servidor
+     * de email. Ainda assim fica protegida: se a fila estiver mal configurada
+     * ou o Mailable rebentar ao ser serializado, o pagamento continua pago e
+     * o erro fica no log.
+     *
+     * Um email que não sai não pode desfazer um pagamento que entrou.
+     */
+    private function confirm(Payment $payment): void
+    {
+        $payment->markAsPaid();
+
+        $payable = $payment->payable;
+
+        if (! $payable instanceof Order) {
+            return;
+        }
+
+        try {
+            Mail::to($payable->buyer_email)
+                ->send(new ContributionConfirmed($payable, $payment->fresh()));
+        } catch (\Throwable $e) {
+            Log::error('Falha ao enviar confirmação de contributo', [
+                'payment_id' => $payment->id,
+                'reference'  => $payment->reference,
+                'erro'       => $e->getMessage(),
+            ]);
+        }
     }
 }

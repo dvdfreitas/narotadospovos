@@ -31,3 +31,20 @@ Schedule::command('mbway:check-pending')
     ->everyMinute()
     ->withoutOverlapping()
     ->appendOutputTo(storage_path('logs/mbway.log'));
+
+
+/**
+ * Processa a fila — emails de confirmação, sobretudo.
+ *
+ * --stop-when-empty: faz o que há e termina. Não fica um processo vivo, o que
+ * seria impossível no alojamento partilhado.
+ * --max-time=50: desiste antes do minuto seguinte, para não se sobrepor.
+ * --tries=3: um email que falhe é tentado mais duas vezes; depois vai para a
+ * tabela failed_jobs, onde pode ser visto e reenviado.
+ *
+ * Exige QUEUE_CONNECTION=database no .env. Com sync os trabalhos correm de
+ * imediato, dentro do pedido, e esta linha não serve de nada.
+ */
+Schedule::command('queue:work --stop-when-empty --max-time=50 --tries=3')
+    ->everyMinute()
+    ->withoutOverlapping();

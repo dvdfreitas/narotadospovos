@@ -6,6 +6,12 @@ Lista directa do que ficou pendente. Actualizar à medida que se resolve.
 
 ## Antes de a loja ir para o ar
 
+- [ ] **Email de confirmação do contributo.** Não existe. Hoje a pessoa só tem a
+  referência no ecrã — se fechar o separador, fica sem comprovativo.
+  Falta a mensagem **e** a configuração: `mail.default` está em `log` e o
+  remetente é `hello@example.com`, os valores por omissão do Laravel.
+  Enviar quando o pagamento ficar `paid`, tanto pela notificação como pelo polling.
+
 - [ ] **Ver a tarifa no contrato.** São 0,09 € por transação nos valores pequenos
   (verificado). Confirmar se se mantém fixa nos valores altos ou se passa a
   percentagem — decide se compensa vender produtos baratos avulso ou só em cabazes.

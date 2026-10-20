@@ -239,6 +239,12 @@ $checkPayment = function () {
 
     if ($payment->isFinal()) {
         $this->step = 3;
+
+        // Só quando se concretizou. Em recusado ou expirado o carrinho fica
+        // intacto, senão o botão "Tentar de novo" levava a um carrinho vazio.
+        if ($payment->status === Payment::STATUS_PAID) {
+            $this->dispatch('contribution-paid');
+        }
     }
 };
 ?>
@@ -292,6 +298,7 @@ $checkPayment = function () {
         }
     }"
     x-on:nrp-shop-selection="selections[$event.detail.productId] = $event.detail.lines"
+    x-on:contribution-paid.window="clearSelection()"
     class="bg-[#faf9f6]"
 >
     @push('meta')
@@ -755,10 +762,13 @@ $checkPayment = function () {
                             <h3 class="m-0 mt-5 text-lg font-semibold text-slate-900">Obrigado pelo seu contributo</h3>
                             <p class="mx-auto mb-0 mt-3 max-w-sm text-center text-sm font-normal leading-relaxed text-slate-600">
                                 O pagamento de {{ number_format($this->total, 2, ',', ' ') }} € foi confirmado.
-                                Enviámos a confirmação para {{ $buyer_email }}.
                             </p>
-                            <p class="mb-0 mt-3 text-center text-xs font-normal text-slate-500">
-                                Referência: {{ $this->payment?->payable?->access_code }}
+                            {{-- Guarde esta referência: é o que identifica o
+                                 contributo enquanto não houver email de
+                                 confirmação. Ver documentation/backlog.md --}}
+                            <p class="mx-auto mb-0 mt-4 max-w-sm rounded-lg bg-stone-50 px-4 py-3 text-center text-sm font-normal text-slate-600">
+                                Guarde a sua referência:<br>
+                                <strong class="text-base font-semibold tracking-wide text-slate-900">{{ $this->payment?->payable?->access_code }}</strong>
                             </p>
 
                         @elseif ($status === \App\Models\Payment::STATUS_EXPIRED)

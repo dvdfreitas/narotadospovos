@@ -218,3 +218,29 @@ it('oferece repetir quando a ifthenpay recusa criar o pedido', function () {
 
     expect(Payment::first()->status)->toBe(Payment::STATUS_FAILED);
 });
+
+it('limpa o carrinho só quando o pagamento se concretiza', function () {
+    Http::fake(['api.ifthenpay.com/*' => Http::response([
+        'Status' => '000', 'Message' => 'Success', 'RequestId' => 'REQ-C',
+    ])]);
+
+    $variant = cabaz('25.00');
+
+    $abrir = fn () => Volt::test('shop.index')
+        ->call('startCheckout', [['variantId' => $variant->id, 'quantity' => 1]])
+        ->set('buyer_name', 'David')
+        ->set('buyer_email', 'david@exemplo.pt')
+        ->set('buyer_phone', '935566333')
+        ->set('terms', true)
+        ->call('placeOrder');
+
+    $pago = $abrir();
+    Payment::latest('id')->first()->markAsPaid();
+    $pago->call('checkPayment')->assertDispatched('contribution-paid');
+
+    // Recusado mantém a selecção: senão o "Tentar de novo" levava a um
+    // carrinho vazio e obrigava a escolher tudo outra vez.
+    $recusado = $abrir();
+    Payment::latest('id')->first()->markAsRejected();
+    $recusado->call('checkPayment')->assertNotDispatched('contribution-paid');
+});
