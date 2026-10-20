@@ -1,17 +1,18 @@
 <x-guestLayout>
 
     {{--<x-irs/>--}}
-    <x-campaign.irs/>
-    <x-motto/>
-    <x-campaign.carousel/>
-    <!-- <x-hero/> -->
-    <x-welcome.about/>
-    <x-stories/>
-    <x-welcome.projects/>
-    <x-welcome.data/>
-    <x-welcome.multimedia/>
-    <x-welcome.help/>
-    <x-partners/>
+    {{--<x-campaign.irs />--}}
+    <x-next-event />
+    <x-hero />
+    <x-motto />
+    <x-welcome.about />
+    <x-campaign.carousel />
+    <x-stories />
+    <x-welcome.projects />
+    <x-welcome.data />
+    <x-welcome.multimedia />
+    <x-welcome.help />
+    <x-partners />
 
     {{--
 

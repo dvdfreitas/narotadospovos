@@ -68,6 +68,14 @@ class StartMbWayPayment
                 amount: $amount,
                 mobileNumber: $mobileNumber,
                 description: $description,
+                // Quem conhece as nossas rotas é este serviço, não o cliente:
+                // se o cliente chamasse route(), passava a depender da
+                // aplicação e deixava de ser testável isolado.
+                //
+                // A referência vai no caminho do URL. É isso que resolve o
+                // caso do timeout: mesmo que nunca recebamos o RequestId, a
+                // notificação sabe de que pagamento fala.
+                notificationUrl: route('mbway.notify', $payment->reference),
             );
         } catch (MbWayUnavailableException) {
             $payment->markAsUnknown();

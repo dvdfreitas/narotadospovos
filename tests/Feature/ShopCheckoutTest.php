@@ -111,3 +111,65 @@ it('exige telemóvel válido e aceitação dos termos', function () {
 
     expect(Order::count())->toBe(0);
 });
+
+it('mostra cada desfecho com a sua mensagem', function () {
+    Http::fake(['api.ifthenpay.com/*' => Http::response([
+        'Status' => '000', 'Message' => 'Success', 'RequestId' => 'REQ-FIM',
+    ])]);
+
+    $variant = cabaz('25.00');
+
+    $component = Volt::test('shop.index')
+        ->call('startCheckout', [['variantId' => $variant->id, 'quantity' => 1]])
+        ->set('buyer_name', 'David')
+        ->set('buyer_email', 'david@exemplo.pt')
+        ->set('buyer_phone', '935566333')
+        ->set('terms', true)
+        ->call('placeOrder')
+        ->assertSet('step', 2)
+        ->assertSee('Confirme no seu telemóvel')
+        ->assertSee('935566333');
+
+    $payment = Payment::first();
+
+    // Pago
+    $payment->markAsPaid();
+    $component->call('checkPayment')
+        ->assertSet('step', 3)
+        ->assertSee('Obrigado pelo seu contributo')
+        ->assertSee(Order::first()->access_code);
+});
+
+it('convida a repetir quando expira, mas nunca quando é desconhecido', function () {
+    Http::fake(['api.ifthenpay.com/*' => Http::response([
+        'Status' => '000', 'Message' => 'Success', 'RequestId' => 'REQ-EXP',
+    ])]);
+
+    $variant = cabaz('25.00');
+
+    $abrir = fn () => Volt::test('shop.index')
+        ->call('startCheckout', [['variantId' => $variant->id, 'quantity' => 1]])
+        ->set('buyer_name', 'David')
+        ->set('buyer_email', 'david@exemplo.pt')
+        ->set('buyer_phone', '935566333')
+        ->set('terms', true)
+        ->call('placeOrder');
+
+    $c = $abrir();
+    Payment::first()->markAsExpired();
+    $c->call('checkPayment')->assertSee('O pedido expirou')->assertSee('Tentar de novo');
+
+    Payment::query()->delete();
+    Order::query()->delete();
+
+    // Em unknown a ligação caiu e nunca soubemos o RequestId. O placeOrder
+    // salta directo ao resultado — não há telemóvel a tocar por que esperar.
+    Http::fake(fn () => throw new \Illuminate\Http\Client\ConnectionException('timeout'));
+
+    $abrir()
+        ->assertSet('step', 3)
+        ->assertSee('Estamos a confirmar')
+        ->assertDontSee('Tentar de novo');
+
+    expect(Payment::first()->status)->toBe(Payment::STATUS_UNKNOWN);
+});

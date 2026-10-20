@@ -3,7 +3,10 @@
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\Payment;
+use App\Services\Payments\CheckMbWayPayment;
 use App\Services\Payments\StartMbWayPayment;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use function Livewire\Volt\{layout, computed, rules, state};
 
@@ -179,14 +182,64 @@ $placeOrder = function (StartMbWayPayment $payments) {
 
     // Sem acentos e dentro dos 100 caracteres. É o que aparece na coluna
     // Descrição do backoffice da ifthenpay.
-    $this->paymentId = $payments->start(
+    $payment = $payments->start(
         $order,
         $total,
         $this->buyer_phone,
         'Loja Solidaria ' . $order->access_code,
-    )->id;
+    );
 
-    $this->step = 2;
+    $this->paymentId = $payment->id;
+
+    // Só espera quem tem por quem esperar. Em failed a ifthenpay recusou
+    // criar o pedido, e em unknown não sabemos se chegou — em nenhum dos
+    // dois o telemóvel vai tocar, e o checkPayment não os resolveria.
+    $this->step = $payment->status === Payment::STATUS_REQUESTED ? 2 : 3;
+};
+
+/** O pagamento em curso, para o ecrã de espera e o de resultado. */
+$payment = computed(fn () => $this->paymentId ? Payment::find($this->paymentId) : null);
+
+/**
+ * Volta ao formulário para uma nova tentativa.
+ *
+ * Só se oferece quando o pedido expirou — aí sabemos com certeza que não foi
+ * pago. Nunca em unknown: a ifthenpay aceita a mesma referência duas vezes e
+ * cria duas transações, por isso reenviar não retoma, duplica.
+ */
+$retry = function () {
+    $this->paymentId = null;
+    $this->step = 1;
+};
+
+/**
+ * Chamado pelo wire:poll do ecrã de espera, de 5 em 5 segundos.
+ *
+ * O caminho normal é a notificação da ifthenpay actualizar a base de dados
+ * sozinha, e aqui bastaria ler. A consulta existe para quando ela não chega —
+ * e em desenvolvimento, onde não há URL público, é a única forma de o ecrã
+ * avançar.
+ *
+ * Cache::add escreve só se a chave não existir: garante no máximo uma consulta
+ * à API a cada 10 segundos por pagamento, mesmo com vários separadores
+ * abertos. O endpoint de estado deles tem limite de taxa.
+ * Ver documentation/backlog.md, "Para rever com calma".
+ */
+$checkPayment = function () {
+    $payment = Payment::find($this->paymentId);
+
+    if ($payment === null) {
+        return;
+    }
+
+    if (! $payment->isFinal() && Cache::add("mbway-check-{$payment->id}", true, 10)) {
+        app(CheckMbWayPayment::class)->check($payment);
+        $payment->refresh();
+    }
+
+    if ($payment->isFinal()) {
+        $this->step = 3;
+    }
 };
 ?>
 
@@ -659,6 +712,119 @@ $placeOrder = function (StartMbWayPayment $payments) {
                     </form>
                     </div>
                 </div>
+
+                @elseif ($step === 2)
+                    {{--
+                        O wire:poll vive DENTRO deste bloco de propósito:
+                        quando o passo mudar para 3, o elemento desaparece e o
+                        polling pára sozinho. Fora daqui, continuaria a
+                        perguntar para sempre.
+                    --}}
+                    <div wire:poll.5s="checkPayment" class="py-8 text-center">
+                        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sky-50">
+                            <svg class="h-8 w-8 animate-spin text-[#006c94] motion-reduce:animate-none" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5" opacity="0.2" />
+                                <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+                            </svg>
+                        </div>
+
+                        <h3 class="m-0 mt-5 text-lg font-semibold text-slate-900">Confirme no seu telemóvel</h3>
+
+                        {{-- O valor e o número à vista: é aqui que a pessoa
+                             se apercebe se escreveu o telemóvel errado, em vez
+                             de esperar quatro minutos por nada. --}}
+                        <p class="mx-auto mb-0 mt-3 max-w-sm text-center text-sm font-normal leading-relaxed text-slate-600">
+                            Enviámos um pedido de <strong class="font-semibold text-slate-900">{{ number_format($this->total, 2, ',', ' ') }} €</strong>
+                            para o <strong class="font-semibold text-slate-900">{{ $buyer_phone }}</strong>.
+                            Abra a aplicação MB Way e confirme.
+                        </p>
+
+                        <p role="status" class="mb-0 mt-5 text-center text-xs font-normal text-slate-500">
+                            O pedido expira em 4 minutos. Esta página actualiza-se sozinha.
+                        </p>
+                    </div>
+
+                @elseif ($step === 3)
+                    @php($status = $this->payment?->status)
+
+                    <div class="py-8 text-center">
+                        @if ($status === \App\Models\Payment::STATUS_PAID)
+                            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
+                                <svg class="h-8 w-8 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                            </div>
+                            <h3 class="m-0 mt-5 text-lg font-semibold text-slate-900">Obrigado pelo seu contributo</h3>
+                            <p class="mx-auto mb-0 mt-3 max-w-sm text-center text-sm font-normal leading-relaxed text-slate-600">
+                                O pagamento de {{ number_format($this->total, 2, ',', ' ') }} € foi confirmado.
+                                Enviámos a confirmação para {{ $buyer_email }}.
+                            </p>
+                            <p class="mb-0 mt-3 text-center text-xs font-normal text-slate-500">
+                                Referência: {{ $this->payment?->payable?->access_code }}
+                            </p>
+
+                        @elseif ($status === \App\Models\Payment::STATUS_EXPIRED)
+                            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-amber-50">
+                                <svg class="h-8 w-8 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                            </div>
+                            <h3 class="m-0 mt-5 text-lg font-semibold text-slate-900">O pedido expirou</h3>
+                            {{-- Expirar não é recusar: ninguém disse que não,
+                                 a pessoa só não chegou a tempo. Por isso convida. --}}
+                            <p class="mx-auto mb-0 mt-3 max-w-sm text-center text-sm font-normal leading-relaxed text-slate-600">
+                                Passaram os 4 minutos sem confirmação. Nada foi cobrado.
+                            </p>
+                            <button type="button" wire:click="retry"
+                                class="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-[#006c94] px-5 text-sm font-semibold text-white hover:bg-[#005575]">
+                                Tentar de novo
+                            </button>
+
+                        @elseif ($status === \App\Models\Payment::STATUS_REJECTED)
+                            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-stone-100">
+                                <svg class="h-8 w-8 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m8 8 8 8M16 8l-8 8" stroke-linecap="round" /></svg>
+                            </div>
+                            <h3 class="m-0 mt-5 text-lg font-semibold text-slate-900">Pagamento recusado</h3>
+                            <p class="mx-auto mb-0 mt-3 max-w-sm text-center text-sm font-normal leading-relaxed text-slate-600">
+                                O pagamento não foi autorizado. Nada foi cobrado.
+                            </p>
+
+                        @elseif ($status === \App\Models\Payment::STATUS_FAILED)
+                            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-stone-100">
+                                <svg class="h-8 w-8 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                            </div>
+                            <h3 class="m-0 mt-5 text-lg font-semibold text-slate-900">Não foi possível iniciar o pagamento</h3>
+                            {{-- Aqui a ifthenpay respondeu e recusou criar:
+                                 temos a certeza de que nada foi criado, por
+                                 isso repetir é seguro. --}}
+                            <p class="mx-auto mb-0 mt-3 max-w-sm text-center text-sm font-normal leading-relaxed text-slate-600">
+                                O pedido não chegou a ser criado e nada foi cobrado.
+                                Confirme o número de telemóvel e tente de novo.
+                            </p>
+                            <button type="button" wire:click="retry"
+                                class="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-[#006c94] px-5 text-sm font-semibold text-white hover:bg-[#005575]">
+                                Tentar de novo
+                            </button>
+
+                        @else
+                            {{-- unknown, ou um estado que não reconhecemos.
+                                 Nunca dizer que falhou: o pedido pode existir e
+                                 ter sido aprovado. Sem botão de repetir —
+                                 reenviar criaria uma segunda cobrança. --}}
+                            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sky-50">
+                                <svg class="h-8 w-8 text-[#006c94]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                            </div>
+                            <h3 class="m-0 mt-5 text-lg font-semibold text-slate-900">Estamos a confirmar</h3>
+                            <p class="mx-auto mb-0 mt-3 max-w-sm text-center text-sm font-normal leading-relaxed text-slate-600">
+                                Não conseguimos confirmar de imediato. Verifique a aplicação MB Way:
+                                se o pagamento aparecer lá, está tratado e receberá confirmação por email.
+                            </p>
+                            <p class="mx-auto mb-0 mt-3 max-w-sm text-center text-xs font-normal text-slate-500">
+                                Não repita o pagamento sem falar connosco — poderia ser cobrado duas vezes.
+                            </p>
+                        @endif
+
+                        <button type="button" x-on:click="$refs.cart.close()"
+                            class="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-stone-200 px-4 text-sm font-semibold hover:bg-stone-50">
+                            Fechar
+                        </button>
+                    </div>
                 @endif
             </dialog>
         @endif

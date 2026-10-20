@@ -102,3 +102,12 @@ it('nunca deixa um pagamento sem referência', function () {
     expect(Payment::whereNull('reference')->count())->toBe(0)
         ->and(Payment::distinct('reference')->count('reference'))->toBe(2);
 });
+
+it('envia o notificationUrl com a nossa referência no caminho', function () {
+    Http::fake([API => Http::response(pedidoAceite())]);
+
+    $payment = servico()->start(encomenda(), '0.01', '935566333', 'Teste');
+
+    Http::assertSent(fn ($request) => $request['notificationUrl']
+        === url("/api/mbway/notify/{$payment->reference}"));
+});

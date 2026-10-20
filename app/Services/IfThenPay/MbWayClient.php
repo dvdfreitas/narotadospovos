@@ -57,6 +57,7 @@ class MbWayClient
         string $mobileNumber,
         string $description,
         ?string $email = null,
+        ?string $notificationUrl = null,
     ): MbWayRequestResult {
         // Identificadores rebentam, nunca truncam: um orderId cortado seria
         // enviado diferente do que está gravado, e o callback deixaria de
@@ -80,6 +81,13 @@ class MbWayClient
         // em vez de dizer que não há email.
         if ($email !== null) {
             $payload['email'] = $email;
+        }
+
+        // Endereço para onde a ifthenpay envia o estado final do pagamento.
+        // Enviado por pedido, o que dispensa configurar o callback no
+        // backoffice. Máximo de 500 caracteres, pela especificação.
+        if ($notificationUrl !== null) {
+            $payload['notificationUrl'] = mb_substr($notificationUrl, 0, 500);
         }
 
         // Só a falha de ligação é apanhada. Um erro de programação passa
