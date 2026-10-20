@@ -10,10 +10,10 @@
     ];
 
     $links = [
-        '/education',
-        '/casa-da-mame',
-        '/ceet',
-        '/health'
+        route('projects.education'),
+        route('projects.mame'),
+        route('projects.ceet'),
+        route('projects.health'),
     ];
 
     if (session('language') === 'pt') {
@@ -50,20 +50,20 @@
 
 @endphp
 
-<div class="max-w-8xl m-auto my-16">
+<div class="max-w-7xl mx-auto px-6 my-10 sm:my-16">
     @if (session('language') === 'pt')
         <h1>Principais projectos</h1>
     @elseif (session('language') === 'en')
         <h1>Main projects</h1>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 my-4">
         @for($i=0; $i<sizeof($titles); $i++)
-            <div class="border p-4 rounded hover:shadow-md">
-                <img class="h-56 w-full object-cover" src="/images/welcome/{{ $images[$i] }}" alt="{{ $titles[$i] }}">
-                <h3>{{ $titles[$i] }}</h3>
-                <p>{{ $descriptions[$i] }}</p>
-            </div>
+            <a href="{{ $links[$i] }}" class="group block rounded border p-3 sm:p-4 transition hover:shadow-md">
+                <img class="h-40 sm:h-52 w-full rounded-sm object-cover" src="/images/welcome/{{ $images[$i] }}" alt="{{ $titles[$i] }}">
+                <h3 class="mt-3 mb-1 text-lg leading-tight group-hover:text-nrp-blue">{{ $titles[$i] }}</h3>
+                <p class="my-0 text-base leading-snug text-gray-700">{{ $descriptions[$i] }}</p>
+            </a>
         @endfor
     </div>
 

@@ -47,15 +47,16 @@
 
 @endphp
 
-<div class="max-w-8xl m-auto my-16">
+<div class="max-w-7xl mx-auto px-6 my-10 sm:my-16">
     <h1>{{ $title }}</h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-4 max-w-5xl m-auto my-8">
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 max-w-5xl mx-auto my-6 sm:my-8">
 
         @for($i = 0; $i < count($titles); $i++)
-            <div class="w-full h-full  overflow-hidden justify-start items-center text-center rounded border-solid border-nrp-blue border">
-                <div class="py-1 bg-nrp-blue w-full text-3xl font-extrabold text-white rounded-t">{{ $numbers[$i] }}</div>
-                <p class="py-1 font-bold text-center">{{ $titles[$i] }}</p>
+            {{-- São 9: em duas colunas o último ocupa a linha toda para não ficar sozinho. --}}
+            <div class="flex flex-col overflow-hidden rounded border border-nrp-blue text-center {{ $i === count($titles) - 1 ? 'col-span-2 lg:col-span-1' : '' }}">
+                <div class="bg-nrp-blue py-1 text-2xl font-extrabold text-white sm:text-3xl">{{ $numbers[$i] }}</div>
+                <p class="my-0 flex flex-1 items-center justify-center px-2 py-1.5 text-sm font-bold leading-tight sm:text-base">{{ $titles[$i] }}</p>
             </div>
         @endfor
 

@@ -12,7 +12,7 @@
 
 @endphp
 
-<div class="max-w-8xl m-auto my-16">
+<div class="max-w-7xl mx-auto px-6 my-10 sm:my-16">
 
     <h1>Parceiros</h1>
     <div class="max-w-sm space-y-0 leading-tight font-light my-4">
@@ -20,7 +20,7 @@
     </div>
     <p>{{ $description }}</p>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12 gap-4 my-6">
+    <div class="grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-12 gap-3 sm:gap-4 my-6">
         @foreach ($partners as $partner)
             <x-partner :partner="$partner"/>
         @endforeach

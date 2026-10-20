@@ -1,4 +1,4 @@
-<section class="max-w-xl mx-auto mb-16">
+<section class="max-w-xl mx-auto mb-10 sm:mb-16">
 
     <div class="relative overflow-hidden" id="nrp-carousel">
 

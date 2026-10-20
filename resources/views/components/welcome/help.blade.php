@@ -32,14 +32,14 @@
     }
 
     $links = [
-        '/firquidja',
-        '/donativo',
-        '/voluntariado'
+        route('help') . '#firquidja',
+        route('help') . '#donativo',
+        route('help'),
     ];
 
 @endphp
 
-<div class="max-w-4xl m-auto my-16">
+<div class="max-w-4xl mx-auto px-6 my-10 sm:my-16">
 
     @if (session('language') === 'pt')
         <h1>Como ajudar</h1>
@@ -47,14 +47,12 @@
         <h1>How to help</h1>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 my-4">
 
         @for ($i=0; $i<sizeof($title); $i++)
-            <a href="{{ $links[$i] }}" class="cursor-pointer">
-                <div>
-                    <h2>{{ $title[$i] }}</h2>
-                    <p class="leading-tight">{{ $description[$i] }}</p>
-                </div>
+            <a href="{{ $links[$i] }}" class="group block h-full rounded border border-l-4 border-l-nrp-green p-4 transition hover:shadow-md">
+                <h2 class="mt-0 mb-1 text-xl group-hover:text-nrp-blue">{{ $title[$i] }}</h2>
+                <p class="my-0 text-base leading-snug text-gray-700">{{ $description[$i] }}</p>
             </a>
         @endfor
     </div>
