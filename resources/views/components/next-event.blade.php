@@ -34,29 +34,32 @@
         };
     @endphp
 
-    <div class="max-w-7xl m-auto px-6 my-10">
-        <div class="flex flex-col gap-5 rounded-xl border border-gray-200 border-l-4 border-l-nrp-blue bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:gap-6">
+    {{-- No telemóvel fica numa só linha; a partir de sm cresce um pouco e junta a data ao título. --}}
+    <div class="max-w-7xl m-auto px-4 my-4 sm:px-6 sm:my-6">
+        <div class="flex items-center gap-3 rounded-lg border border-gray-200 border-l-4 border-l-nrp-blue bg-white p-3 shadow-sm sm:gap-4 sm:px-5 sm:py-3">
 
-            <div class="flex w-20 shrink-0 flex-col items-center justify-center rounded-lg bg-nrp-blue py-3 text-white">
-                <span class="text-3xl font-bold leading-none">{{ $next['date']->format('d') }}</span>
-                <span class="mt-1 text-xs font-semibold uppercase tracking-widest">
+            <div class="flex w-11 shrink-0 flex-col items-center justify-center rounded-md bg-nrp-blue py-1 text-white sm:w-14 sm:py-1.5">
+                <span class="text-lg font-bold leading-none sm:text-2xl">{{ $next['date']->format('d') }}</span>
+                <span class="text-[10px] font-semibold uppercase leading-tight tracking-wider sm:text-xs">
                     {{ $next['date']->locale('pt')->translatedFormat('M') }}
                 </span>
             </div>
 
-            <div class="flex-1">
-                <p class="mb-1 mt-0 text-xs font-bold uppercase tracking-widest text-nrp-green">
+            <div class="min-w-0 flex-1">
+                <p class="my-0 text-[10px] font-bold uppercase leading-tight tracking-wider text-nrp-green sm:text-xs sm:tracking-widest">
                     Próximo evento
                 </p>
-                <h2 class="mb-1 mt-0 text-xl font-bold text-gray-900">
-                    {{ $next['title'] }}
-                </h2>
-                <p class="my-0 text-sm text-gray-600">
-                    {{ ucfirst($next['date']->locale('pt')->translatedFormat('l, j \d\e F')) }}
-                </p>
+                <div class="sm:flex sm:min-w-0 sm:items-baseline sm:gap-2">
+                    <h2 class="my-0 truncate text-sm font-bold leading-snug text-gray-900 sm:text-lg">
+                        {{ $next['title'] }}
+                    </h2>
+                    <p class="my-0 hidden shrink-0 text-sm text-gray-600 sm:block">
+                        · {{ ucfirst($next['date']->locale('pt')->translatedFormat('l, j \d\e F')) }}
+                    </p>
+                </div>
             </div>
 
-            <span class="shrink-0 self-start rounded-full bg-nrp-blue/10 px-4 py-2 text-sm font-bold text-nrp-blue sm:self-auto">
+            <span class="shrink-0 whitespace-nowrap rounded-full bg-nrp-blue/10 px-2.5 py-1 text-xs font-bold text-nrp-blue sm:px-3 sm:text-sm">
                 {{ $countdown }}
             </span>
 
