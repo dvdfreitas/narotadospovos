@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             NeedSeeder::class,
             DonationSeeder::class,
+            EventSeeder::class,
         ]);
 
         User::factory()->create([
