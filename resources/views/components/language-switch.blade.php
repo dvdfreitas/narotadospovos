@@ -6,5 +6,5 @@
             <option value="en" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>🇬🇧</option>
             <option value="pt" {{ app()->getLocale() === 'pt' ? 'selected' : '' }}>🇵🇹</option>
         </select>
-
+    </form>
 </div>
