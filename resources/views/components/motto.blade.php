@@ -8,6 +8,6 @@
 @endphp
 
 
-<div class="m-auto my-16 flex justify-center">
-    <p class="text-7xl text-center self-center">{{ $motto }}</p>
+<div class="m-auto my-10 flex justify-center px-6 sm:my-16">
+    <p class="text-4xl leading-tight text-center text-balance self-center sm:text-6xl lg:text-7xl">{{ $motto }}</p>
 </div>
