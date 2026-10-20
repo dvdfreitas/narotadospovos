@@ -20,9 +20,14 @@ Artisan::command('inspire', function () {
  * withoutOverlapping: se uma passagem demorar mais de um minuto, a seguinte
  * não arranca por cima — evita consultar o mesmo pagamento duas vezes.
  *
+ * appendOutputTo: cada linha do ficheiro é um pagamento que a notificação não
+ * resolveu e o polling apanhou. Para um sistema que mexe em dinheiro, esse
+ * registo vale o espaço que ocupa.
+ *
  * ATENÇÃO: só corre se o servidor tiver o agendador no cron. Sem essa
  * entrada, nada corre e ninguém avisa. Ver documentation/backlog.md
  */
 Schedule::command('mbway:check-pending')
     ->everyMinute()
-    ->withoutOverlapping();
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/mbway.log'));
