@@ -1,6 +1,5 @@
 <?php
 
-use App\Jobs\CheckPendingMbWayPayments;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
@@ -13,15 +12,17 @@ Artisan::command('inspire', function () {
  * Resolve os pagamentos MB Way cuja notificação não chegou.
  *
  * De minuto a minuto: um pagamento perdido fica resolvido em menos de 60
- * segundos, e na maioria das vezes a consulta não encontra nada para fazer.
+ * segundos, e na maioria das vezes não encontra nada para fazer.
+ *
+ * Schedule::command e não Schedule::job: o comando corre dentro do próprio
+ * agendador, sem fila nem trabalhador pelo meio.
  *
  * withoutOverlapping: se uma passagem demorar mais de um minuto, a seguinte
  * não arranca por cima — evita consultar o mesmo pagamento duas vezes.
  *
- * ATENÇÃO: isto só corre se o servidor tiver o agendador do Laravel no cron.
- * Sem essa entrada, o job nunca corre e ninguém avisa.
- * Ver documentation/backlog.md
+ * ATENÇÃO: só corre se o servidor tiver o agendador no cron. Sem essa
+ * entrada, nada corre e ninguém avisa. Ver documentation/backlog.md
  */
-Schedule::job(new CheckPendingMbWayPayments)
+Schedule::command('mbway:check-pending')
     ->everyMinute()
     ->withoutOverlapping();
