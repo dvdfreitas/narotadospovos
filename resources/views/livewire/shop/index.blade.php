@@ -781,9 +781,17 @@ $checkPayment = function () {
                                 <svg class="h-8 w-8 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m8 8 8 8M16 8l-8 8" stroke-linecap="round" /></svg>
                             </div>
                             <h3 class="m-0 mt-5 text-lg font-semibold text-slate-900">Pagamento recusado</h3>
+                            {{-- Repetir é seguro porque temos a certeza de que
+                                 nada foi cobrado. Pode ter sido um toque errado
+                                 na app, ou saldo que entretanto se resolve. --}}
                             <p class="mx-auto mb-0 mt-3 max-w-sm text-center text-sm font-normal leading-relaxed text-slate-600">
-                                O pagamento não foi autorizado. Nada foi cobrado.
+                                O pagamento não foi autorizado e nada foi cobrado.
+                                Pode tentar de novo.
                             </p>
+                            <button type="button" wire:click="retry"
+                                class="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-[#006c94] px-5 text-sm font-semibold text-white hover:bg-[#005575]">
+                                Tentar de novo
+                            </button>
 
                         @elseif ($status === \App\Models\Payment::STATUS_FAILED)
                             <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-stone-100">

@@ -173,3 +173,48 @@ it('convida a repetir quando expira, mas nunca quando é desconhecido', function
 
     expect(Payment::first()->status)->toBe(Payment::STATUS_UNKNOWN);
 });
+
+it('oferece repetir sempre que há certeza de que nada foi cobrado', function () {
+    Http::fake(['api.ifthenpay.com/*' => Http::response([
+        'Status' => '000', 'Message' => 'Success', 'RequestId' => 'REQ-R',
+    ])]);
+
+    $variant = cabaz('25.00');
+
+    $abrir = fn () => Volt::test('shop.index')
+        ->call('startCheckout', [['variantId' => $variant->id, 'quantity' => 1]])
+        ->set('buyer_name', 'David')
+        ->set('buyer_email', 'david@exemplo.pt')
+        ->set('buyer_phone', '935566333')
+        ->set('terms', true)
+        ->call('placeOrder');
+
+    // Nestes três sabemos que nada foi cobrado.
+    foreach (['markAsRejected', 'markAsExpired'] as $transicao) {
+        $c = $abrir();
+        Payment::latest('id')->first()->$transicao();
+        $c->call('checkPayment')->assertSee('Tentar de novo');
+    }
+
+});
+
+it('oferece repetir quando a ifthenpay recusa criar o pedido', function () {
+    // Teste à parte porque Http::fake() chamado segunda vez não substitui o
+    // primeiro: os stubs acumulam e o primeiro continua a responder.
+    Http::fake(['api.ifthenpay.com/*' => Http::response(['Status' => '999', 'Message' => 'Error'])]);
+
+    $variant = cabaz('25.00');
+
+    Volt::test('shop.index')
+        ->call('startCheckout', [['variantId' => $variant->id, 'quantity' => 1]])
+        ->set('buyer_name', 'David')
+        ->set('buyer_email', 'david@exemplo.pt')
+        ->set('buyer_phone', '935566333')
+        ->set('terms', true)
+        ->call('placeOrder')
+        ->assertSet('step', 3)
+        ->assertSee('Não foi possível iniciar o pagamento')
+        ->assertSee('Tentar de novo');
+
+    expect(Payment::first()->status)->toBe(Payment::STATUS_FAILED);
+});
