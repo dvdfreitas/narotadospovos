@@ -132,8 +132,14 @@ state([
                             </div>
 
                             <p class="mt-8 text-sm leading-relaxed text-slate-600">
-                                Pode pedir que o seu nome não seja mostrado publicamente. Nesse caso o donativo fica
-                                registado como anónimo, mas os dados continuam a existir nos nossos registos
+                                Na Loja Solidária, cada contributo pago aparece na lista pública de contributos da
+                                página da loja, com o seu primeiro e último nome, o que escolheu, o valor e a data.
+                                O email, o telemóvel, o NIF e a morada nunca são mostrados.
+                            </p>
+
+                            <p class="mt-4 text-sm leading-relaxed text-slate-600">
+                                Pode pedir que o seu nome não seja mostrado publicamente. Nesse caso o contributo
+                                aparece como anónimo, mas os dados continuam a existir nos nossos registos
                                 internos para efeitos contabilísticos.
                             </p>
                         </div>

@@ -305,7 +305,7 @@ $checkPayment = function () {
         <meta name="robots" content="noindex, nofollow">
     @endpush
 
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <header class="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-stone-200 pb-7 sm:mb-10">
             <div>
                 <h1 class="m-0 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">Loja Solidária</h1>
@@ -315,6 +315,13 @@ $checkPayment = function () {
             </div>
         </header>
 
+        {{--
+            Duas colunas a partir de lg: a loja à esquerda e os contributos
+            numa coluna à direita, que acompanha o scroll. Abaixo disso os
+            contributos descem para o fim da página.
+        --}}
+        <div class="lg:grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,1fr)_20rem]">
+        <div class="min-w-0">
         @if ($this->products->isNotEmpty())
             <span role="status" class="sr-only" x-text="clearMessage"></span>
             <x-shop.purchase-bar class="mb-6" />
@@ -403,13 +410,13 @@ $checkPayment = function () {
                             document.body.style.overflow = 'hidden';
                         }
                     }"
-                    class="flex h-full flex-col overflow-hidden rounded-xl border border-stone-200 bg-white transition-shadow hover:shadow-lg hover:shadow-stone-200/40 motion-reduce:transition-none lg:flex-row"
+                    class="flex h-full flex-col overflow-hidden rounded-xl border border-stone-200 bg-white transition-shadow hover:shadow-lg hover:shadow-stone-200/40 motion-reduce:transition-none xl:flex-row"
                 >
-                    <div class="relative aspect-square shrink-0 overflow-hidden bg-[#f5f1ea] lg:aspect-auto lg:w-44 xl:w-52">
+                    <div class="relative aspect-square shrink-0 overflow-hidden bg-[#f5f1ea] xl:aspect-auto xl:w-44 2xl:w-52">
                         @if ($product->image)
                             <picture>
                                 @if ($product->image === 'images/products/cabaz-solidario.webp')
-                                    <source media="(min-width: 1024px)" srcset="{{ asset('images/products/cabaz-card.webp') }}" width="768" height="1152">
+                                    <source media="(min-width: 1280px)" srcset="{{ asset('images/products/cabaz-card.webp') }}" width="768" height="1152">
                                 @endif
                                 <img
                                     src="{{ asset($product->image) }}"
@@ -685,7 +692,7 @@ $checkPayment = function () {
                         <div class="mt-6 space-y-3 border-t border-stone-100 pt-5">
                             <label class="flex items-start gap-3 text-sm text-slate-700">
                                 <input type="checkbox" wire:model="is_anonymous" class="mt-0.5 h-5 w-5 rounded border-stone-300 text-[#006c94] focus:ring-[#006c94]">
-                                <span>Não quero aparecer na lista pública de contributos</span>
+                                <span>Mostrar o meu nome como anónimo na lista de contributos</span>
                             </label>
 
                             <div>
@@ -846,5 +853,11 @@ $checkPayment = function () {
                 @endif
             </dialog>
         @endif
+        </div>
+
+        <aside aria-labelledby="shop-contributions-title" class="mt-12 lg:sticky lg:top-6 lg:mt-0">
+            <livewire:shop.contributions />
+        </aside>
+        </div>
     </div>
 </section>

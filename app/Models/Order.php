@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\GeneratesAccessCode;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -31,13 +32,45 @@ class Order extends Model
         'postal_code',
         'city',
         'terms_accepted_at',
+        'paid_at',
     ];
 
     protected $casts = [
         'total' => 'decimal:2',
         'is_anonymous' => 'boolean',
         'terms_accepted_at' => 'datetime',
+        'paid_at' => 'datetime',
     ];
+
+    /**
+     * Só o que entrou. Uma encomenda pendente pode nunca vir a ser paga,
+     * e não conta para nada que se mostre ou se some.
+     */
+    public function scopePaid(Builder $query): void
+    {
+        $query->where('status', self::STATUS_PAID);
+    }
+
+    /**
+     * O nome tal como aparece na lista pública: primeiro e último.
+     *
+     * Os nomes do meio ficam de fora porque a lista é pública e o
+     * nome completo só é preciso no recibo.
+     */
+    public function publicName(): string
+    {
+        if ($this->is_anonymous) {
+            return 'Anónimo';
+        }
+
+        $parts = preg_split('/\s+/u', trim($this->buyer_name), -1, PREG_SPLIT_NO_EMPTY);
+
+        if (count($parts) <= 1) {
+            return $parts[0] ?? 'Anónimo';
+        }
+
+        return $parts[0] . ' ' . end($parts);
+    }
 
     public function items(): HasMany
     {

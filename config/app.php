@@ -30,6 +30,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Administradores
+    |--------------------------------------------------------------------------
+    |
+    | Emails das contas que vêem a página de pagamentos, separados por
+    | vírgulas. Não há papéis na base de dados: enquanto forem duas ou três
+    | pessoas, uma lista no .env chega. A conta tem de ter o email verificado,
+    | senão bastava registar-se com o email de um administrador.
+    |
+    */
+
+    'admin_emails' => array_values(array_filter(array_map(
+        fn ($email) => strtolower(trim($email)),
+        explode(',', (string) env('ADMIN_EMAILS', '')),
+    ))),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Debug Mode
     |--------------------------------------------------------------------------
     |

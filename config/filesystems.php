@@ -44,6 +44,16 @@ return [
             'throw' => false,
         ],
 
+        // Logótipos dos parceiros, servidos em /images/partners/{ficheiro}.
+        // Um disco próprio para os testes o poderem trocar por um falso.
+        'partners' => [
+            'driver' => 'local',
+            'root' => public_path('images/partners'),
+            'url' => '/images/partners',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

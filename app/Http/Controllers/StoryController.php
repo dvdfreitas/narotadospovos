@@ -11,10 +11,48 @@ use Illuminate\Support\Str;
 
 class StoryController extends Controller
 {
-    public function index()
+    /**
+     * /noticias: a mais recente e a que está em destaque no topo, e por
+     * baixo todas as outras, com páginas e filtro por ano.
+     *
+     * As duas do topo saem da lista em todas as páginas, e não só na
+     * primeira: se saíssem só na primeira, a segunda página começava com
+     * uma notícia que já tinha aparecido.
+     *
+     * Com um ano escolhido não há topo — quem filtra quer a lista.
+     */
+    public function index(Request $request)
     {
-        $stories = Story::with(['user', 'categories'])->latest()->paginate(3);
-        return view('stories.index', compact('stories'));
+        $years = Story::published()->pluck('date')
+            ->map(fn ($date) => (int) substr($date, 0, 4))
+            ->unique()
+            ->values();
+
+        $year = $years->contains($request->integer('ano')) ? $request->integer('ano') : null;
+
+        $latest = $featured = null;
+
+        if ($year === null && $latest = Story::published()->with('categories')->first()) {
+            // A marcada mais recente; sem nenhuma marcada, a segunda mais
+            // recente, para o topo não ficar coxo. O is_featured tem de vir
+            // antes da data na ordenação, daí o reorder.
+            $featured = Story::published()->with('categories')
+                ->whereKeyNot($latest->id)
+                ->reorder()
+                ->orderByDesc('is_featured')
+                ->orderByDesc('date')
+                ->orderByDesc('id')
+                ->first();
+        }
+
+        $stories = Story::published()
+            ->with('categories')
+            ->when($year, fn ($q) => $q->whereYear('date', $year))
+            ->whereNotIn('id', array_filter([$latest?->id, $featured?->id]))
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('stories.index', compact('stories', 'latest', 'featured', 'years', 'year'));
     }
 
     public function create()

@@ -69,4 +69,20 @@
             </ul>
         </div>
     </div>
+
+    {{-- Só com sessão iniciada: um atalho discreto para o painel, fora do menu do público. --}}
+    @auth
+        <div class="border-t border-gray-100 bg-gray-50 dark:border-gray-800 dark:bg-gray-950">
+            <div class="max-w-screen-xl mx-auto flex justify-end px-4">
+                <a href="{{ route('dashboard') }}"
+                    class="group inline-flex items-center gap-1.5 py-1.5 text-xs text-gray-600 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-nrp-blue dark:text-gray-400 dark:hover:text-white">
+                    <svg class="h-3.5 w-3.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" /></svg>
+                    <span class="font-semibold text-gray-900 dark:text-white">{{ strtok(auth()->user()->name, ' ') }}</span>
+                    <span aria-hidden="true" class="text-gray-300">·</span>
+                    {{ session('language') === 'en' ? 'Dashboard' : 'Painel' }}
+                    <svg class="h-3 w-3 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </a>
+            </div>
+        </div>
+    @endauth
 </nav>

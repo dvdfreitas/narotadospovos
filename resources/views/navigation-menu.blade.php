@@ -17,12 +17,11 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     @endauth
-                    <x-nav-link href="{{ route('stories.index') }}" :active="request()->routeIs('stories.index')">
-                        {{ __('Histórias') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('partners.index') }}" :active="request()->routeIs('partners.index')">
-                        {{ __('Parceiros') }}
-                    </x-nav-link>                    
+                    @can('admin')
+                        <x-nav-link href="{{ route('admin.orders') }}" :active="request()->routeIs('admin.orders')">
+                            {{ __('Pagamentos') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -103,12 +102,11 @@
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
             @endauth
-            <x-responsive-nav-link href="{{ route('stories.index') }}" :active="request()->routeIs('stories.index')">
-                {{ __('Histórias') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('partners.index') }}" :active="request()->routeIs('partners.index')">
-                {{ __('Parceiros') }}
-            </x-responsive-nav-link>
+            @can('admin')
+                <x-responsive-nav-link href="{{ route('admin.orders') }}" :active="request()->routeIs('admin.orders')">
+                    {{ __('Pagamentos') }}
+                </x-responsive-nav-link>
+            @endcan
         </div>
         
         <!-- Responsive Settings Options -->

@@ -82,8 +82,14 @@ Volt::route('/loja-solidaria', 'shop.index')
 
 
 // Histórias e parceiros — ler é público, escrever exige sessão.
-Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');
-Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
+//
+// O índice vive em /noticias e não em /stories: public/stories é a pasta
+// das imagens das notícias, e o servidor web serve a pasta antes de o
+// pedido chegar ao Laravel — /stories dava 404. O resto (/stories/{slug},
+// /stories/create) não colide, porque não há pastas com esses nomes.
+Route::get('/noticias', [StoryController::class, 'index'])->name('stories.index');
+Route::get('/parceiros', [PartnerController::class, 'index'])->name('partners.index');
+Route::redirect('/partners', '/parceiros', 301);
 
 Route::middleware([
     'auth:sanctum',
@@ -95,9 +101,11 @@ Route::middleware([
     Route::patch('/stories/{story:slug}', [StoryController::class, 'update']);
     Route::delete('/stories/{story:slug}', [StoryController::class, 'destroy']);
 
-    Route::get('/partners/create', [PartnerController::class, 'create'])->name('partners.create');
-    Route::post('/partners', [PartnerController::class, 'store']);
 });
+
+// Acrescentar parceiros passou para o painel de /admin/parceiros. A morada
+// antiga abre-o directamente, para os links que ainda apontam para cá.
+Route::redirect('/partners/create', '/admin/parceiros?novo=1')->name('partners.create');
 
 // Declarada depois do /stories/create: o {story:slug} aceita qualquer
 // segmento, e a primeira rota que casa é a que ganha.
@@ -112,9 +120,18 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Volt::route('/dashboard', 'dashboard')->name('dashboard');
+
+    // Encomendas da Loja Solidária, com os dados do formulário. Ver o Gate
+    // 'admin' no AppServiceProvider e ADMIN_EMAILS no .env.
+    Volt::route('/admin/pagamentos', 'admin.orders-index')
+        ->middleware('can:admin')
+        ->name('admin.orders');
+
+    // Lista de todos os parceiros, para os mostrar ou esconder no site.
+    Volt::route('/admin/parceiros', 'admin.partners-index')
+        ->middleware('can:admin')
+        ->name('admin.partners');
 });
 
 Route::get('/noticias/{year}/{month}/{title}', function ($year, $month, $title) {

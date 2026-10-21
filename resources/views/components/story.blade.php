@@ -1,8 +1,8 @@
 @props(['story', 'format' => 'default'])
 
 @php
-    $url = Str::startsWith($story->url, '/') ? $story->url : '/noticias/' . $story->url;
-    $imageUrl = $story->image ? '/stories/' . $story->image : '/images/default.jpg';
+    $url = $story->link();
+    $imageUrl = $story->imageUrl();
 
     // 'compact' cabe duas por linha no telemóvel: sem resumo nem categoria,
     // que voltam a aparecer a partir de sm.
@@ -25,7 +25,7 @@
 
             <div class="flex items-center gap-2 {{ $compact ? 'mb-1 sm:mb-2' : 'mb-2' }}">
                 <span class="{{ $compact ? 'text-[10px] sm:text-xs' : 'text-xs' }} font-bold uppercase tracking-widest text-neutral-400">
-                    {{ $story->date }}
+                    <time datetime="{{ $story->date }}">{{ $story->displayDate() }}</time>
                 </span>
                 @if($story->categories->isNotEmpty())
                    <span class="{{ $compact ? 'max-sm:hidden' : '' }} w-1 h-1 rounded-full bg-neutral-300"></span>

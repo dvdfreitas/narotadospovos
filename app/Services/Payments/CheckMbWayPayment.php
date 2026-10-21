@@ -6,6 +6,7 @@ use App\Mail\ContributionConfirmed;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Services\IfThenPay\MbWayClient;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -71,14 +72,29 @@ class CheckMbWayPayment
      * o email já é dele.
      *
      * Um email que não sai não pode desfazer um pagamento que entrou.
+     *
+     * O pagamento e a encomenda mudam na mesma transação: um pagamento pago
+     * com a encomenda ainda pendente deixava o comprador fora da lista
+     * pública e o dinheiro fora das contas da página de pagamentos.
      */
     private function confirm(Payment $payment): void
     {
-        if (! $payment->markAsPaid()) {
-            return;
-        }
+        $payable = DB::transaction(function () use ($payment) {
+            if (! $payment->markAsPaid()) {
+                return null;
+            }
 
-        $payable = $payment->payable;
+            $payable = $payment->payable;
+
+            if ($payable instanceof Order) {
+                $payable->update([
+                    'status'  => Order::STATUS_PAID,
+                    'paid_at' => $payment->confirmed_at,
+                ]);
+            }
+
+            return $payable;
+        });
 
         if (! $payable instanceof Order) {
             return;
