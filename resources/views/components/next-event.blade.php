@@ -4,18 +4,13 @@
 
     /**
      * Mostra o próximo evento e permite andar pelos seguintes com as setas.
-     * Um evento sai no dia seguinte ao seu fim (ends_at, ou starts_at se não
-     * tiver fim). Nada é apagado da base de dados: só deixa de ser mostrado.
-     * Eventos escondidos ou cancelados não aparecem.
+     * Um evento sai da lista no dia seguinte ao seu último dia. Nada é
+     * apagado da base de dados: só deixa de ser mostrado. Eventos
+     * escondidos não aparecem.
      */
-    $today = Carbon::today();
-
-    // Compara-se o dia, não o instante: um evento fica à vista durante todo
-    // o seu último dia.
     $events = Event::visible()
-        ->where('is_cancelled', false)
-        ->whereRaw('COALESCE(ends_at, starts_at) >= ?', [$today])
-        ->orderBy('starts_at')
+        ->upcoming()
+        ->with('dates')
         ->limit(10)
         ->get();
 
@@ -30,31 +25,31 @@
 
             @foreach ($events as $event)
                 @php
-                    $start = $event->starts_at->copy()->startOfDay();
-                    $end = $event->ends_at?->copy()->startOfDay();
-                    $days = (int) $today->diffInDays($start, false);
+                    $next = $event->nextDate();
+                    $cancelled = $event->isCancelled();
+                    $days = (int) Carbon::today()->diffInDays($next, false);
 
                     $countdown = match (true) {
-                        $days < 0 => 'A decorrer',
-                        $days === 0 => 'É hoje',
+                        $cancelled => 'Cancelado',
+                        $event->happensToday() => 'É hoje',
+                        $days <= 0 => 'Terminou',
                         $days === 1 => 'É amanhã',
                         default => "Faltam {$days} dias",
                     };
-
-                    $when = ucfirst($start->locale('pt')->translatedFormat('l, j \d\e F'));
-                    if ($end && $end->gt($start)) {
-                        $when .= ' a '.$end->locale('pt')->translatedFormat('j \d\e F');
-                    }
                 @endphp
 
                 <div @if (! $loop->first) x-cloak @endif
                      x-show="i === {{ $loop->index }}"
                      class="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
 
-                    <div class="flex w-11 shrink-0 flex-col items-center justify-center rounded-md bg-nrp-blue py-1 text-white sm:w-14 sm:py-1.5">
-                        <span class="text-lg font-bold leading-none sm:text-2xl">{{ $start->format('d') }}</span>
+                    <div @class([
+                        'flex w-11 shrink-0 flex-col items-center justify-center rounded-md py-1 text-white sm:w-14 sm:py-1.5',
+                        'bg-nrp-blue' => ! $cancelled,
+                        'bg-gray-400' => $cancelled,
+                    ])>
+                        <span class="text-lg font-bold leading-none sm:text-2xl">{{ $next->format('d') }}</span>
                         <span class="text-[10px] font-semibold uppercase leading-tight tracking-wider sm:text-xs">
-                            {{ $start->locale('pt')->translatedFormat('M') }}
+                            {{ $next->locale('pt')->translatedFormat('M') }}
                         </span>
                     </div>
 
@@ -70,17 +65,29 @@
                                 {{ $event->name }}
                             </h2>
                             <p class="my-0 hidden shrink-0 text-sm text-gray-600 sm:block">
-                                · {{ $when }}
+                                ·
+                                @foreach ($event->dateLabels() as $label)
+                                    <span @class(['line-through' => $label['cancelled']])>{{ $label['text'] }}</span>@unless ($loop->last){{ $loop->remaining === 1 ? ' e' : ',' }}@endunless
+                                @endforeach
                             </p>
                         </div>
+                        @if (filled($event->description))
+                            <p class="my-0 truncate text-xs text-gray-500">{{ $event->description }}</p>
+                        @endif
                         {{-- Com setas não há espaço para o selo no telemóvel: a contagem passa para baixo do título. --}}
                         @if ($many)
-                            <p class="my-0 text-xs font-semibold text-nrp-blue sm:hidden">{{ $countdown }}</p>
+                            <p @class([
+                                'my-0 text-xs font-semibold sm:hidden',
+                                'text-nrp-blue' => ! $cancelled,
+                                'text-red-700' => $cancelled,
+                            ])>{{ $countdown }}</p>
                         @endif
                     </div>
 
                     <span @class([
-                        'shrink-0 whitespace-nowrap rounded-full bg-nrp-blue/10 px-2.5 py-1 text-xs font-bold text-nrp-blue sm:px-3 sm:text-sm',
+                        'shrink-0 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold sm:px-3 sm:text-sm',
+                        'bg-nrp-blue/10 text-nrp-blue' => ! $cancelled,
+                        'bg-red-50 text-red-700' => $cancelled,
                         'hidden sm:inline-block' => $many,
                     ])>
                         {{ $countdown }}
