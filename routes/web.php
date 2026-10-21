@@ -8,9 +8,6 @@ use App\Models\Donation;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-// Para teste
-// auth()->loginUsingId(1);
-
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
@@ -84,17 +81,27 @@ Volt::route('/loja-solidaria', 'shop.index')
     ->name('shop.index');
 
 
+// Histórias e parceiros — ler é público, escrever exige sessão.
 Route::get('/stories', [StoryController::class, 'index'])->name('stories.index');
-Route::get('/stories/create', [StoryController::class, 'create'])->name('stories.create');
-Route::get('/stories/{story:slug}', [StoryController::class, 'show'])->name('stories.show');
-Route::post('/stories', [StoryController::class, 'store']);
-Route::get('/stories/{story:slug}/edit', [StoryController::class, 'edit'])->name('stories.edit');
-Route::patch('/stories/{story:slug}', [StoryController::class, 'update']);
-Route::delete('/stories/{story:slug}', [StoryController::class, 'destroy']);
-
 Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
-Route::get('/partners/create', [PartnerController::class, 'create'])->name('partners.create');
-Route::post('/partners', [PartnerController::class, 'store']);
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+])->group(function () {
+    Route::get('/stories/create', [StoryController::class, 'create'])->name('stories.create');
+    Route::post('/stories', [StoryController::class, 'store']);
+    Route::get('/stories/{story:slug}/edit', [StoryController::class, 'edit'])->name('stories.edit');
+    Route::patch('/stories/{story:slug}', [StoryController::class, 'update']);
+    Route::delete('/stories/{story:slug}', [StoryController::class, 'destroy']);
+
+    Route::get('/partners/create', [PartnerController::class, 'create'])->name('partners.create');
+    Route::post('/partners', [PartnerController::class, 'store']);
+});
+
+// Declarada depois do /stories/create: o {story:slug} aceita qualquer
+// segmento, e a primeira rota que casa é a que ganha.
+Route::get('/stories/{story:slug}', [StoryController::class, 'show'])->name('stories.show');
 
 Route::get('/campanha', [NeedController::class, 'index'])->name('needs.index');
 
