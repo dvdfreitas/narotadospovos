@@ -16,6 +16,8 @@ return [
 
     'default' => env('MAIL_MAILER', 'log'),
 
+    'bazar_address' => env('BAZAR_NOTIFICATION_ADDRESS', 'bazar@narotadospovos.org'),
+
     /*
     |--------------------------------------------------------------------------
     | Mailer Configurations

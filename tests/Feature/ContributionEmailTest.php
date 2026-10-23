@@ -1,12 +1,17 @@
 <?php
 
 use App\Mail\ContributionConfirmed;
+use App\Mail\ContributionReceived;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Services\IfThenPay\MbWayClient;
 use App\Services\Payments\CheckMbWayPayment;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+
+beforeEach(function () {
+    config(['mail.bazar_address' => 'bazar@narotadospovos.org']);
+});
 
 function contributo(): Payment
 {
@@ -39,6 +44,12 @@ it('agradece por email quando o contributo é pago', function () {
     Mail::assertQueued(ContributionConfirmed::class, fn ($mail) =>
         $mail->hasTo('david@exemplo.pt')
         && $mail->order->access_code === $payment->payable->access_code);
+
+    Mail::assertQueued(ContributionReceived::class, fn ($mail) =>
+        $mail->hasTo('bazar@narotadospovos.org')
+        && $mail->order->id === $payment->payable_id
+        && $mail->payment->id === $payment->id);
+    Mail::assertQueuedCount(2);
 });
 
 it('não agradece quando o pagamento não se concretiza', function () {
@@ -81,11 +92,60 @@ it('agradece uma só vez quando dois caminhos confirmam ao mesmo tempo', functio
     $this->travel(5)->seconds();
     $check->check($peloEcra);
 
-    Mail::assertQueuedCount(1);
+    Mail::assertQueued(ContributionConfirmed::class, 1);
+    Mail::assertQueued(ContributionReceived::class, 1);
+    Mail::assertQueuedCount(2);
 
     // Quem chegou em segundo não reescreve a hora de quem chegou primeiro.
     expect($payment->fresh()->confirmed_at->equalTo($primeiraHora))->toBeTrue()
         ->and($peloEcra->status)->toBe(Payment::STATUS_PAID);
+});
+
+it('avisa o bazar mesmo que falhe a colocação do email do comprador na fila', function () {
+    Http::fake(['api.ifthenpay.com/*' => Http::response(['Status' => '000', 'Message' => 'Success'])]);
+
+    Mail::shouldReceive('to')->with('david@exemplo.pt')->once()
+        ->andThrow(new RuntimeException('fila indisponível para o comprador'));
+    $pending = Mockery::mock(\Illuminate\Mail\PendingMail::class);
+    $pending->shouldReceive('send')->once()->with(Mockery::type(ContributionReceived::class));
+    Mail::shouldReceive('to')->with('bazar@narotadospovos.org')->once()->andReturn($pending);
+
+    $payment = (new CheckMbWayPayment(new MbWayClient('UWP-TESTE')))->check(contributo());
+
+    expect($payment->fresh()->status)->toBe(Payment::STATUS_PAID);
+});
+
+it('inclui os dados do contributo e o acesso ao painel no aviso interno', function () {
+    $this->travelTo(\Illuminate\Support\Carbon::parse('2026-07-01 12:00:00', 'UTC'));
+    $example = ContributionConfirmed::example();
+    $mail = new ContributionReceived($example->order, $example->payment);
+
+    expect($mail->envelope()->subject)->toBe('Novo contributo pago — EXEMPLO')
+        ->and($mail->render())->toContain(
+            'Maria Silva', 'maria@exemplo.pt', 'Cabaz', 'Papas lácteas', '27,50 €',
+            '01/07/2026 às 13:00', route('admin.orders', ['q' => 'EXEMPLO']),
+        );
+});
+
+it('processa os dois emails pela fila da base de dados', function () {
+    config(['queue.default' => 'database', 'mail.default' => 'array']);
+    Http::fake(['api.ifthenpay.com/*' => Http::response(['Status' => '000', 'Message' => 'Success'])]);
+
+    (new CheckMbWayPayment(new MbWayClient('UWP-TESTE')))->check(contributo());
+
+    $this->assertDatabaseCount('jobs', 2);
+
+    $this->artisan('queue:work', [
+        'connection' => 'database', '--stop-when-empty' => true, '--tries' => 1,
+    ])->assertSuccessful();
+
+    $this->assertDatabaseCount('jobs', 0);
+    $this->assertDatabaseCount('failed_jobs', 0);
+
+    $messages = Mail::mailer()->getSymfonyTransport()->messages();
+    expect($messages)->toHaveCount(2);
+    expect($messages->map(fn ($message) => $message->getOriginalMessage()->getTo()[0]->getAddress())->all())
+        ->toBe(['david@exemplo.pt', 'bazar@narotadospovos.org']);
 });
 
 it('envia um email de teste sem gravar nada', function () {

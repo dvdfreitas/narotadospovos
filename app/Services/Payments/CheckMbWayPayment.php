@@ -3,6 +3,7 @@
 namespace App\Services\Payments;
 
 use App\Mail\ContributionConfirmed;
+use App\Mail\ContributionReceived;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Services\IfThenPay\MbWayClient;
@@ -100,15 +101,22 @@ class CheckMbWayPayment
             return;
         }
 
-        try {
-            Mail::to($payable->buyer_email)
-                ->send(new ContributionConfirmed($payable, $payment));
-        } catch (\Throwable $e) {
-            Log::error('Falha ao enviar confirmação de contributo', [
-                'payment_id' => $payment->id,
-                'reference'  => $payment->reference,
-                'erro'       => $e->getMessage(),
-            ]);
+        // Cada mensagem tem o seu trabalho na fila: uma falha no email do
+        // comprador não impede o aviso interno, nem o contrário.
+        foreach ([
+            [$payable->buyer_email, new ContributionConfirmed($payable, $payment)],
+            [config('mail.bazar_address'), new ContributionReceived($payable, $payment)],
+        ] as [$recipient, $mail]) {
+            try {
+                Mail::to($recipient)->send($mail);
+            } catch (\Throwable $e) {
+                Log::error('Falha ao enviar confirmação de contributo', [
+                    'payment_id' => $payment->id,
+                    'reference'  => $payment->reference,
+                    'mail'      => $mail::class,
+                    'erro'      => $e->getMessage(),
+                ]);
+            }
         }
     }
 }

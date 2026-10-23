@@ -10,6 +10,11 @@ Lista directa do que ficou pendente. Actualizar à medida que se resolve.
   fila quando o pagamento fica `paid`, por qualquer dos três caminhos. Sai uma só
   vez mesmo que dois caminhos confirmem ao mesmo tempo (`Payment::markAsPaid`).
 
+- [x] **Aviso interno do contributo pago.** `ContributionReceived`, enviado pela
+  mesma fila para `bazar@narotadospovos.org` (configurável por
+  `BAZAR_NOTIFICATION_ADDRESS`), com o resumo e ligação ao painel. Cada email
+  tem o seu trabalho e uma falha num envio não impede o outro.
+
 - [x] **Envio de email por SMTP.** Sai de `bazar@narotadospovos.org` pelo Google
   Workspace (`smtp.gmail.com`, palavra-passe de aplicação), testado a 2026-10-23
   com `php artisan bazar:testar-email`. Valores em comentário no `.env.example`.
@@ -35,6 +40,8 @@ Lista directa do que ficou pendente. Actualizar à medida que se resolve.
   o `schedule:run` no cron — sem ele a fila não é processada e os emails ficam
   parados na tabela `jobs`. O `bazar:testar-email` não passa pela fila: funciona
   mesmo sem cron, por isso não serve para testar o cron.
+  Instruções de configuração e diagnóstico no `README.md`, em "Emails do Bazar
+  Solidário e cron".
 
 - [ ] **Ver a tarifa no contrato.** São 0,09 € por transação nos valores pequenos
   (verificado). Confirmar se se mantém fixa nos valores altos ou se passa a
