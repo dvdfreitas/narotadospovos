@@ -130,7 +130,7 @@ new #[Layout('layouts.app')] class extends Component {
             }
 
             fclose($out);
-        }, 'loja-solidaria-' . now()->format('Y-m-d') . '.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
+        }, 'bazar-solidario-' . now()->format('Y-m-d') . '.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
     }
 };
 ?>
@@ -164,7 +164,7 @@ new #[Layout('layouts.app')] class extends Component {
 
         {{-- HEADER & STATS --}}
         <div class="mb-8">
-            <h1 class="text-2xl font-bold text-gray-900 mb-6">Pagamentos — Loja Solidária</h1>
+            <h1 class="text-2xl font-bold text-gray-900 mb-6">Pagamentos — Bazar Solidário</h1>
 
             <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
                 <div class="overflow-hidden rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-900/5">

@@ -10,10 +10,31 @@ Lista directa do que ficou pendente. Actualizar à medida que se resolve.
   fila quando o pagamento fica `paid`, por qualquer dos três caminhos. Sai uma só
   vez mesmo que dois caminhos confirmem ao mesmo tempo (`Payment::markAsPaid`).
 
-- [ ] **Configurar o envio de email em produção.** `mail.default` está em `log` e o
-  remetente é `hello@example.com`, os valores por omissão do Laravel. Falta SMTP,
-  remetente do domínio com SPF/DKIM, e o `schedule:run` no cron — sem ele a fila
-  não é processada e os emails ficam parados na tabela `jobs`.
+- [x] **Envio de email por SMTP.** Sai de `bazar@narotadospovos.org` pelo Google
+  Workspace (`smtp.gmail.com`, palavra-passe de aplicação), testado a 2026-10-23
+  com `php artisan bazar:testar-email`. Valores em comentário no `.env.example`.
+
+- [ ] **SPF e DKIM do domínio — os emails vão para o spam.** O DMARC falha porque
+  nem o SPF nem o DKIM passam. Até lá, quem testa tem de procurar no spam.
+  O DNS está na webhs (`ns1.webhs.org`).
+  - **SPF:** o registo actual não inclui o Google e acaba em `-all`. Substituir por
+    `v=spf1 ip4:194.39.124.60 include:_spf.google.com include:_spf.spambusters.email include:_spf185.serverhs.org include:_spf145.serverhs.org -all`
+    (tira o `_spf145` repetido, o `+a` — mesmo IP do `ip4` — e o `+mx`, que são os
+    servidores de receção do Google. Fica com 6 consultas DNS, abaixo do limite de 10.)
+  - **DKIM:** não existe `google._domainkey`. Em admin.google.com → Apps → Google
+    Workspace → Gmail → Autenticar email: gerar o registo (2048 bits, seletor
+    `google`), criá-lo como TXT na webhs e, depois de propagar, carregar em
+    "Iniciar autenticação".
+  - **DMARC:** está `p=none`; pode ficar. Opcional: acrescentar
+    `rua=mailto:bazar@narotadospovos.org` para receber relatórios. Passar a
+    `p=quarantine` só depois de SPF e DKIM darem PASS.
+  - **Verificar:** `bazar:testar-email` e, no Gmail, "Mostrar original" — SPF, DKIM e
+    DMARC em PASS.
+
+- [ ] **Email em produção.** Repetir no `.env` do servidor as linhas `MAIL_*`, e pôr
+  o `schedule:run` no cron — sem ele a fila não é processada e os emails ficam
+  parados na tabela `jobs`. O `bazar:testar-email` não passa pela fila: funciona
+  mesmo sem cron, por isso não serve para testar o cron.
 
 - [ ] **Ver a tarifa no contrato.** São 0,09 € por transação nos valores pequenos
   (verificado). Confirmar se se mantém fixa nos valores altos ou se passa a
@@ -32,7 +53,7 @@ Lista directa do que ficou pendente. Actualizar à medida que se resolve.
 
 ### Acesso (quem lá chega)
 
-- [ ] `/loja-solidaria` está **aberta a quem tiver o link**. Tem `X-Robots-Tag: noindex, nofollow`, logo não é indexada — mas não é privada.
+- [ ] `/bazar-solidario` está **aberta a quem tiver o link** (`/loja-solidaria`, o nome anterior, redirecciona para lá). Tem `X-Robots-Tag: noindex, nofollow`, logo não é indexada — mas não é privada.
 - [ ] Decidir antes de aceitar pagamentos reais: deixar aberta, pôr palavra-passe, ou mudar para um caminho não adivinhável.
 - [ ] A página **não está no menu**. Se um dia for para o menu, rever o `noindex`.
 
@@ -103,7 +124,7 @@ Lista directa do que ficou pendente. Actualizar à medida que se resolve.
   automático no browser. Se for conta, acrescentar `orders.user_id` nullable —
   é barato de acrescentar depois, por isso não se faz já.
 - **NIF:** hoje é `nullable` e opcional no formulário. Confirmar com a contabilidade
-  se a Loja Solidária é venda (NIF dispensável) ou donativo (NIF permite dedução no IRS).
+  se o Bazar Solidário é venda (NIF dispensável) ou donativo (NIF permite dedução no IRS).
 - **Facturação pelo site.** Exige software certificado pela AT. Hoje a factura é emitida fora.
 
 ## Para rever com calma

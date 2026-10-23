@@ -9,7 +9,7 @@ use Livewire\Volt\Component;
 
 /**
  * A primeira página depois do login: o estado do site e atalhos para
- * cada área. Os números da loja só aparecem a administradores — são os
+ * cada área. Os números do bazar só aparecem a administradores — são os
  * mesmos de /admin/pagamentos.
  */
 new #[Layout('layouts.app')] class extends Component {
@@ -45,11 +45,11 @@ new #[Layout('layouts.app')] class extends Component {
             <p class="mt-2 text-gray-600">Daqui gere o conteúdo do site da Na Rota dos Povos.</p>
         </header>
 
-        {{-- LOJA SOLIDÁRIA --}}
+        {{-- BAZAR SOLIDÁRIO --}}
         @if ($isAdmin)
             <section aria-labelledby="dashboard-shop" class="mt-10">
                 <div class="flex flex-wrap items-baseline justify-between gap-3">
-                    <h2 id="dashboard-shop" class="text-lg font-semibold text-gray-900">Loja Solidária</h2>
+                    <h2 id="dashboard-shop" class="text-lg font-semibold text-gray-900">Bazar Solidário</h2>
                     <a href="{{ route('admin.orders') }}" class="group inline-flex items-center gap-1 text-sm font-semibold text-nrp-blue hover:text-gray-900">
                         Ver todos os pagamentos
                         <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke-linecap="round" stroke-linejoin="round" /></svg>
@@ -153,14 +153,14 @@ new #[Layout('layouts.app')] class extends Component {
                     </div>
                 </div>
 
-                {{-- Loja --}}
+                {{-- Bazar --}}
                 <div class="flex flex-col rounded-xl p-6 ring-1 ring-gray-200">
                     <div class="flex items-center gap-3">
                         <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
                         </span>
                         <div>
-                            <h3 class="font-semibold text-gray-900">Loja Solidária</h3>
+                            <h3 class="font-semibold text-gray-900">Bazar Solidário</h3>
                             <p class="text-sm text-gray-500">Acessível só por link</p>
                         </div>
                     </div>
@@ -171,7 +171,7 @@ new #[Layout('layouts.app')] class extends Component {
                         @if ($isAdmin)
                             <a href="{{ route('admin.orders') }}" class="inline-flex items-center rounded-lg bg-nrp-blue px-3 py-2 text-sm font-semibold text-white hover:bg-[#006c94]">Pagamentos</a>
                         @endif
-                        <a href="{{ route('shop.index') }}" class="inline-flex items-center rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Ver loja</a>
+                        <a href="{{ route('shop.index') }}" class="inline-flex items-center rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Ver bazar</a>
                     </div>
                 </div>
 

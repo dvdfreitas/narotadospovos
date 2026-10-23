@@ -9,20 +9,20 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Enche a base local com encomendas fictícias da Loja Solidária.
+ * Enche a base local com encomendas fictícias do Bazar Solidário.
  *
  * Para ver a lista pública e a página de pagamentos com volume — a
  * paginação, o "Ver mais", os anónimos, as pendentes — sem passar pelo
  * checkout uma vez por linha. Para o fluxo de compra em si, usar o
- * IFTHENPAY_FAKE (ver FakeMbWayClient).
+ * IFTHENPAY_ENV=fake (ver FakeMbWayClient).
  *
  * Só fora de produção: inventa pagamentos que nunca existiram.
  */
 class SimulateShopOrders extends Command
 {
-    protected $signature = 'loja:simular {quantidade=15 : Quantas encomendas criar}';
+    protected $signature = 'bazar:simular {quantidade=15 : Quantas encomendas criar}';
 
-    protected $description = 'Cria encomendas fictícias da Loja Solidária (só fora de produção)';
+    protected $description = 'Cria encomendas fictícias do Bazar Solidário (só fora de produção)';
 
     public function handle(): int
     {

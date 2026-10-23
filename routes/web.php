@@ -68,7 +68,7 @@ Route::get('/historias', function () {
 //     ->name('cards.christmas');
 
 
-// Política de privacidade — cobre os donativos, a Loja Solidária e as campanhas.
+// Política de privacidade — cobre os donativos, o Bazar Solidário e as campanhas.
 Volt::route('/privacidade', 'privacy-policy')
     ->name('privacy');
 
@@ -76,9 +76,12 @@ Volt::route('/privacidade', 'privacy-policy')
 Route::redirect('/natal/privacidade', '/privacidade', 301);
 
 
-// Loja Solidária — acessível por link directo, fora do menu.
-Volt::route('/loja-solidaria', 'shop.index')
+// Bazar Solidário — acessível por link directo, fora do menu.
+Volt::route('/bazar-solidario', 'shop.index')
     ->name('shop.index');
+
+// O nome anterior. Os links que já circularam continuam a funcionar.
+Route::redirect('/loja-solidaria', '/bazar-solidario', 301);
 
 
 // Histórias e parceiros — ler é público, escrever exige sessão.
@@ -122,11 +125,21 @@ Route::middleware([
 ])->group(function () {
     Volt::route('/dashboard', 'dashboard')->name('dashboard');
 
-    // Encomendas da Loja Solidária, com os dados do formulário. Ver o Gate
+    // Encomendas do Bazar Solidário, com os dados do formulário. Ver o Gate
     // 'admin' no AppServiceProvider e ADMIN_EMAILS no .env.
     Volt::route('/admin/pagamentos', 'admin.orders-index')
         ->middleware('can:admin')
         ->name('admin.orders');
+
+    // O email de confirmação tal como sai, para rever o texto sem comprar.
+    // ?encomenda={id} mostra o de uma encomenda paga verdadeira.
+    Route::get('/admin/emails/confirmacao', function () {
+        $order = request('encomenda') ? App\Models\Order::paid()->with('items')->findOrFail(request('encomenda')) : null;
+
+        return $order
+            ? new App\Mail\ContributionConfirmed($order, $order->payments()->where('status', 'paid')->latest('id')->firstOrFail())
+            : App\Mail\ContributionConfirmed::example(isTest: false);
+    })->middleware('can:admin')->name('admin.emails.confirmation');
 
     // Lista de todos os parceiros, para os mostrar ou esconder no site.
     Volt::route('/admin/parceiros', 'admin.partners-index')

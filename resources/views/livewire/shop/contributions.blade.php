@@ -56,7 +56,7 @@ $next = function () {
     $this->page = min($this->pages, $this->page + 1);
 };
 
-// Disparado pela loja quando o pagamento de quem está na página entra.
+// Disparado pelo bazar quando o pagamento de quem está na página entra.
 // Volta à primeira página, que é onde a pessoa acabou de aparecer.
 on(['contribution-paid' => function () {
     $this->page = 1;

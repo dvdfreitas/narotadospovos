@@ -3,23 +3,27 @@
 namespace App\Services\IfThenPay;
 
 /**
- * Um MB Way que não sai do servidor, para experimentar a loja sem pagar.
+ * Um MB Way que não sai do servidor, para experimentar o bazar sem pagar.
  *
- * Liga-se com IFTHENPAY_FAKE=true e nunca em produção — ver
+ * Liga-se com IFTHENPAY_ENV=fake e nunca em produção — ver
  * AppServiceProvider::register(). Tudo o resto corre a sério: a encomenda,
  * o pagamento, o ecrã de espera, o email, a lista pública e o admin. Só
  * esta classe finge ser a ifthenpay.
  *
- * O resultado escolhe-se pelo último dígito do telemóvel:
+ * Qualquer telemóvel paga. Os outros desfechos pedem um número de teste
+ * — 91, 92, 93 ou 96, seis zeros e o dígito do caso — que ninguém escreve
+ * por engano. Com o último dígito apenas, um número verdadeiro acabado em
+ * 1 a 4 caía num desfecho de falha sem se perceber porquê.
  *
- *   …1  o cliente recusa na app             (020 → rejected)
- *   …2  o cliente não responde a tempo      (101 → expired)
- *   …3  a ifthenpay recusa criar o pedido   (999 → failed)
- *   …4  a ifthenpay não responde            (timeout → unknown)
- *   outro  paga                             (000 → paid)
+ *   910000001  o cliente recusa na app             (020 → rejected)
+ *   910000002  o cliente não responde a tempo      (101 → expired)
+ *   910000003  a ifthenpay recusa criar o pedido   (999 → failed)
+ *   910000004  a ifthenpay não responde            (timeout → unknown)
+ *   outro      paga                                (000 → paid)
  *
- * Os desfechos de 1, 2 e qualquer outro só chegam passados DELAY segundos,
- * para se ver o ecrã de espera. Até lá a consulta responde "Pending".
+ * Os desfechos pago, recusado e expirado só chegam passados DELAY
+ * segundos, para se ver o ecrã de espera. Até lá a consulta responde
+ * "Pending".
  */
 class FakeMbWayClient extends MbWayClient
 {
@@ -39,14 +43,14 @@ class FakeMbWayClient extends MbWayClient
         ?string $email = null,
         ?string $notificationUrl = null,
     ): MbWayRequestResult {
-        $scenario = substr($mobileNumber, -1);
+        $scenario = preg_match('/^9[1236]0{6}([1-4])$/', $mobileNumber, $match) ? $match[1] : 'pago';
 
         return match ($scenario) {
             '3' => new MbWayRequestResult('999', 'Simulado: erro ao iniciar', null),
             '4' => throw new MbWayUnavailableException('Simulado: a ifthenpay não respondeu'),
             // O cenário e a hora vão no próprio RequestId: assim a consulta
             // sabe o que responder sem guardar nada em lado nenhum.
-            default => new MbWayRequestResult('000', 'Simulado: pending acceptance', "FAKE-{$scenario}-" . time()),
+            default => new MbWayRequestResult('000', 'Simulado: pending acceptance', "FAKE-{$scenario}-" . now()->timestamp),
         };
     }
 
@@ -54,7 +58,7 @@ class FakeMbWayClient extends MbWayClient
     {
         [, $scenario, $requestedAt] = explode('-', $requestId) + [null, null, 0];
 
-        if (time() - (int) $requestedAt < self::DELAY) {
+        if (now()->timestamp - (int) $requestedAt < self::DELAY) {
             return new MbWayStatusResult('123', 'Simulado: Pending');
         }
 

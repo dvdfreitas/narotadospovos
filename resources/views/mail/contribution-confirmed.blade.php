@@ -12,8 +12,10 @@ Recebemos o seu contributo e já está confirmado.
 | **Total** | | **{{ number_format($order->total, 2, ',', ' ') }} €** |
 </x-mail::table>
 
-**Referência:** {{ $order->access_code }}
-**Data:** {{ $payment->confirmed_at?->format('d/m/Y \à\s H:i') }}
+{{-- O <br>: em Markdown, duas linhas seguidas juntam-se numa só. A hora
+     guarda-se em UTC e mostra-se na de Portugal, que é a do comprador. --}}
+**Referência:** {{ $order->access_code }}<br>
+**Data:** {{ $payment->confirmed_at?->copy()->tz('Europe/Lisbon')->format('d/m/Y \à\s H:i') }}
 
 Guarde esta referência — é o que identifica o seu contributo se precisar de
 falar connosco.
@@ -26,7 +28,7 @@ Com os nossos agradecimentos,<br>
 {{ config('app.name') }}
 
 <x-mail::subcopy>
-Recebeu esta mensagem porque fez um contributo na Loja Solidária.
+Recebeu esta mensagem porque fez um contributo no Bazar Solidário.
 Se não foi você, responda a este email e nós tratamos do assunto.
 </x-mail::subcopy>
 </x-mail::message>

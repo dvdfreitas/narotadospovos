@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\IfThenPay\FakeMbWayClient;
+use App\Services\IfThenPay\MbWayClient;
 use App\Services\IfThenPay\MbWayUnavailableException;
 use Illuminate\Support\Facades\Http;
 
@@ -22,16 +23,62 @@ it('aceita o pedido e responde Pending até o cliente "decidir"', function () {
         ->and((new FakeMbWayClient())->checkStatus($result->requestId)->status)->toBe('123');
 });
 
-it('escolhe o desfecho pelo último dígito do telemóvel', function () {
+/** Pede o pagamento e devolve a resposta da consulta, já depois do atraso. */
+function desfecho(string $phone)
+{
     $client = new FakeMbWayClient();
-    $past = time() - 60;
+    $requestId = $client->requestPayment('L1', '5.00', $phone, 'Teste')->requestId;
 
-    expect($client->checkStatus("FAKE-8-{$past}")->isPaid())->toBeTrue()
-        ->and($client->checkStatus("FAKE-1-{$past}")->isRejected())->toBeTrue()
-        ->and($client->checkStatus("FAKE-2-{$past}")->isExpired())->toBeTrue()
-        ->and($client->requestPayment('L1', '5.00', '912345673', 'Teste')->wasAccepted())->toBeFalse();
+    // O RequestId leva a hora do pedido; recuá-la salta o atraso.
+    return $client->checkStatus(preg_replace('/\d+$/', (string) (time() - 60), $requestId));
+}
+
+it('paga com qualquer telemóvel, incluindo os acabados em 1 a 4', function () {
+    foreach (['912345678', '935566333', '961234561', '921234564'] as $phone) {
+        expect(desfecho($phone)->isPaid())->toBeTrue();
+    }
+});
+
+it('os números de teste escolhem o desfecho', function () {
+    expect(desfecho('910000001')->isRejected())->toBeTrue()
+        ->and(desfecho('930000002')->isExpired())->toBeTrue()
+        ->and((new FakeMbWayClient())->requestPayment('L1', '5.00', '910000003', 'Teste')->wasAccepted())->toBeFalse();
 });
 
 it('simula a ifthenpay em baixo', function () {
-    (new FakeMbWayClient())->requestPayment('L1', '5.00', '912345674', 'Teste');
+    (new FakeMbWayClient())->requestPayment('L1', '5.00', '910000004', 'Teste');
 })->throws(MbWayUnavailableException::class);
+
+/** O cliente é um singleton: cada teste pede um novo depois de mudar a configuração. */
+function clienteMbWay(): MbWayClient
+{
+    app()->forgetInstance(MbWayClient::class);
+
+    return app(MbWayClient::class);
+}
+
+it('IFTHENPAY_ENV=fake dá o cliente falso', function () {
+    config(['services.ifthenpay.env' => 'fake']);
+
+    expect(clienteMbWay())->toBeInstanceOf(FakeMbWayClient::class);
+});
+
+it('IFTHENPAY_ENV=production dá o cliente real', function () {
+    config(['services.ifthenpay.env' => 'production', 'services.ifthenpay.mbway_key' => 'UWP-TESTE']);
+
+    expect(clienteMbWay())->not->toBeInstanceOf(FakeMbWayClient::class)
+        ->toBeInstanceOf(MbWayClient::class);
+});
+
+it('um valor desconhecido rebenta, em vez de cair no cliente real', function () {
+    config(['services.ifthenpay.env' => 'fak', 'services.ifthenpay.mbway_key' => 'UWP-TESTE']);
+
+    clienteMbWay();
+})->throws(RuntimeException::class, 'IFTHENPAY_ENV tem de ser production ou fake');
+
+it('fake num servidor de produção rebenta', function () {
+    config(['services.ifthenpay.env' => 'fake']);
+    app()->detectEnvironment(fn () => 'production');
+
+    clienteMbWay();
+})->throws(RuntimeException::class, 'não pode ser usado com APP_ENV=production');

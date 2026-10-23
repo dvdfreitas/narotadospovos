@@ -39,7 +39,8 @@ return [
     'ifthenpay' => [
         'mbway_key'         => env('IFTHENPAY_MBWAY_KEY'),
         'anti_phishing_key' => env('IFTHENPAY_ANTI_PHISHING_KEY'),
-        // Pagamentos simulados, sem tocar na ifthenpay. Ver FakeMbWayClient.
-        'fake'              => (bool) env('IFTHENPAY_FAKE', false),
+        // production: pagamentos reais. fake: simulados, sem tocar na
+        // ifthenpay — ver FakeMbWayClient e AppServiceProvider::register().
+        'env'               => env('IFTHENPAY_ENV', 'production'),
     ],
 ];

@@ -7,7 +7,7 @@
 
     <p class="mt-6 text-gray-500 leading-relaxed">
         Daqui gere o conteúdo do site da Na Rota dos Povos: as notícias que aparecem na
-        página inicial, os parceiros, a campanha em curso e a loja solidária.
+        página inicial, os parceiros, a campanha em curso e o bazar solidário.
     </p>
 </div>
 
@@ -86,12 +86,12 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
             </svg>
             <h2 class="ms-3 text-xl font-semibold text-gray-900">
-                <a href="{{ route('shop.index') }}">Loja Solidária</a>
+                <a href="{{ route('shop.index') }}">Bazar Solidário</a>
             </h2>
         </div>
 
         <p class="mt-4 text-gray-500 text-sm leading-relaxed">
-            A loja está acessível por link directo, fora do menu do site. Aqui vê os
+            O bazar está acessível por link directo, fora do menu do site. Aqui vê os
             produtos à venda e as encomendas feitas.
         </p>
     </div>

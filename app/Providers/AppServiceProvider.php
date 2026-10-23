@@ -28,23 +28,30 @@ class AppServiceProvider extends ServiceProvider
          * alguém pedir o cliente — assim é possível correr migrações
          * sem a chave definida.
          *
-         * Com IFTHENPAY_FAKE=true entra o FakeMbWayClient, que não paga
-         * nada. Em produção rebenta em vez de obedecer: uma loja que
-         * aceitasse encomendas sem cobrar seria pior do que uma em baixo.
+         * IFTHENPAY_ENV escolhe o cliente: production fala com a
+         * ifthenpay a sério, fake entra o FakeMbWayClient, que não paga
+         * nada. Um valor que não seja nenhum dos dois rebenta: um engano
+         * a escrever "fake" não pode cair em cobranças reais.
+         *
+         * fake num servidor com APP_ENV=production também rebenta, em vez
+         * de obedecer: uma loja que aceitasse encomendas sem cobrar seria
+         * pior do que uma em baixo.
          */
         $this->app->singleton(MbWayClient::class, function () {
-            if (config('services.ifthenpay.fake')) {
-                if ($this->app->isProduction()) {
-                    throw new RuntimeException('IFTHENPAY_FAKE não pode estar ligado em produção.');
-                }
+            $env = config('services.ifthenpay.env');
 
-                return new FakeMbWayClient();
-            }
+            return match ($env) {
+                'fake' => $this->app->isProduction()
+                    ? throw new RuntimeException('IFTHENPAY_ENV=fake não pode ser usado com APP_ENV=production.')
+                    : new FakeMbWayClient(),
 
-            return new MbWayClient(
-                config('services.ifthenpay.mbway_key')
-                    ?? throw new RuntimeException('IFTHENPAY_MBWAY_KEY não está definida.'),
-            );
+                'production' => new MbWayClient(
+                    config('services.ifthenpay.mbway_key')
+                        ?? throw new RuntimeException('IFTHENPAY_MBWAY_KEY não está definida.'),
+                ),
+
+                default => throw new RuntimeException("IFTHENPAY_ENV tem de ser production ou fake, não \"{$env}\"."),
+            };
         });
     }
 

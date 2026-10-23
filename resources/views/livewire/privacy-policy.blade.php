@@ -33,7 +33,7 @@ state([
 
             <p class="text-emerald-100/90 max-w-2xl mx-auto leading-relaxed">
                 Como a Na Rota dos Povos trata os dados pessoais de quem faz um donativo,
-                directamente ou através da Loja Solidária, e de quem participa nas nossas campanhas.
+                directamente ou através do Bazar Solidário, e de quem participa nas nossas campanhas.
             </p>
         </div>
     </div>
@@ -132,8 +132,8 @@ state([
                             </div>
 
                             <p class="mt-8 text-sm leading-relaxed text-slate-600">
-                                Na Loja Solidária, cada contributo pago aparece na lista pública de contributos da
-                                página da loja, com o seu primeiro e último nome, o que escolheu, o valor e a data.
+                                No Bazar Solidário, cada contributo pago aparece na lista pública de contributos da
+                                página do bazar, com o seu primeiro e último nome, o que escolheu, o valor e a data.
                                 O email, o telemóvel, o NIF e a morada nunca são mostrados.
                             </p>
 
@@ -164,7 +164,7 @@ state([
                                     </div>
                                     <p class="text-slate-600 leading-relaxed max-w-2xl">
                                         Para validar o pagamento e garantir que o apoio chega ao destino. O que
-                                        escolhe na Loja Solidária é também um donativo: não há envio de bens, e por
+                                        escolhe no Bazar Solidário é também um donativo: não há envio de bens, e por
                                         isso não lhe pedimos morada de entrega.
                                     </p>
                                 </div>

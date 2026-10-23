@@ -82,6 +82,17 @@ $products = computed(function () {
  * não é preciso rejeitá-la, ela não existe para esta pergunta.
  */
 $startCheckout = function (array $selection) {
+    // Abrir o carrinho depois de um pagamento terminado é uma compra nova:
+    // volta ao formulário, com os dados do comprador ainda preenchidos.
+    //
+    // Só quando terminou. Em requested o telemóvel ainda pode aprovar, e em
+    // unknown não sabemos se foi pago — recomeçar aí convidava a pagar duas
+    // vezes. O ecrã de espera ou o aviso continuam à vista.
+    if ($this->paymentId && Payment::find($this->paymentId)?->isFinal()) {
+        $this->paymentId = null;
+        $this->step = 1;
+    }
+
     $requested = collect($selection)
         ->mapWithKeys(fn ($line) => [
             (int) $line['variantId'] => max(1, min(99, (int) $line['quantity'])),
@@ -101,7 +112,7 @@ $startCheckout = function (array $selection) {
         ->values()
         ->all();
 
-    // Seleção velha guardada no browser, com produtos que já saíram da loja.
+    // Seleção velha guardada no browser, com produtos que já saíram do bazar.
     // O modal abre sem linhas e sem total, em vez de rebentar.
 };
 
@@ -186,7 +197,7 @@ $placeOrder = function (StartMbWayPayment $payments) {
         $order,
         $total,
         $this->buyer_phone,
-        'Loja Solidaria ' . $order->access_code,
+        'Bazar Solidario ' . $order->access_code,
     );
 
     $this->paymentId = $payment->id;
@@ -308,7 +319,7 @@ $checkPayment = function () {
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <header class="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-stone-200 pb-7 sm:mb-10">
             <div>
-                <h1 class="m-0 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">Loja Solidária</h1>
+                <h1 class="m-0 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">Bazar Solidário</h1>
                 <p class="mb-0 mt-3 max-w-xl text-left text-base font-normal leading-relaxed text-slate-600">
                     Escolha como quer ajudar. Cada compra transforma-se em bens para quem precisa.
                 </p>
@@ -316,7 +327,7 @@ $checkPayment = function () {
         </header>
 
         {{--
-            Duas colunas a partir de lg: a loja à esquerda e os contributos
+            Duas colunas a partir de lg: o bazar à esquerda e os contributos
             numa coluna à direita, que acompanha o scroll. Abaixo disso os
             contributos descem para o fim da página.
         --}}

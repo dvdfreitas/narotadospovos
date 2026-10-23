@@ -33,5 +33,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'dvdfreitas@gmail.com',
             'password' => bcrypt('password'),
         ]);
+
+        // geral@narotadospovos.org
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'geral@narotadospovos.org',
+            'password' => bcrypt('bazar2026'),
+        ]);
     }
 }

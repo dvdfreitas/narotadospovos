@@ -244,3 +244,100 @@ it('limpa o carrinho só quando o pagamento se concretiza', function () {
     Payment::latest('id')->first()->markAsRejected();
     $recusado->call('checkPayment')->assertNotDispatched('contribution-paid');
 });
+
+/**
+ * Faz uma encomenda com o telemóvel a tocar (requested) e devolve o
+ * componente, para cada teste decidir o que acontece ao pagamento.
+ */
+function compraPendente(ProductVariant $variant)
+{
+    Http::fake(['api.ifthenpay.com/*' => Http::response([
+        'Status' => '000', 'Message' => 'Success', 'RequestId' => 'REQ-NOVA',
+    ])]);
+
+    return Volt::test('shop.index')
+        ->call('startCheckout', [['variantId' => $variant->id, 'quantity' => 1]])
+        ->set('buyer_name', 'David Freitas')
+        ->set('buyer_email', 'david@exemplo.pt')
+        ->set('buyer_phone', '935566333')
+        ->set('terms', true)
+        ->call('placeOrder')
+        ->assertSet('step', 2);
+}
+
+it('recomeça com o carrinho novo depois de um pagamento recusado', function () {
+    $cabaz = cabaz('25.00');
+    $outro = cabaz('10.00');
+
+    $component = compraPendente($cabaz);
+    Payment::first()->markAsRejected();
+
+    $component
+        ->call('startCheckout', [['variantId' => $outro->id, 'quantity' => 3]])
+        ->assertSet('step', 1)
+        ->assertSet('paymentId', null)
+        ->assertSet('lines.0.variant_id', $outro->id)
+        ->assertSet('lines.0.quantity', 3)
+        // Quem tenta de novo não tem de voltar a escrever os dados.
+        ->assertSet('buyer_name', 'David Freitas')
+        ->assertDontSee('Pagamento recusado');
+});
+
+it('recomeça também depois de um pagamento concluído', function () {
+    $cabaz = cabaz('25.00');
+
+    $component = compraPendente($cabaz);
+    Payment::first()->markAsPaid();
+
+    $component
+        ->call('startCheckout', [['variantId' => $cabaz->id, 'quantity' => 1]])
+        ->assertSet('step', 1)
+        ->assertSet('paymentId', null);
+});
+
+it('não recomeça enquanto o telemóvel ainda pode aprovar', function () {
+    $cabaz = cabaz('25.00');
+
+    $component = compraPendente($cabaz);
+
+    $component
+        ->call('startCheckout', [['variantId' => $cabaz->id, 'quantity' => 2]])
+        ->assertSet('step', 2)
+        ->assertNotSet('paymentId', null);
+});
+
+it('não recomeça quando não se sabe se foi pago', function () {
+    $cabaz = cabaz('25.00');
+
+    $component = compraPendente($cabaz);
+    Payment::first()->markAsUnknown();
+
+    $component
+        ->call('startCheckout', [['variantId' => $cabaz->id, 'quantity' => 2]])
+        ->assertNotSet('paymentId', null)
+        ->assertNotSet('step', 1);
+});
+
+it('em modo fake, uma compra com um telemóvel qualquer chega a paga', function () {
+    config(['services.ifthenpay.env' => 'fake']);
+    app()->forgetInstance(\App\Services\IfThenPay\MbWayClient::class);
+    Http::fake();
+
+    $component = Volt::test('shop.index')
+        ->call('startCheckout', [['variantId' => cabaz('25.00')->id, 'quantity' => 1]])
+        ->set('buyer_name', 'David Freitas')
+        ->set('buyer_email', 'david@exemplo.pt')
+        // Acaba em 3: era o que antes caía, sem se perceber, no desfecho "falhado".
+        ->set('buyer_phone', '935566333')
+        ->set('terms', true)
+        ->call('placeOrder')
+        ->assertSet('step', 2);
+
+    // O "cliente" decide passados uns segundos.
+    $this->travel(15)->seconds();
+
+    $component->call('checkPayment')->assertSet('step', 3)->assertSee('Obrigado pelo seu contributo');
+
+    expect(Order::first()->status)->toBe(Order::STATUS_PAID);
+    Http::assertNothingSent();
+});

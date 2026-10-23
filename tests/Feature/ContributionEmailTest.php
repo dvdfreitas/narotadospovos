@@ -87,3 +87,54 @@ it('agradece uma só vez quando dois caminhos confirmam ao mesmo tempo', functio
     expect($payment->fresh()->confirmed_at->equalTo($primeiraHora))->toBeTrue()
         ->and($peloEcra->status)->toBe(Payment::STATUS_PAID);
 });
+
+it('envia um email de teste sem gravar nada', function () {
+    Mail::fake();
+
+    $this->artisan('bazar:testar-email', ['para' => 'bazar@exemplo.pt'])->assertSuccessful();
+
+    Mail::assertSent(ContributionConfirmed::class, fn ($mail) =>
+        $mail->hasTo('bazar@exemplo.pt')
+        && $mail->envelope()->subject === '[Teste] Obrigado pelo seu contributo — EXEMPLO'
+    );
+
+    expect(Order::count())->toBe(0)
+        ->and(Payment::count())->toBe(0);
+});
+
+it('recusa um endereço inválido', function () {
+    Mail::fake();
+
+    $this->artisan('bazar:testar-email', ['para' => 'isto-nao'])->assertFailed();
+
+    Mail::assertNothingSent();
+});
+
+it('o exemplo tem um total que bate certo com as linhas', function () {
+    $mail = ContributionConfirmed::example();
+
+    $sum = $mail->order->items->reduce(fn ($sum, $item) => bcadd($sum, $item->lineTotal(), 2), '0.00');
+
+    expect($sum)->toBe($mail->order->total);
+});
+
+it('mostra a hora de Portugal no email', function () {
+    $this->travelTo(\Illuminate\Support\Carbon::parse('2026-07-01 12:00:00', 'UTC'));
+
+    // Em Julho, Portugal está em UTC+1.
+    expect(ContributionConfirmed::example()->render())->toContain('01/07/2026 às 13:00');
+});
+
+it('pré-visualiza o email só para administradores', function () {
+    config(['app.admin_emails' => ['admin@exemplo.pt']]);
+
+    $this->get('/admin/emails/confirmacao')->assertRedirect('/login');
+
+    $this->actingAs(\App\Models\User::factory()->create(['email' => 'outro@exemplo.pt']))
+        ->get('/admin/emails/confirmacao')->assertForbidden();
+
+    $this->actingAs(\App\Models\User::factory()->create(['email' => 'admin@exemplo.pt']))
+        ->get('/admin/emails/confirmacao')
+        ->assertOk()
+        ->assertSee('Obrigado, Maria Silva');
+});

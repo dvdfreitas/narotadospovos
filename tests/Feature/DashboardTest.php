@@ -11,7 +11,7 @@ it('manda quem não tem sessão para o login', function () {
     $this->get('/dashboard')->assertRedirect('/login');
 });
 
-it('mostra a loja e os últimos contributos a administradores', function () {
+it('mostra o bazar e os últimos contributos a administradores', function () {
     Order::create([
         'total' => '25.00', 'status' => Order::STATUS_PAID, 'paid_at' => now(),
         'buyer_name' => 'Maria Silva', 'buyer_email' => 'maria@exemplo.pt', 'buyer_phone' => '935566333',
@@ -26,7 +26,7 @@ it('mostra a loja e os últimos contributos a administradores', function () {
         ->assertSee('Maria Silva');
 });
 
-it('esconde os números da loja a quem não é administrador', function () {
+it('esconde os números do bazar a quem não é administrador', function () {
     Order::create([
         'total' => '25.00', 'status' => Order::STATUS_PAID, 'paid_at' => now(),
         'buyer_name' => 'Maria Silva', 'buyer_email' => 'maria@exemplo.pt', 'buyer_phone' => '935566333',

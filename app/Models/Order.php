@@ -79,7 +79,7 @@ class Order extends Model
 
     /**
      * Uma encomenda pode ter várias tentativas de pagamento.
-     * Idêntico ao que a Donation declara — é o que torna a loja
+     * Idêntico ao que a Donation declara — é o que torna o bazar
      * utilizável pela máquina de pagamentos sem lhe tocar.
      */
     public function payments(): MorphMany

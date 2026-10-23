@@ -78,5 +78,5 @@ it('exporta CSV', function () {
 
     Volt::test('admin.orders-index')
         ->call('export')
-        ->assertFileDownloaded('loja-solidaria-' . now()->format('Y-m-d') . '.csv');
+        ->assertFileDownloaded('bazar-solidario-' . now()->format('Y-m-d') . '.csv');
 });

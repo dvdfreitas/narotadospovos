@@ -136,7 +136,7 @@ it('nunca envia o email nem o telemóvel ao browser', function () {
     encomendaPublica();
 
     // A página inteira, com o snapshot do Livewire incluído.
-    $this->get('/loja-solidaria')
+    $this->get('/bazar-solidario')
         ->assertOk()
         ->assertSee('Maria Silva')
         ->assertDontSee('maria@exemplo.pt')
