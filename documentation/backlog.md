@@ -40,7 +40,13 @@ Lista directa do que ficou pendente. Actualizar à medida que se resolve.
   (verificado). Confirmar se se mantém fixa nos valores altos ou se passa a
   percentagem — decide se compensa vender produtos baratos avulso ou só em cabazes.
 
-- [ ] **Preços reais.** Os do `ProductSeeder` são inventados. Substituir.
+- [ ] **Preços reais.** Os do `ProductSeeder` são 0,01 € de propósito: a fase de
+  testes com um grupo pequeno paga a sério, pelo valor mínimo. Cada teste custa
+  0,09 € de tarifa à ifthenpay. Substituir antes de abrir.
+- [ ] **Encomendas da fase de testes.** Quem testa aparece em "Quem já contribuiu"
+  com 0,01 €. Antes de abrir, decidir: apagá-las (somem da lista, mas foram
+  pagamentos reais e ficam no backoffice da ifthenpay) ou marcá-las como teste e
+  escondê-las da lista pública e dos totais.
 - [x] **Descrições dos produtos.** Os quatro produtos têm uma descrição curta do contributo de cada compra.
 - [ ] **Composição real dos cabazes.** As opções Solidário e Família têm conteúdos exemplificativos para teste, apresentados na janela de descrição. Substituir pelos conteúdos reais antes da venda.
 - [x] **Seleção no catálogo.** Cada variante tem uma quantidade independente, sincronizada entre o cartão e a janela de descrição. Permite combinar opções no mesmo produto (0 a 99 unidades por opção), com cálculo exato do total.
@@ -81,6 +87,20 @@ Lista directa do que ficou pendente. Actualizar à medida que se resolve.
 - [ ] Guardar cópia do `storage/logs/laravel.log` antes de `migrate:fresh` — é a prova de que a REST v2 funciona.
 
 ## Dívida técnica conhecida
+
+- [ ] **`ADMIN_EMAILS` errado ou em falta deixa o administrador às escuras.** A lista
+  de administradores vem do `.env` (`config/app.php`, `admin_emails`; Gate `admin`
+  no `AppServiceProvider`). Se faltar, tiver uma gralha, ou a conta não tiver o
+  email verificado, não há erro nenhum: `/admin/pagamentos` e `/admin/parceiros`
+  dão um 403 seco, o painel esconde a secção do bazar e os botões "Gerir", e o
+  menu perde "Pagamentos" — parece que o site está avariado. Com `config:cache`,
+  mudar o `.env` também não tem efeito até correr `php artisan config:clear`.
+  Hipóteses, por ordem de esforço:
+  - um 403 próprio que, a quem tem sessão, explica a causa (email não está em
+    `ADMIN_EMAILS`, ou não está verificado);
+  - um aviso no arranque/`php artisan about` quando a lista está vazia em produção;
+  - passar o papel para a base de dados (`users.is_admin`), gerido por comando,
+    e deixar de depender do `.env`.
 
 - [ ] **Validar o dígito de controlo do NIF.** Hoje valida-se só `digits:9`, que
   aceita `123456789`. Como vai num recibo, um NIF com gralha é um problema real.
